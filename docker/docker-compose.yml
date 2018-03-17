@@ -1,0 +1,9 @@
+version: '3'
+services:
+    web:
+        build: images/apache
+        image: flo/tournoi:develop
+        volumes:
+            - ..:/var/www/floTournoi
+        ports:
+            - "80:80"

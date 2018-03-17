@@ -1,5 +1,5 @@
 <?php
-namespace App\controller;
+namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
