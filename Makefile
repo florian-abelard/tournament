@@ -30,9 +30,6 @@ init: install-dependencies
 
 install-dependencies: composer-install
 
-test:
-	@echo TEST
-
 #------------------------------------------------------------------------------
 
 clean: clean-docker clean-composer

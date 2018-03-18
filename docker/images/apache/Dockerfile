@@ -1,10 +1,11 @@
 FROM php:7.2-apache
 
-RUN apt-get update \
-&& apt-get install -y zip \
-&& apt-get clean
+RUN apt-get update && \
+    apt-get install -y zip && \
+    apt-get clean
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite && \
+    a2enmod headers
 
 ADD bootstrap.sh /root/bootstrap.sh
 ENTRYPOINT [ "sh", "/root/bootstrap.sh" ]
