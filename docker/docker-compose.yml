@@ -4,7 +4,7 @@ services:
         build: images/apache
         image: flo/tournoi:develop
         volumes:
-            - ..:/var/www/floTournoi
+            - ..:/var/www/flo-tournoi
         ports:
             - "80:80"
         environment:

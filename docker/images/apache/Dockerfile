@@ -12,6 +12,6 @@ ENTRYPOINT [ "sh", "/root/bootstrap.sh" ]
 
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf
 
-WORKDIR /var/www/floTournoi
+WORKDIR /var/www/flo-tournoi
 
 CMD ["apache2-foreground"]
