@@ -6,6 +6,9 @@ RUN apt-get update \
 
 RUN a2enmod rewrite
 
+ADD bootstrap.sh /root/bootstrap.sh
+ENTRYPOINT [ "sh", "/root/bootstrap.sh" ]
+
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf
 
 WORKDIR /var/www/floTournoi
