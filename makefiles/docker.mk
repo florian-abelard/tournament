@@ -6,7 +6,7 @@ DOCKER_COMPOSE_FILE?=docker/docker-compose.yml
 
 #------------------------------------------------------------------------------
 
-build:
+build: ##@docker build containers
 	docker-compose -f ${DOCKER_COMPOSE_FILE} build
 
 up:
@@ -25,4 +25,4 @@ clean-docker: down
 
 #------------------------------------------------------------------------------
 
-.PHONY: up build down attach clean-docker
+.PHONY: up build down attach clean-docker ## eqs ezs f

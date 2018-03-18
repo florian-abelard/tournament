@@ -10,30 +10,37 @@ export GROUP_ID
 
 #------------------------------------------------------------------------------
 
+include makefiles/help.mk
 include makefiles/docker.mk
 include makefiles/composer.mk
+
+#------------------------------------------------------------------------------
+
+init: ## install project dependencies
+	install-dependencies
+
+install-dependencies: composer-install
+
+test: ## this is a test
+	@echo TEST
+
+#------------------------------------------------------------------------------
+
+clean: ## clean project dependencies, docker containers...
+	clean-docker clean-composer
+
+#------------------------------------------------------------------------------
+
+.PHONY: init help
 
 #------------------------------------------------------------------------------
 
 .DEFAULT_GOAL := help
 
 help:
-	@echo "========================================"
-	@echo "floTournoi"
-	@echo "========================================"
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
-	@echo "========================================"
-
-#------------------------------------------------------------------------------
-
-init: install-dependencies
-
-install-dependencies: composer-install
-
-#------------------------------------------------------------------------------
-
-clean: clean-docker clean-composer
-
-#------------------------------------------------------------------------------
-
-.PHONY: init help
+	@echo "================================================================================"
+	@echo "floTournoi Makefile"
+	@echo "================================================================================"
+	@echo
+	@perl -e '$(HELP_FUNC)' $(MAKEFILE_LIST)
+	@echo "================================================================================"
