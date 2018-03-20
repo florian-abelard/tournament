@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace Flo\Tournoi\Domain\Player\Entities;
+
+class Player
+{
+    private
+        $uuid,
+        $name;
+
+    public function __construct(string $uuid, string $name)
+    {
+        $this->uuid = $uuid;
+        $this->name = $name;
+    }
+
+    public function uuid(): string
+    {
+        return $this->uuid;
+    }
+}
