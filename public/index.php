@@ -1,6 +1,6 @@
 <?php
 
-use App\Kernel;
+use Flo\Tournoi\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;

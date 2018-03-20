@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace Flo\Tournoi\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
 
