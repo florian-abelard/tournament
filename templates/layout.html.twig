@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        {% block stylesheets %}
+            <link href="{{ asset('build/layout.css') }}" rel="stylesheet" />
+        {% endblock %}
+    </head>
+
+    <body>
+        <div class="container">
+
+        	<header>
+            	HEADER
+        	</header>
+
+            <nav>
+                NAV
+            </nav>
+
+            <main>
+                MAIN
+            </main>
+
+        	<footer>
+        		FOOTER
+        	</footer>
+
+        </div>
+
+        {% block javascripts %}
+            <script src="{{ asset('build/layout.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

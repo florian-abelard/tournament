@@ -7,7 +7,7 @@ WHITE  := $(shell tput -Txterm setaf 7)
 YELLOW := $(shell tput -Txterm setaf 3)
 RESET  := $(shell tput -Txterm sgr0)
 
-TAB_LENGTH := 20
+TAB_LENGTH := 30
 
 HELP_FUNC = \
     %help; \

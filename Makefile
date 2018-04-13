@@ -4,15 +4,17 @@
 
 USER_ID=$(shell id -u)
 GROUP_ID=$(shell id -g)
+HOST_SOURCE_PATH=$(shell pwd)
 
 export USER_ID
 export GROUP_ID
 
 #------------------------------------------------------------------------------
 
-include makefiles/help.mk
-include makefiles/docker.mk
 include makefiles/composer.mk
+include makefiles/docker.mk
+include makefiles/help.mk
+include makefiles/webpack.mk
 
 #------------------------------------------------------------------------------
 
@@ -27,7 +29,7 @@ test: ## this is a test
 #------------------------------------------------------------------------------
 
 clean: ## clean project dependencies, docker containers...
-	clean-docker clean-composer
+	clean-docker clean-composer clean-webpack clean-built-assets
 
 #------------------------------------------------------------------------------
 
