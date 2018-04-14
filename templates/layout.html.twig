@@ -11,19 +11,19 @@
         <div class="container">
 
         	<header>
-            	HEADER
+            	{% block header %} header block {% endblock %}
         	</header>
 
             <nav>
-                NAV
+                {% block nav %} nav block {% endblock %}
             </nav>
 
             <main>
-                MAIN
+                {% block main %} main block {% endblock %}
             </main>
 
         	<footer>
-        		FOOTER
+                {% block footer %} footer block {% endblock %}
         	</footer>
 
         </div>

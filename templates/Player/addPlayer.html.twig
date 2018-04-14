@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+
+    <h3>Add a player</h3>
+    <br/>
+    <section>
+
+        <form action="{{ path('tournoi_player_add_submit') }}" method="POST">
+
+            <div>
+                <label>Nom du joueur</label>
+                <input type="text" name="name" value="">
+            </div>
+
+            <button type="submit">Valider</button>
+        </form>
+
+    </section>
+
+{% endblock %}

@@ -33,4 +33,4 @@ clean-built-assets: ##@webpack clean built assets
 
 #------------------------------------------------------------------------------
 
-.PHONY:
+.PHONY: webpack-install webpack-build webpack-build-production webpack-watch clean-webpack clean-built-assets

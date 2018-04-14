@@ -20,4 +20,9 @@ class Player
     {
         return $this->uuid;
     }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
 }

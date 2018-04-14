@@ -2,6 +2,16 @@
 #    path: /
 #    controller: Flo\Tournoi\Controller\DefaultController::index
 
-app_test:
+tournoi_test:
     path: /test
     controller: Flo\Tournoi\Controllers\TestController::index
+
+tournoi_player_add:
+    path: /player/add
+    methods:  [GET]
+    controller: Flo\Tournoi\Controllers\Player\AddPlayerController::formAddAction
+
+tournoi_player_add_submit:
+    path: /player/add
+    methods:  [POST]
+    controller: Flo\Tournoi\Controllers\Player\AddPlayerController::submitAdd
