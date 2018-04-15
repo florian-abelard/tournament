@@ -7,6 +7,17 @@ services:
             - ..:/var/www/flo-tournoi
         ports:
             - "80:80"
+        links:
+            - database
         environment:
             - USER_ID=${USER_ID}
             - GROUP_ID=${GROUP_ID}
+    database:
+        image: mariadb
+        env_file: ../.env
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8080:80
+        links:
+            - database:db
