@@ -14,4 +14,4 @@ tournoi_player_add:
 tournoi_player_add_submit:
     path: /player/add
     methods:  [POST]
-    controller: Flo\Tournoi\Controllers\Player\AddPlayerController::submitAdd
+    controller: Flo\Tournoi\Controllers\Player\AddPlayerController::submitAddAction
