@@ -11,7 +11,7 @@ NPM_DOCKER_CMD = docker run --rm \
 
 #------------------------------------------------------------------------------
 
-webpack-install: ##@webpack install wabpack-encore node package
+webpack-install: ##@webpack install webpack-encore node package
 	$(call NPM_DOCKER_CMD, install --silent)
 
 webpack-build: ##@webpack build assets for development environment

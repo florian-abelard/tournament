@@ -5,23 +5,27 @@
 USER_ID=$(shell id -u)
 GROUP_ID=$(shell id -g)
 HOST_SOURCE_PATH=$(shell pwd)
+DOCKER_COMPOSE_FILE?=docker/docker-compose.yml
 
 export USER_ID
 export GROUP_ID
 
 #------------------------------------------------------------------------------
 
+docker-compose-exec = docker-compose -f ${DOCKER_COMPOSE_FILE} exec -T --user www-data web ${1}
+
+#------------------------------------------------------------------------------
+
 include makefiles/composer.mk
 include makefiles/docker.mk
 include makefiles/help.mk
+include makefiles/mariadb.mk
 include makefiles/webpack.mk
 
 #------------------------------------------------------------------------------
 
-init: ## install project dependencies
-	install-dependencies
-
-install-dependencies: composer-install
+init: ## install project dependencies, create database...
+	composer-install webpack-install webpack-build db-init db-populate
 
 test: ## this is a test
 	@echo TEST

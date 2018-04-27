@@ -1,4 +1,7 @@
+USE tournoi;
+
 CREATE TABLE player (
-    "uuid" PRIMARY KEY,
-    "name" NOT NULL
+    uuid VARCHAR(50) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (uuid)
 );
