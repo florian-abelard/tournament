@@ -11,9 +11,14 @@ final class Uuid {
     private
         $uuid;
 
-    public function __construct()
+    public function __construct(?string $uuid = null)
     {
-        $this->uuid = (string) RamseyUuid::uuid4();
+        if ($uuid === null)
+        {
+            $this->uuid = (string) RamseyUuid::uuid4();
+        }
+
+        $this->uuid = $uuid;
     }
 
     public function value(): string
@@ -24,5 +29,10 @@ final class Uuid {
     public function __toString(): string
     {
         return $this->uuid;
+    }
+
+    public function import(string $uuid): Uuid
+    {
+        return new Uuid($uuid);
     }
 }

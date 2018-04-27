@@ -7,6 +7,7 @@ namespace Flo\Tournoi\Persistence\Player\Repositories;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
+use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Doctrine\DBAL\Connection;
 
 class Mysql implements PlayerRepository
@@ -35,5 +36,29 @@ SQL;
     public function findById(string $id): ?Player
     {
         return null;
+    }
+
+    public function findAll(): iterable
+    {
+        $sql = 'SELECT * FROM player';
+
+        $statement = $this->databaseConnection->prepare($sql);
+        $statement->execute();
+
+        $players = [];
+        foreach ($statement->fetchAll() as $result)
+        {
+            $players[] = $this->buildDomainObject($result);
+        }
+
+        return $players;
+    }
+
+    private function buildDomainObject(array $result): Player
+    {
+        return new Player(
+            new Uuid($result['uuid']),
+            $result['name']
+        );
     }
 }

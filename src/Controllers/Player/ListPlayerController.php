@@ -12,7 +12,7 @@ use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Persistence\Player\Repositories\Mysql as PlayerRepository;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 
-class AddPlayerController extends Controller
+class ListPlayerController extends Controller
 {
     private
         $playerRepository;
@@ -22,22 +22,10 @@ class AddPlayerController extends Controller
         $this->playerRepository = $repository;
     }
 
-    public function displayAddFormAction()
+    public function displayListAction()
     {
-        return $this->render('Player/addPlayer.html.twig');
-    }
+        $players = $this->playerRepository->findAll();
 
-    public function submitAddFormAction(Request $request): Response
-    {
-        $name = $request->request->get('name');
-
-        $player = new Player(
-            new Uuid(),
-            $name
-        );
-
-        $this->playerRepository->persist($player);
-
-        return $this->render('Player/addPlayer.html.twig');
+        return $this->render('Player/listPlayer.html.twig', array('players' => $players));
     }
 }

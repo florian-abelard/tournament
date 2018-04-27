@@ -34,4 +34,9 @@ class Memory implements PlayerRepository
         }
         return null;
     }
+
+    public function findAll(): iterable
+    {
+        return [];
+    }
 }
