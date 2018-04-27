@@ -21,12 +21,14 @@ class Mysql implements PlayerRepository
 
     public function persist(Player $player): void
     {
-        $sql = "INSERT INTO player (uuid, name)
-        VALUES (" . $player->uuid() . ", " . $player->name() . ")";
-
-        // $this->databaseConnection->executeQuery($sql);
+        $sql = <<<SQL
+            INSERT INTO player (uuid, name)
+            VALUES (:uuid, :name)
+SQL;
 
         $statement = $this->databaseConnection->prepare($sql);
+        $statement->bindValue(':uuid', $player->uuid()->value());
+        $statement->bindValue(':name', $player->name());
         $statement->execute();
     }
 

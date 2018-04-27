@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Persistence\Player\Repositories\Mysql as PlayerRepository;
+use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 
 class AddPlayerController extends Controller
 {
@@ -30,7 +31,10 @@ class AddPlayerController extends Controller
     {
         $name = $request->request->get('name');
 
-        $player = new Player($name, $name);
+        $player = new Player(
+            new Uuid(),
+            $name
+        );
 
         $this->playerRepository->persist($player);
 
