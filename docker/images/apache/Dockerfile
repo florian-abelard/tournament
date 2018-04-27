@@ -5,6 +5,8 @@ RUN apt-get update && \
                        vim && \
     apt-get clean
 
+RUN docker-php-ext-install pdo_mysql
+
 RUN a2enmod rewrite && \
     a2enmod headers
 

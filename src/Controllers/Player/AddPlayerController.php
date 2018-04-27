@@ -9,32 +9,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Flo\Tournoi\Domain\Player\Entities\Player;
-use Flo\Tournoi\Persistence\Player\Repositories\Memory as UserRepository;
+use Flo\Tournoi\Persistence\Player\Repositories\Mysql as PlayerRepository;
 
 class AddPlayerController extends Controller
 {
+    private
+        $playerRepository;
+
+    public function __construct(PlayerRepository $repository)
+    {
+        $this->playerRepository = $repository;
+    }
+
     public function formAddAction()
     {
-        echo "formAddAction";
-
         return $this->render('Player/addPlayer.html.twig');
     }
 
     public function submitAddAction(Request $request): Response
     {
-        echo "submitAddAction ";
-
         $name = $request->request->get('name');
 
-        $player = new Player("1", $name);
+        $player = new Player($name, $name);
 
-        $memory = new UserRepository();
-
-        $memory->persist($player);
-
-        echo "<pre>";
-        var_dump($memory->collection);
-        echo "</pre>";
+        $this->playerRepository->persist($player);
 
         return $this->render('Player/addPlayer.html.twig');
     }
