@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Flo\Tournoi\Domain\Player\Entities\Player;
-use Flo\Tournoi\Persistence\Player\Repositories\Mysql as PlayerRepository; // TODO FIXME INTERFACE
+use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 
 class PlayerController extends Controller
