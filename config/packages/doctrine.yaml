@@ -12,7 +12,7 @@ doctrine:
         charset: utf8mb4
         default_table_options:
             collate: utf8mb4_unicode_ci
-        host: 'database'
+        host: '%env(resolve:DATABASE_HOST)%'
         dbname: '%env(resolve:DATABASE_NAME)%'
         user: '%env(resolve:DATABASE_USER)%'
         password: '%env(resolve:DATABASE_USER_PASSWORD)%'
