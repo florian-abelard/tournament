@@ -1,14 +1,19 @@
 tournoi_player_add:
     path: /player/add
     methods:  [GET]
-    controller: Flo\Tournoi\Controllers\Player\AddPlayerController::displayAddFormAction
+    controller: Flo\Tournoi\Controllers\Player\PlayerController::displayAddForm
 
 tournoi_player_add_submit:
     path: /player/add
     methods:  [POST]
-    controller: Flo\Tournoi\Controllers\Player\AddPlayerController::submitAddFormAction
+    controller: Flo\Tournoi\Controllers\Player\PlayerController::submitAddForm
 
 tournoi_player_list:
     path: /player/list
     methods:  [GET]
-    controller: Flo\Tournoi\Controllers\Player\ListPlayerController::displayListAction
+    controller: Flo\Tournoi\Controllers\Player\PlayerController::displayList
+
+tournoi_player_remove:
+    path: /player/remove/{uuid}
+    methods:  [GET]
+    controller: Flo\Tournoi\Controllers\Player\PlayerController::remove

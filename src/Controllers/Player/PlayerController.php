@@ -9,10 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Flo\Tournoi\Domain\Player\Entities\Player;
-use Flo\Tournoi\Persistence\Player\Repositories\Mysql as PlayerRepository;
+use Flo\Tournoi\Persistence\Player\Repositories\Mysql as PlayerRepository; // TODO FIXME INTERFACE
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 
-class AddPlayerController extends Controller
+class PlayerController extends Controller
 {
     private
         $playerRepository;
@@ -22,12 +22,12 @@ class AddPlayerController extends Controller
         $this->playerRepository = $repository;
     }
 
-    public function displayAddFormAction()
+    public function displayAddForm()
     {
         return $this->render('Player/addPlayer.html.twig');
     }
 
-    public function submitAddFormAction(Request $request): Response
+    public function submitAddForm(Request $request): Response
     {
         $name = $request->request->get('name');
 
@@ -39,5 +39,19 @@ class AddPlayerController extends Controller
         $this->playerRepository->persist($player);
 
         return $this->render('Player/addPlayer.html.twig');
+    }
+
+    public function displayList()
+    {
+        $players = $this->playerRepository->findAll();
+
+        return $this->render('Player/listPlayer.html.twig', array('players' => $players));
+    }
+
+    public function remove(string $uuid)
+    {
+        $this->playerRepository->remove(new Uuid($uuid));
+
+        return $this->redirectToRoute('tournoi_player_list');
     }
 }

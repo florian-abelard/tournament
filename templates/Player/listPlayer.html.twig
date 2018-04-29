@@ -7,7 +7,10 @@
     <section>
 
         {% for player in players %}
-            <div>{{ player.name }}</div>
+            <div>
+                <span>{{ player.name }}</span>
+                <span>[<a href="{{ path('tournoi_player_remove', {'uuid': player.uuid}) }}">x</a>]</span>
+            </div>
         {% endfor %}
 
     </section>

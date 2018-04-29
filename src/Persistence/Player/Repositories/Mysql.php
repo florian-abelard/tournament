@@ -12,6 +12,9 @@ use Doctrine\DBAL\Connection;
 
 class Mysql implements PlayerRepository
 {
+    private const
+        TABLE = 'player';
+
     private
         $databaseConnection;
 
@@ -35,7 +38,7 @@ SQL;
         $statement->execute();
     }
 
-    public function findById(string $id): ?Player
+    public function findById(Uuid $uuid): ?Player
     {
         return null;
     }
@@ -54,6 +57,20 @@ SQL;
         }
 
         return $players;
+    }
+
+    public function remove(Uuid $uuid): void
+    {
+        $table = self::TABLE;
+
+        $sql = <<<SQL
+            DELETE FROM $table
+            WHERE uuid = :uuid
+SQL;
+
+        $statement = $this->databaseConnection->prepare($sql);
+        $statement->bindValue(':uuid', $uuid->value());
+        $statement->execute();
     }
 
     private function buildDomainObject(array $result): Player

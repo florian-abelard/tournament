@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Persistence\Player\Repositories;
 
+use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
@@ -23,7 +24,7 @@ class Memory implements PlayerRepository
         $this->collection->add($player);
     }
 
-    public function findById(string $id): ?Player
+    public function findById(Uuid $uuid): ?Player
     {
         foreach ($this->collection as $player)
         {
@@ -38,5 +39,10 @@ class Memory implements PlayerRepository
     public function findAll(): iterable
     {
         return [];
+    }
+
+    public function remove(Uuid $uuid): void
+    {
+
     }
 }
