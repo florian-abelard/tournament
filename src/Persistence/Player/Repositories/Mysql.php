@@ -22,14 +22,16 @@ class Mysql implements PlayerRepository
 
     public function persist(Player $player): void
     {
+        $dto = $player->toDTO();
+
         $sql = <<<SQL
             INSERT INTO player (uuid, name)
             VALUES (:uuid, :name)
 SQL;
 
         $statement = $this->databaseConnection->prepare($sql);
-        $statement->bindValue(':uuid', $player->uuid()->value());
-        $statement->bindValue(':name', $player->name());
+        $statement->bindValue(':uuid', $dto->uuid());
+        $statement->bindValue(':name', $dto->name());
         $statement->execute();
     }
 
@@ -46,7 +48,7 @@ SQL;
         $statement->execute();
 
         $players = [];
-        foreach ($statement->fetchAll() as $result)
+        foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
         {
             $players[] = $this->buildDomainObject($result);
         }

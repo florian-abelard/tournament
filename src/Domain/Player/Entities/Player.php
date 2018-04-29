@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Domain\Player\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Persistence\Player\DataTransferObjects as DTO;
 
 class Player
 {
@@ -26,5 +27,13 @@ class Player
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function toDTO(): DTO\Player
+    {
+        return new DTO\Player(
+            $this->uuid->value(),
+            $this->name
+        );
     }
 }

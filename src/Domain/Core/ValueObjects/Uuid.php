@@ -15,10 +15,17 @@ final class Uuid {
     {
         if ($uuid === null)
         {
-            $this->uuid = (string) RamseyUuid::uuid4();
+            $uuid = (string) RamseyUuid::uuid4();
         }
 
         $this->uuid = $uuid;
+    }
+
+    public function generate(): Uuid
+    {
+        $this->uuid = (string) RamseyUuid::uuid4();
+
+        return $this;
     }
 
     public function value(): string
@@ -26,13 +33,18 @@ final class Uuid {
         return $this->uuid;
     }
 
+    public function fromString(string $uuid): Uuid
+    {
+        return (new Uuid())->generate();
+    }
+
+    public function validate(Uuid $uuid): void
+    {
+        // TODO
+    }
+
     public function __toString(): string
     {
         return $this->uuid;
-    }
-
-    public function import(string $uuid): Uuid
-    {
-        return new Uuid($uuid);
     }
 }
