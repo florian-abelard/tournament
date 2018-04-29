@@ -5,6 +5,7 @@
 NPM_DOCKER_CMD = docker run --rm \
 	-v ${HOST_SOURCE_PATH}:/var/app \
 	-v ${HOME}/.npm:/opt/.npm \
+	-u ${USER_ID}:${GROUP_ID} \
 	-w /var/app \
 	node:8 \
 	npm ${1}
