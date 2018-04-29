@@ -6,17 +6,5 @@ tournoi_test:
     path: /test
     controller: Flo\Tournoi\Controllers\TestController::index
 
-tournoi_player_add:
-    path: /player/add
-    methods:  [GET]
-    controller: Flo\Tournoi\Controllers\Player\AddPlayerController::displayAddFormAction
-
-tournoi_player_add_submit:
-    path: /player/add
-    methods:  [POST]
-    controller: Flo\Tournoi\Controllers\Player\AddPlayerController::submitAddFormAction
-
-tournoi_player_list:
-    path: /player/list
-    methods:  [GET]
-    controller: Flo\Tournoi\Controllers\Player\ListPlayerController::displayListAction
+tournoi_player:
+    resource: "routes/player/routes.yaml"
