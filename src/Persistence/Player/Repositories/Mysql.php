@@ -4,24 +4,15 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Persistence\Player\Repositories;
 
-use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
+use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlAbstract;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Doctrine\DBAL\Connection;
 
-class Mysql implements PlayerRepository
+class Mysql extends MysqlAbstract implements PlayerRepository
 {
     private const
         TABLE = 'player';
-
-    private
-        $databaseConnection;
-
-    public function __construct(Connection $connection)
-    {
-        $this->databaseConnection = $connection;
-    }
 
     public function persist(Player $player): void
     {
@@ -32,7 +23,7 @@ class Mysql implements PlayerRepository
             VALUES (:uuid, :name)
 SQL;
 
-        $statement = $this->databaseConnection->prepare($sql);
+        $statement = $this->getDatabaseConnection()->prepare($sql);
         $statement->bindValue(':uuid', $dto->uuid());
         $statement->bindValue(':name', $dto->name());
         $statement->execute();
@@ -47,7 +38,7 @@ SQL;
     {
         $sql = 'SELECT * FROM player';
 
-        $statement = $this->databaseConnection->prepare($sql);
+        $statement = $this->getDatabaseConnection()->prepare($sql);
         $statement->execute();
 
         $players = [];
@@ -68,12 +59,12 @@ SQL;
             WHERE uuid = :uuid
 SQL;
 
-        $statement = $this->databaseConnection->prepare($sql);
+        $statement = $this->getDatabaseConnection()->prepare($sql);
         $statement->bindValue(':uuid', $uuid->value());
         $statement->execute();
     }
 
-    private function buildDomainObject(array $result): Player
+    protected function buildDomainObject(array $result): Player
     {
         return new Player(
             new Uuid($result['uuid']),
