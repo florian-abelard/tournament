@@ -19,6 +19,12 @@ make init
 
 # Démarrer les containers docker
 make up
+
+# Alimenter la base de données
+make db-populate
+
+# Afficher toutes les commandes disponibles
+make
 ```
 
 Accès interface sur http://localhost
