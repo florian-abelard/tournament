@@ -26,10 +26,9 @@ include makefiles/webpack.mk
 
 #------------------------------------------------------------------------------
 
-init: composer-install webpack-install webpack-build ## install project dependencies
 
-test: ## this is a test
-	@echo TEST
+
+init: composer-install webpack-install webpack-build db-init ## install project dependencies, create database
 
 #------------------------------------------------------------------------------
 
