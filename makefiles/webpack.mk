@@ -3,10 +3,10 @@
 #------------------------------------------------------------------------------
 
 NPM_DOCKER_CMD = docker run --rm \
-	-v ${HOST_SOURCE_PATH}:/var/app \
+	-v ${HOST_SOURCE_PATH}:/var/www/app \
 	-v ${HOME}/.npm:/opt/.npm \
 	-u ${USER_ID}:${GROUP_ID} \
-	-w /var/app \
+	-w /var/www/app \
 	node:8 \
 	npm ${1}
 
@@ -27,7 +27,7 @@ webpack-watch: ##@webpack run webpack watch
 #------------------------------------------------------------------------------
 
 clean-webpack: ##@webpack clean webpack node module
-	test ! -e node_modules || -rm -rf node_modules
+	test ! -e node_modules || rm -rf node_modules
 
 clean-built-assets: ##@webpack clean built assets
 	test ! -e public/build || rm -rf public/build

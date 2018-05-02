@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Controllers\Player;
 
-use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
