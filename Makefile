@@ -13,6 +13,7 @@ export GROUP_ID
 #------------------------------------------------------------------------------
 
 docker-compose-exec = docker-compose -f ${DOCKER_COMPOSE_FILE} exec -T --user www-data web ${1}
+docker-compose-exec-db = docker-compose -f ${DOCKER_COMPOSE_FILE} exec -T --user root database ${1}
 
 #------------------------------------------------------------------------------
 
@@ -20,20 +21,19 @@ include makefiles/composer.mk
 include makefiles/docker.mk
 include makefiles/help.mk
 include makefiles/mariadb.mk
+include makefiles/phpunit.mk
 include makefiles/webpack.mk
 
 #------------------------------------------------------------------------------
 
-init: ## install project dependencies, create database...
-	composer-install webpack-install webpack-build db-init db-populate
+init: composer-install webpack-install webpack-build ## install project dependencies
 
 test: ## this is a test
 	@echo TEST
 
 #------------------------------------------------------------------------------
 
-clean: ## clean project dependencies, docker containers...
-	clean-docker clean-composer clean-webpack clean-built-assets
+clean: clean-docker clean-composer clean-webpack clean-built-assets clean-phpunit ## clean project dependencies, docker containers...
 
 #------------------------------------------------------------------------------
 

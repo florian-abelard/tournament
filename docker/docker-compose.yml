@@ -7,13 +7,15 @@ services:
             - ..:/var/www/flo-tournoi
         ports:
             - "80:80"
-        links:
-            - database
+        networks:
+            - flo
         environment:
             - USER_ID=${USER_ID}
             - GROUP_ID=${GROUP_ID}
     database:
         image: mariadb
+        networks:
+            - flo
         env_file: ../.env
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -21,3 +23,9 @@ services:
             - 8080:80
         links:
             - database:db
+        networks:
+            - flo
+
+networks:
+  flo:
+    driver: bridge
