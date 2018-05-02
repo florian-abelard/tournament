@@ -5,7 +5,7 @@
 
 #------------------------------------------------------------------------------
 
-db-init: ##@database Create maraidb database and schema
+db-init: ##@database Create mariadb database and schema
 	$(call docker-compose-exec, mysql --user=root --password=root --host=database < data/sql/01-system.sql)
 	$(call docker-compose-exec, mysql --user=root --password=root --host=database < data/sql/02-schema.sql)
 
@@ -14,7 +14,7 @@ db-populate: ##@database filled database with sample data
 
 #------------------------------------------------------------------------------
 
-clean-db: down ##@database clean database  TODO?
+clean-db: ##@database clean database  TODO?
 
 #------------------------------------------------------------------------------
 
