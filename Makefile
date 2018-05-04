@@ -10,10 +10,12 @@ DOCKER_COMPOSE_FILE?=docker/docker-compose.yml
 export USER_ID
 export GROUP_ID
 
+$(foreach var,$(shell cat .env),$(eval export ${var}))
+
 #------------------------------------------------------------------------------
 
 docker-compose-exec = docker-compose -f ${DOCKER_COMPOSE_FILE} exec -T --user www-data web ${1}
-docker-compose-exec-db = docker-compose -f ${DOCKER_COMPOSE_FILE} exec -T --user root database ${1}
+docker-compose-exec-db = docker-compose -f ${DOCKER_COMPOSE_FILE} exec -T --user root ${DATABASE_HOST} ${1}
 
 #------------------------------------------------------------------------------
 
@@ -26,9 +28,10 @@ include makefiles/webpack.mk
 
 #------------------------------------------------------------------------------
 
-
-
 init: composer-install webpack-install webpack-build db-init ## install project dependencies, create database
+
+test:
+	echo ${APP_SECRET}
 
 #------------------------------------------------------------------------------
 
