@@ -1,0 +1,4 @@
+tournoi_tournament_list:
+    path: /tournament/list
+    methods:  [GET]
+    controller: Flo\Tournoi\Controllers\Tournament\TournamentController::displayList
