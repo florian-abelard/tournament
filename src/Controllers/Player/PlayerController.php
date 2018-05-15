@@ -4,12 +4,13 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Controllers\Player;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PlayerController extends Controller
 {
@@ -21,7 +22,7 @@ class PlayerController extends Controller
         $this->playerRepository = $repository;
     }
 
-    public function displayAddForm()
+    public function displayAddForm(): Response
     {
         return $this->render('Player/addPlayer.html.twig');
     }
@@ -40,14 +41,14 @@ class PlayerController extends Controller
         return $this->render('Player/addPlayer.html.twig');
     }
 
-    public function displayList()
+    public function displayList(): Response
     {
         $players = $this->playerRepository->findAll();
 
         return $this->render('Player/listPlayer.html.twig', array('players' => $players));
     }
 
-    public function remove(string $uuid)
+    public function remove(string $uuid): RedirectResponse
     {
         $this->playerRepository->remove(new Uuid($uuid));
 
