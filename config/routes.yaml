@@ -7,4 +7,7 @@ tournoi_test:
     controller: Flo\Tournoi\Controllers\TestController::index
 
 tournoi_player:
-    resource: "routes/player/routes.yaml"
+    resource: "routes/tournoi/player.yaml"
+
+tournoi_tournament:
+    resource: "routes/tournoi/tournament.yaml"
