@@ -28,3 +28,4 @@ services:
     # please note that last definitions always *replace* previous ones
 
     Flo\Tournoi\Domain\Player\PlayerRepository: '@Flo\Tournoi\Persistence\Player\Repositories\Mysql'
+    Flo\Tournoi\Domain\Tournament\TournamentRepository: '@Flo\Tournoi\Persistence\Tournament\Repositories\Mysql'
