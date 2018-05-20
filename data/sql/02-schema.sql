@@ -13,9 +13,10 @@ CREATE TABLE tournament (
 );
 
 CREATE TABLE tournament_player (
-    tournament_uuid VARCHAR(36) NOT NULL,
     player_uuid VARCHAR(36) NOT NULL,
-    PRIMARY KEY (tournament_uuid, player_uuid),
-    FOREIGN KEY (tournament_uuid) REFERENCES tournament (uuid) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (player_uuid) REFERENCES player (uuid) ON DELETE CASCADE ON UPDATE CASCADE
+    tournament_uuid VARCHAR(36) NOT NULL,
+    registration_date DATETIME,
+    PRIMARY KEY (player_uuid, tournament_uuid),
+    FOREIGN KEY (player_uuid) REFERENCES player (uuid) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (tournament_uuid) REFERENCES tournament (uuid) ON DELETE CASCADE ON UPDATE CASCADE
 )
