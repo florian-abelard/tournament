@@ -3,6 +3,7 @@
 namespace Flo\Tournoi\Controllers\Tournament;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,11 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 class TournamentController extends Controller
 {
     private
-        $tournamentRepository;
+        $tournamentRepository,
+        $playerRepository;
 
-    public function __construct(TournamentRepository $repository)
+    public function __construct(TournamentRepository $tournamentRepository, PlayerRepository $playerRepository)
     {
-        $this->tournamentRepository = $repository;
+        $this->tournamentRepository = $tournamentRepository;
+        $this->playerRepository = $playerRepository;
     }
 
     public function displayList(): Response
@@ -30,6 +33,11 @@ class TournamentController extends Controller
     {
         $tournament = $this->tournamentRepository->findById(new Uuid($uuid));
 
-        return $this->render('Tournament/showTournament.html.twig', array('tournament' => $tournament));
+        $tournamentPlayers = $this->playerRepository->findByTournamentId($tournament->uuid());
+
+        return $this->render(
+            'Tournament/showTournament.html.twig',
+            array('tournament' => $tournament, 'players' => $tournamentPlayers)
+        );
     }
 }

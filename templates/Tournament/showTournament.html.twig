@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+
+    <h3>{{ tournament.name }}</h3>
+    <br/>
+    <section>
+        <span>ID : {{ tournament.uuid }}</span>
+    </section>
+    <section>
+        <h4>Joueurs inscrits</h3>
+        {% for player in players %}
+            <div>
+                <span>{{ player.name }}</span>
+                -
+                <span>{{ player.uuid }}</span>
+            </div>
+        {% endfor %}
+    </section>
+
+{% endblock %}

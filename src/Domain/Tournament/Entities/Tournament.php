@@ -5,21 +5,21 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Domain\Tournament\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
-use Flo\Tournoi\Domain\Player\Entities\Player;
+use Flo\Tournoi\Domain\TournamentPlayer\Collections\TournamentPlayerCollection as ParticipatingPlayerCollection;
+use Flo\Tournoi\Domain\TournamentPlayer\Entities\TournamentPlayer;
 
 class Tournament
 {
     private
         $uuid,
         $name,
-        $players;
+        $participatingPlayers;
 
     public function __construct(Uuid $uuid, string $name, iterable $players = [])
     {
         $this->uuid = $uuid;
         $this->name = $name;
-        $this->players = new PlayerCollection($players);
+        $this->participatingPlayers = new ParticipatingPlayerCollection($players);
     }
 
     public function uuid(): Uuid
@@ -32,11 +32,11 @@ class Tournament
         return $this->name;
     }
 
-    public function addPlayer(Player $player): void
+    public function addPlayer(TournamentPlayer $player): void
     {
         $player->addTournament($this);
 
-        $this->players->add($player);
+        $this->participatingPlayers->add($player);
     }
 
     // public function toDTO(): DTO\Tournament

@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Domain\Player\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Tournament\Collections\TournamentCollection;
-use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
+use Flo\Tournoi\Domain\TournamentPlayer\Collections\TournamentPlayerCollection;
+use Flo\Tournoi\Domain\TournamentPlayer\Entities\TournamentPlayer;
 use Flo\Tournoi\Persistence\Player\DataTransferObjects as DTO;
 
 class Player
@@ -20,7 +20,7 @@ class Player
     {
         $this->uuid = $uuid;
         $this->name = $name;
-        $this->tournaments = new TournamentCollection($tournaments);
+        $this->tournaments = new TournamentPlayerCollection($tournaments);
     }
 
     public function uuid(): Uuid
@@ -33,7 +33,7 @@ class Player
         return $this->name;
     }
 
-    public function addTournament(Tournament $tournament): void
+    public function addTournament(TournamentPlayer $tournament): void
     {
         $this->tournaments->add($tournament);
     }
