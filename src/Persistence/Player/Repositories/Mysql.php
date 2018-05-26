@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Persistence\Player\Repositories;
 
-use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlAbstract;
+use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
-use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
+use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlAbstract;
 
 class Mysql extends MysqlAbstract implements PlayerRepository
 {
@@ -54,23 +54,23 @@ SQL;
         return $player;
     }
 
-    public function findAll(): iterable
+    public function findAll(): PlayerCollection
     {
         $sql = 'SELECT * FROM ' . self::TABLE;
 
         $statement = $this->getDatabaseConnection()->prepare($sql);
         $statement->execute();
 
-        $players = [];
+        $players = new PlayerCollection;
         foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
         {
-            $players[] = $this->buildDomainObject($result);
+            $players->add($this->buildDomainObject($result));
         }
 
         return $players;
     }
 
-    public function findByTournamentId(Uuid $tournamentUuid): iterable
+    public function findByTournamentId(Uuid $tournamentUuid): PlayerCollection
     {
         $table = self::TABLE;
 
@@ -86,16 +86,16 @@ SQL;
         $statement->bindValue(':tournamentUuid', $tournamentUuid);
         $statement->execute();
 
-        $players = [];
+        $players = new PlayerCollection;
         foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
         {
-            $players[] = $this->buildDomainObject($result);
+            $players->add($this->buildDomainObject($result));
         }
 
         return $players;
     }
 
-    public function findNotInTournament(Uuid $tournamentUuid): iterable
+    public function findNotInTournament(Uuid $tournamentUuid): PlayerCollection
     {
         $table = self::TABLE;
 
@@ -113,10 +113,10 @@ SQL;
         $statement->bindValue(':tournamentUuid', $tournamentUuid);
         $statement->execute();
 
-        $players = [];
+        $players = new PlayerCollection;
         foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
         {
-            $players[] = $this->buildDomainObject($result);
+            $players->add($this->buildDomainObject($result));
         }
 
         return $players;
@@ -136,7 +136,7 @@ SQL;
         $statement->execute();
     }
 
-    protected function buildDomainObject(array $result): Player
+    private function buildDomainObject(array $result): Player
     {
         return new Player(
             new Uuid($result['uuid']),
