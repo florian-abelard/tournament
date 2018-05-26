@@ -4,10 +4,11 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Persistence\Tournament\Repositories;
 
-use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlAbstract;
+use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Domain\Tournament\Collections\TournamentCollection;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
-use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlAbstract;
 
 class Mysql extends MysqlAbstract implements TournamentRepository
 {
@@ -54,17 +55,17 @@ SQL;
         return $tournament;
     }
 
-    public function findAll(): iterable
+    public function findAll(): TournamentCollection
     {
         $sql = 'SELECT * FROM ' . self::TABLE;
 
         $statement = $this->getDatabaseConnection()->prepare($sql);
         $statement->execute();
 
-        $tournaments = [];
+        $tournaments = new TournamentCollection;
         foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
         {
-            $tournaments[] = $this->buildDomainObject($result);
+            $tournaments->add($this->buildDomainObject($result));
         }
 
         return $tournaments;
@@ -84,7 +85,7 @@ SQL;
         $statement->execute();
     }
 
-    protected function buildDomainObject(array $result): Tournament
+    private function buildDomainObject(array $result): Tournament
     {
         return new Tournament(
             new Uuid($result['uuid']),
