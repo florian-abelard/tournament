@@ -33,7 +33,7 @@ class PlayerControllerTest extends WebTestCase
     public function urlProvider()
     {
         yield ['/player/list', 'GET'];
-        yield ['/player/add', 'GET'];
+        yield ['/player/create', 'GET'];
     }
 
     public function urlRedirectedProvider()

@@ -14,7 +14,7 @@ VALUES ('1da757a7-5d93-417e-8baa-49749a436f68', 'Florian Abélard'),
        ('39d30dd1-7453-40fb-9d40-634f3b529201', 'Matthias Desson'),
        ('544739d7-0421-4d59-a410-e75d0e9cabd7', 'Aurélien Durand');
 
-DELETE FROM tournament_player;
-INSERT INTO tournament_player (tournament_uuid, player_uuid, registration_date)
+DELETE FROM registration;
+INSERT INTO registration (tournament_uuid, player_uuid, registration_date)
 VALUES ('859772a8-07bf-4e9c-8733-83f3bf806b09', '1da757a7-5d93-417e-8baa-49749a436f68', '2018-04-24 02:23:00'),
        ('859772a8-07bf-4e9c-8733-83f3bf806b09', '9a462cd6-e935-4e2c-8b51-e5e746025488', '2018-05-12 09:12:28');

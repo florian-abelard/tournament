@@ -12,7 +12,7 @@ CREATE TABLE tournament (
     PRIMARY KEY (uuid)
 );
 
-CREATE TABLE tournament_player (
+CREATE TABLE registration (
     player_uuid VARCHAR(36) NOT NULL,
     tournament_uuid VARCHAR(36) NOT NULL,
     registration_date DATETIME,

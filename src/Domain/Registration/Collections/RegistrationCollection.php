@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Domain\TournamentPlayer\Collections;
+namespace Flo\Tournoi\Domain\Registration\Collections;
 
-use Flo\Tournoi\Domain\TournamentPlayer\Entities\TournamentPlayer;
+use Flo\Tournoi\Domain\Registration\Entities\Registration;
 
-class TournamentPlayerCollection implements \IteratorAggregate, \Countable
+class RegistrationCollection implements \IteratorAggregate, \Countable
 {
     private
         $tournamentsPlayers;
@@ -17,14 +17,14 @@ class TournamentPlayerCollection implements \IteratorAggregate, \Countable
 
         foreach($tournamentsPlayers as $tournamentPlayer)
         {
-            if($tournamentPlayer instanceof TournamentPlayer)
+            if($tournamentPlayer instanceof Registration)
             {
                 $this->add($tournamentPlayer);
             }
         }
     }
 
-    public function add(TournamentPlayer $tournamentPlayer): self
+    public function add(Registration $tournamentPlayer): self
     {
         $this->tournamentPlayer[] = $tournamentPlayer;
 
