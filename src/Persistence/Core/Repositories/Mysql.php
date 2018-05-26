@@ -20,6 +20,4 @@ abstract class Mysql
     {
         return $this->databaseConnection;
     }
-
-    protected abstract function buildDomainObject(array $result);
 }

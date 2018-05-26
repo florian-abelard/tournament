@@ -9,7 +9,7 @@
         {% for tournament in tournaments %}
             <div>
                 <span>{{ tournament.name }}</span>
-                <span>[<a href="{{ path('tournoi_tournament_show', {'uuid': tournament.uuid}) }}">show</a>]</span>
+                <span>[<a href="{{ path('tournoi_tournament_detail', {'uuid': tournament.uuid}) }}">détail</a>]</span>
                 <span>[<a href="{{ path('tournoi_tournament_remove', {'uuid': tournament.uuid}) }}">x</a>]</span>
             </div>
         {% endfor %}

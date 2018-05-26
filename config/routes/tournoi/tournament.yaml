@@ -1,14 +1,19 @@
 tournoi_tournament_list:
     path: /tournament/list
     methods:  [GET]
-    controller: Flo\Tournoi\Controllers\Tournament\TournamentController::displayList
+    controller: Flo\Tournoi\Controllers\Tournament\TournamentController::list
 
 tournoi_tournament_remove:
     path: /tournament/remove/{uuid}
     methods: [GET]
     controller: Flo\Tournoi\Controllers\Tournament\TournamentController::remove
 
-tournoi_tournament_show:
+tournoi_tournament_detail:
     path: /tournament/{uuid}
     methods: [GET]
-    controller: Flo\Tournoi\Controllers\Tournament\TournamentController::show
+    controller: Flo\Tournoi\Controllers\Tournament\TournamentController::detail
+
+tournoi_tournament_add_player:
+    path: /tournament/{uuid}/add-player
+    methods: [POST]
+    controller: Flo\Tournoi\Controllers\Tournament\TournamentController::addPlayer

@@ -32,7 +32,26 @@ SQL;
 
     public function findById(Uuid $uuid): ?Player
     {
-        return null;
+        $table = self::TABLE;
+
+        $sql = <<<SQL
+            SELECT * FROM $table
+            WHERE uuid = :uuid
+SQL;
+
+        $statement = $this->getDatabaseConnection()->prepare($sql);
+        $statement->bindValue(':uuid', $uuid->value());
+        $statement->execute();
+
+        if ($statement->rowCount() === 0)
+        {
+            return null;
+        }
+
+        $result = $statement->fetch();
+        $player = $this->buildDomainObject($result);
+
+        return $player;
     }
 
     public function findAll(): iterable
@@ -58,9 +77,36 @@ SQL;
         $sql = <<<SQL
             SELECT p.*
             FROM $table as p
-            INNER JOIN tournament_player
-            ON p.uuid = tournament_player.player_uuid
-            WHERE tournament_player.tournament_uuid = :tournamentUuid
+            INNER JOIN registration as r
+            ON p.uuid = r.player_uuid
+            WHERE r.tournament_uuid = :tournamentUuid
+SQL;
+
+        $statement = $this->getDatabaseConnection()->prepare($sql);
+        $statement->bindValue(':tournamentUuid', $tournamentUuid);
+        $statement->execute();
+
+        $players = [];
+        foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
+        {
+            $players[] = $this->buildDomainObject($result);
+        }
+
+        return $players;
+    }
+
+    public function findNotInTournament(Uuid $tournamentUuid): iterable
+    {
+        $table = self::TABLE;
+
+        $sql = <<<SQL
+            SELECT *
+            FROM $table
+            WHERE uuid NOT IN (
+                SELECT player_uuid
+                FROM registration as r
+                WHERE r.tournament_uuid = :tournamentUuid
+            )
 SQL;
 
         $statement = $this->getDatabaseConnection()->prepare($sql);

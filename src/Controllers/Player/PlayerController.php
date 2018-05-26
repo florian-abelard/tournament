@@ -22,12 +22,12 @@ class PlayerController extends Controller
         $this->playerRepository = $repository;
     }
 
-    public function displayAddForm(): Response
+    public function viewCreate(): Response
     {
-        return $this->render('Player/addPlayer.html.twig');
+        return $this->render('Player/createPlayer.html.twig');
     }
 
-    public function submitAddForm(Request $request): Response
+    public function create(Request $request): Response
     {
         $name = $request->request->get('name');
 
@@ -38,10 +38,10 @@ class PlayerController extends Controller
 
         $this->playerRepository->persist($player);
 
-        return $this->render('Player/addPlayer.html.twig');
+        return $this->render('Player/createPlayer.html.twig');
     }
 
-    public function displayList(): Response
+    public function list(): Response
     {
         $players = $this->playerRepository->findAll();
 

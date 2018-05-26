@@ -7,15 +7,30 @@
     <section>
         <span>ID : {{ tournament.uuid }}</span>
     </section>
+    <br/>
     <section>
-        <h4>Joueurs inscrits</h3>
-        {% for player in players %}
+        <h4>Joueurs inscrits</h4>
+        {% for player in participatingPlayers %}
             <div>
                 <span>{{ player.name }}</span>
                 -
                 <span>{{ player.uuid }}</span>
             </div>
         {% endfor %}
+    </section>
+    <br/>
+    <section>
+        <h4>Ajouter un joueur</h4>
+
+        <form action="{{ path('tournoi_tournament_add_player', {'uuid': tournament.uuid}) }}" method="POST">
+            <select name="player_to_add">
+                {% for player in players %}
+                    <option value="{{ player.uuid }}">{{ player.name }}</option>
+                    </div>
+                {% endfor %}
+            </select>
+            <button type="submit">Valider</button>
+        </form>
     </section>
 
 {% endblock %}
