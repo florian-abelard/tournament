@@ -22,5 +22,5 @@ interface PlayerRepository
 
     public function remove(Uuid $uuid): void;
 
-    private function buildDomainObject(array $result): Player;
+    public function buildDomainObject(array $result): Player;
 }

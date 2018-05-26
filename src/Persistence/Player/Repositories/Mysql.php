@@ -136,7 +136,7 @@ SQL;
         $statement->execute();
     }
 
-    private function buildDomainObject(array $result): Player
+    public function buildDomainObject(array $result): Player
     {
         return new Player(
             new Uuid($result['uuid']),

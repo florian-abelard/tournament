@@ -18,5 +18,5 @@ interface TournamentRepository
 
     public function remove(Uuid $uuid): void;
 
-    private function buildDomainObject(array $result): Tournament;
+    public function buildDomainObject(array $result): Tournament;
 }

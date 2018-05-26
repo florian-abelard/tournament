@@ -85,7 +85,7 @@ SQL;
         $statement->execute();
     }
 
-    private function buildDomainObject(array $result): Tournament
+    public function buildDomainObject(array $result): Tournament
     {
         return new Tournament(
             new Uuid($result['uuid']),

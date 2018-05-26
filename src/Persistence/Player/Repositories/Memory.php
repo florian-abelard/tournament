@@ -36,13 +36,31 @@ class Memory implements PlayerRepository
         return null;
     }
 
-    public function findAll(): iterable
+    public function findAll(): PlayerCollection
     {
-        return [];
+        return new PlayerCollection;
+    }
+
+    public function findByTournamentId(Uuid $tournamentUuid): PlayerCollection
+    {
+        return new PlayerCollection;
+    }
+
+    public function findNotInTournament(Uuid $tournamentUuid): PlayerCollection
+    {
+        return new PlayerCollection;
     }
 
     public function remove(Uuid $uuid): void
     {
 
+    }
+
+    public function buildDomainObject(array $result): Player
+    {
+        return new Player(
+            new Uuid($result['uuid']),
+            $result['name']
+        );
     }
 }
