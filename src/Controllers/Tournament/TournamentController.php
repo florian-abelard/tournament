@@ -7,6 +7,7 @@ use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Registration\RegistrationRepository;
 use Flo\Tournoi\Domain\Registration\Entities\Registration;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
+use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,25 @@ class TournamentController extends Controller
         $this->tournamentRepository = $tournamentRepository;
         $this->playerRepository = $playerRepository;
         $this->registrationRepository = $registrationRepository;
+    }
+
+    public function viewCreate(): Response
+    {
+        return $this->render('Tournament/createTournament.html.twig');
+    }
+
+    public function create(Request $request): Response
+    {
+        $name = $request->request->get('name');
+
+        $tournament = new Tournament(
+            new Uuid(),
+            $name
+        );
+
+        $this->tournamentRepository->persist($tournament);
+
+        return $this->render('Tournament/createTournament.html.twig');
     }
 
     public function list(): Response

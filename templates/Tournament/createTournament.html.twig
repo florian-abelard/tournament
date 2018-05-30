@@ -2,14 +2,14 @@
 
 {% block main %}
 
-    <h3>Create a player</h3>
+    <h3>Create a tournament</h3>
     <br/>
     <section>
 
-        <form action="{{ path('tournoi_player_create') }}" method="POST">
+        <form action="{{ path('tournoi_tournament_create') }}" method="POST">
 
             <div>
-                <label>Nom du joueur</label>
+                <label>Nom du tournoi</label>
                 <input type="text" name="name" value="">
             </div>
 

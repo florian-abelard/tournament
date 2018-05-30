@@ -1,6 +1,16 @@
+tournoi_tournament_view_create:
+    path: /tournament/create
+    methods: [GET]
+    controller: Flo\Tournoi\Controllers\Tournament\TournamentController::viewCreate
+
+tournoi_tournament_create:
+    path: /tournament/create
+    methods: [POST]
+    controller: Flo\Tournoi\Controllers\Tournament\TournamentController::create
+
 tournoi_tournament_list:
     path: /tournament/list
-    methods:  [GET]
+    methods: [GET]
     controller: Flo\Tournoi\Controllers\Tournament\TournamentController::list
 
 tournoi_tournament_remove:
