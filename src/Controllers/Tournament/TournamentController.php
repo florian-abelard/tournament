@@ -11,6 +11,7 @@ use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TournamentController extends Controller
 {
@@ -71,6 +72,13 @@ class TournamentController extends Controller
                 'notRegisteredplayers' => $notRegisteredplayers
             )
         );
+    }
+
+    public function remove(string $uuid): RedirectResponse
+    {
+        $this->tournamentRepository->remove(new Uuid($uuid));
+
+        return $this->redirectToRoute('tournoi_tournament_list');
     }
 
     public function addPlayer(Request $request, string $uuid): Response
