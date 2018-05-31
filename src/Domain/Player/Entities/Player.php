@@ -32,7 +32,7 @@ class Player
         return $this->name;
     }
 
-    public function points(): string
+    public function points(): int
     {
         return $this->points;
     }
