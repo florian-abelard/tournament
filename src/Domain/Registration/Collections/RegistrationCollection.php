@@ -9,35 +9,35 @@ use Flo\Tournoi\Domain\Registration\Entities\Registration;
 class RegistrationCollection implements \IteratorAggregate, \Countable
 {
     private
-        $tournamentsPlayers;
+        $registrations;
 
-    public function __construct(iterable $tournamentsPlayers = [])
+    public function __construct(iterable $registrations = [])
     {
         $this->players = [];
 
-        foreach($tournamentsPlayers as $tournamentPlayer)
+        foreach($registrations as $registrations)
         {
-            if($tournamentPlayer instanceof Registration)
+            if($registrations instanceof Registration)
             {
-                $this->add($tournamentPlayer);
+                $this->add($registrations);
             }
         }
     }
 
-    public function add(Registration $tournamentPlayer): self
+    public function add(Registration $registrations): self
     {
-        $this->tournamentPlayer[] = $tournamentPlayer;
+        $this->registrations[] = $registrations;
 
         return $this;
     }
 
     public function getIterator(): \Iterator
     {
-        return new \ArrayIterator($this->tournamentPlayer);
+        return new \ArrayIterator($this->registrations);
     }
 
     public function count(): int
     {
-        return count($this->tournamentPlayer);
+        return count($this->registrations);
     }
 }
