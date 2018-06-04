@@ -28,7 +28,7 @@ class Memory implements PlayerRepository
     {
         foreach ($this->collection as $player)
         {
-            if ($player->uuid == $id)
+            if ($player->uuid->equals($uuid))
             {
                 return $player;
             }
@@ -38,12 +38,25 @@ class Memory implements PlayerRepository
 
     public function findAll(): PlayerCollection
     {
-        return new PlayerCollection;
+        return $this->collection;
     }
 
     public function findByTournamentId(Uuid $tournamentUuid): PlayerCollection
     {
-        return new PlayerCollection;
+        $results = new PlayerCollection;
+
+        foreach($this->collection as $player)
+        {
+            foreach($player->registrations as $registration)
+            {
+                if($registration->tournamentUuid()->equals($tournamentUuid))
+                {
+                    $results->add($player);
+                }
+            }
+        }
+
+        return $results;
     }
 
     public function findNotInTournament(Uuid $tournamentUuid): PlayerCollection

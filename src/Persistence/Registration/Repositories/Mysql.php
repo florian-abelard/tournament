@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Persistence\Registration\Repositories;
 
+use Flo\Tournoi\Domain\Registration\Collections\RegistrationCollection;
 use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlAbstract;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Registration\Entities\Registration;
