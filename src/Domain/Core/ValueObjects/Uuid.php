@@ -33,6 +33,11 @@ final class Uuid {
         return $this->uuid;
     }
 
+    public function equals(Uuid $uuid): bool
+    {
+        return $this->uuid->value() === $uuid->value();
+    }
+
     public function fromString(string $uuid): Uuid
     {
         return (new Uuid())->generate();
