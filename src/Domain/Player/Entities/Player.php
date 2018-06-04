@@ -6,7 +6,6 @@ namespace Flo\Tournoi\Domain\Player\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Persistence\Player\DataTransferObjects as DTO;
-use Flo\Tournoi\Domain\Registration\Collections\RegistrationCollection;
 use Flo\Tournoi\Domain\Registration\Entities\Registration;
 
 class Player
@@ -42,11 +41,6 @@ class Player
         $this->points = $points;
 
         return $this;
-    }
-
-    public function addRegistration(Registration $registration): void
-    {
-        $this->registrations->add($registration);
     }
 
     public function toDTO(): DTO\Player
