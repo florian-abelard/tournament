@@ -35,7 +35,7 @@ final class Uuid {
 
     public function equals(Uuid $uuid): bool
     {
-        return $this->uuid->value() === $uuid->value();
+        return $this->value() === $uuid->value();
     }
 
     public function fromString(string $uuid): Uuid

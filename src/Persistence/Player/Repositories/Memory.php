@@ -28,7 +28,7 @@ class Memory implements PlayerRepository
     {
         foreach ($this->collection as $player)
         {
-            if ($player->uuid->equals($uuid))
+            if ($player->uuid()->equals($uuid))
             {
                 return $player;
             }

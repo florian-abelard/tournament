@@ -9,4 +9,4 @@ services:
     # test.App\Service\MyService: '@App\Service\MyService'
 
 
-    # test.Flo\Tournoi\Domain\Player\PlayerRepository: '@Flo\Tournoi\Persistence\Player\Repositories\Memory'
+    test.Flo\Tournoi\Domain\Player\PlayerRepository: '@Flo\Tournoi\Persistence\Player\Repositories\Memory'
