@@ -21,11 +21,11 @@ class PlayerControllerTest extends WebTestCase
     /**
      * @dataProvider urlRedirectedProvider
      */
-    public function testUrlIsRedirected($url)
+    public function testUrlIsRedirected($url, $method)
     {
         $client = static::createClient();
 
-        $client->request('GET', $url);
+        $client->request($method, $url);
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
