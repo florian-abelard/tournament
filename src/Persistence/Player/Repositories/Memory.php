@@ -47,7 +47,7 @@ class Memory implements PlayerRepository
 
         foreach($this->collection as $player)
         {
-            foreach($player->registrations as $registration)
+            foreach($player->registrations() as $registration)
             {
                 if($registration->tournamentUuid()->equals($tournamentUuid))
                 {
@@ -66,7 +66,7 @@ class Memory implements PlayerRepository
 
     public function remove(Uuid $uuid): void
     {
-
+        $this->collection->remove($uuid);
     }
 
     public function buildDomainObject(array $result): Player

@@ -22,7 +22,6 @@ class Registration
         $this->tournamentUuid = $tournamentUuid;
         if (!$registrationDate)
         {
-            // $registrationDate = (new DateTime())->format('Y-m-d H:i:s');
             $registrationDate = new DateTime();
         }
         $this->registrationDate = $registrationDate;

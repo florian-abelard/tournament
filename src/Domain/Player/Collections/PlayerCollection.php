@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Player\Collections;
 
+use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 
 class PlayerCollection implements \IteratorAggregate, \Countable
@@ -27,6 +28,19 @@ class PlayerCollection implements \IteratorAggregate, \Countable
     public function add(Player $player): self
     {
         $this->players[] = $player;
+
+        return $this;
+    }
+
+    public function remove(Uuid $uuid): self
+    {
+        foreach ($this->players as $index => $player)
+        {
+            if ($player->uuid()->equals($uuid))
+            {
+                unset($this->players[$index]);
+            }
+        }
 
         return $this;
     }
