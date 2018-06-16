@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Persistence\Player\Repositories;
 
-use DateTime;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Flo\Tournoi\Domain\Player\Entities\Player;
@@ -37,10 +36,9 @@ class MemoryTest extends TestCase
         $registration = new Registration(
             $this->player1->uuid(),
             new Uuid(self::TOURNAMENT_UUID),
-            new DateTime('2017-05-20')
+            new \DateTime('2017-05-20')
         );
         $this->player1->addRegistration($registration);
-
     }
 
     public function testPersist(): Memory
@@ -48,8 +46,7 @@ class MemoryTest extends TestCase
         $this->repository->persist($this->player1);
         $this->repository->persist($this->player2);
 
-        $this->assertNotNull($this->repository->findById(new Uuid(self::PLAYER_UUID_1)));
-        $this->assertNotNull($this->repository->findById(new Uuid(self::PLAYER_UUID_2)));
+        $this->assertSame($this->player2, $this->repository->last());
 
         return $this->repository;
     }

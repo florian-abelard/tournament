@@ -21,6 +21,4 @@ interface PlayerRepository
     public function findNotInTournament(Uuid $tournamentUuid): PlayerCollection;
 
     public function remove(Uuid $uuid): void;
-
-    public function buildDomainObject(array $result): Player;
 }

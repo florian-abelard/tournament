@@ -17,6 +17,4 @@ interface TournamentRepository
     public function findAll(): TournamentCollection;
 
     public function remove(Uuid $uuid): void;
-
-    public function buildDomainObject(array $result): Tournament;
 }

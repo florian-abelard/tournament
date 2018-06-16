@@ -69,11 +69,8 @@ class Memory implements PlayerRepository
         $this->collection->remove($uuid);
     }
 
-    public function buildDomainObject(array $result): Player
+    public function last(): ?Player
     {
-        return new Player(
-            new Uuid($result['uuid']),
-            $result['name']
-        );
+        return $this->collection->last();
     }
 }
