@@ -13,7 +13,7 @@ class RegistrationCollection implements \IteratorAggregate, \Countable
 
     public function __construct(iterable $registrations = [])
     {
-        $this->players = [];
+        $this->registrations = [];
 
         foreach($registrations as $registrations)
         {
