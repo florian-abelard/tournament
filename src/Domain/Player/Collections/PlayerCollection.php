@@ -45,6 +45,18 @@ class PlayerCollection implements \IteratorAggregate, \Countable
         return $this;
     }
 
+    public function last(): ?Player
+    {
+        $last = end($this->players);
+
+        if (!$last)
+        {
+            return null;
+        }
+
+        return $last;
+    }
+
     public function getIterator(): \Iterator
     {
         return new \ArrayIterator($this->players);

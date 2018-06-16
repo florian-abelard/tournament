@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Registration\Entities;
 
-use DateTime;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Flo\Tournoi\Persistence\Registration\DataTransferObjects as DTO;
@@ -16,13 +15,13 @@ class Registration
         $tournamentUuid,
         $registrationDate;
 
-    public function __construct(Uuid $playerUuid, Uuid $tournamentUuid, DateTime $registrationDate = null)
+    public function __construct(Uuid $playerUuid, Uuid $tournamentUuid, \DateTime $registrationDate = null)
     {
         $this->playerUuid = $playerUuid;
         $this->tournamentUuid = $tournamentUuid;
         if (!$registrationDate)
         {
-            $registrationDate = new DateTime();
+            $registrationDate = new \DateTime();
         }
         $this->registrationDate = $registrationDate;
     }
