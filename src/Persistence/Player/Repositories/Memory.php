@@ -52,6 +52,7 @@ class Memory implements PlayerRepository
                 if($registration->tournamentUuid()->equals($tournamentUuid))
                 {
                     $results->add($player);
+                    break;
                 }
             }
         }
@@ -61,7 +62,26 @@ class Memory implements PlayerRepository
 
     public function findNotInTournament(Uuid $tournamentUuid): PlayerCollection
     {
-        return new PlayerCollection;
+        $results = new PlayerCollection;
+
+        foreach($this->collection as $player)
+        {
+            $found = false;
+            foreach($player->registrations() as $registration)
+            {
+                if($registration->tournamentUuid()->equals($tournamentUuid))
+                {
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found)
+            {
+                $results->add($player);
+            }
+        }
+
+        return $results;
     }
 
     public function remove(Uuid $uuid): void

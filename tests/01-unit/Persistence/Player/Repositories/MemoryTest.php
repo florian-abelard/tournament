@@ -86,6 +86,34 @@ class MemoryTest extends TestCase
         $this->assertCount(0, $result);
     }
 
+    /**
+     * @depends testPersist
+     */
+    public function testFindNotInTournament(Memory $repository): void
+    {
+        $result = $repository->findNotInTournament(new Uuid(self::TOURNAMENT_UUID));
+
+        $this->assertInstanceOf(PlayerCollection::class, $result);
+        $this->assertCount(1, $result);
+
+        $result = $repository->findNotInTournament(new Uuid(self::NULL_TOURNAMENT_UUID));
+
+        $this->assertInstanceOf(PlayerCollection::class, $result);
+        $this->assertCount(2, $result);
+    }
+
+    /**
+     * @depends testPersist
+     */
+    public function testRemove(Memory $repository): void
+    {
+        $this->assertCount(2, $repository->findAll());
+
+        $repository->remove(new Uuid(self::PLAYER_UUID_1));
+
+        $this->assertCount(1, $repository->findAll());
+    }
+
     private function newPlayer(Uuid $id): Player
     {
         return new Player($id, 'name');
