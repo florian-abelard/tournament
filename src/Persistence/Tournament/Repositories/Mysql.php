@@ -8,9 +8,9 @@ use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Tournament\Collections\TournamentCollection;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
-use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlAbstract;
+use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlCore;
 
-class Mysql extends MysqlAbstract implements TournamentRepository
+class Mysql extends MysqlCore implements TournamentRepository
 {
     private const
         TABLE = 'tournament';
