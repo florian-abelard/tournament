@@ -2,9 +2,9 @@
 #    path: /
 #    controller: Flo\Tournoi\Controller\DefaultController::index
 
-tournoi_test:
-    path: /test
-    controller: Flo\Tournoi\Controllers\TestController::index
+tournoi_home:
+    path: /
+    controller: Flo\Tournoi\Controllers\HomeController::index
 
 tournoi_player:
     resource: "routes/tournoi/player.yaml"
