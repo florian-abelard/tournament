@@ -15,7 +15,28 @@
         	</header>
 
             <nav>
-                {% block nav %} nav block {% endblock %}
+                {% block nav %}
+                    <br/>
+                    <h5>Tournois</h2>
+                    <ul>
+                        <li>
+                            <a href="{{ path('tournoi_tournament_list') }}">Liste</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tournoi_tournament_view_create') }}">Créer</a>
+                        </li>
+                    </ul>
+                    <h5>Joueurs</h2>
+                    <ul>
+                        <li>
+                            <a href="{{ path('tournoi_player_list') }}">Liste</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tournoi_player_view_create') }}">Créer</a>
+                        </li>
+                    </ul>
+
+                {% endblock %}
             </nav>
 
             <main>
