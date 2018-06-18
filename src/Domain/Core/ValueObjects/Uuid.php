@@ -4,7 +4,10 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Core\ValueObjects;
 
+use Exception;
 use Ramsey\Uuid\Uuid as RamseyUuid;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Constraints\Uuid as UuidConstraint;
 
 final class Uuid {
 
@@ -16,6 +19,9 @@ final class Uuid {
         if ($uuid === null)
         {
             $uuid = (string) RamseyUuid::uuid4();
+        }
+        else {
+            $this->validate($uuid);
         }
 
         $this->uuid = $uuid;
@@ -43,9 +49,16 @@ final class Uuid {
         return (new Uuid())->generate();
     }
 
-    public function validate(Uuid $uuid): void
+    public function validate(string $uuid): void
     {
-        // TODO
+        $validator = Validation::createValidator();
+
+        $errors = $validator->validate($uuid, new UuidConstraint);
+
+        if (count($errors) !== 0)
+        {
+            throw new Exception("This is not a valid uuid : " . $uuid); // TODO FIXME specific exception 
+        }
     }
 
     public function __toString(): string

@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class PlayerControllerTest extends WebTestCase
 {
+    private const
+        NULL_UUID = 'a055f192-59d2-4ed0-9b83-d21bb74537a6';
+
     /**
      * @dataProvider urlProvider
      */
@@ -38,6 +41,6 @@ class PlayerControllerTest extends WebTestCase
 
     public function urlRedirectedProvider()
     {
-        yield ['/player/remove/sample-uuid', 'GET'];
+        yield ['/player/remove/' . self::NULL_UUID, 'GET'];
     }
 }
