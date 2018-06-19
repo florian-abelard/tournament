@@ -4,13 +4,13 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Core\ValueObjects;
 
-use Exception;
+use Flo\Tournoi\Domain\Core\Exceptions\InvalidUuidException;
 use Ramsey\Uuid\Uuid as RamseyUuid;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints\Uuid as UuidConstraint;
 
-final class Uuid {
-
+final class Uuid
+{
     private
         $uuid;
 
@@ -57,7 +57,7 @@ final class Uuid {
 
         if (count($errors) !== 0)
         {
-            throw new Exception("This is not a valid uuid : " . $uuid); // TODO FIXME specific exception 
+            throw new InvalidUuidException($uuid);
         }
     }
 
