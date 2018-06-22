@@ -22,7 +22,7 @@ class Player
         $this->uuid = $uuid;
         $this->name = $name;
 
-        $this->registrations = new RegistrationCollection;
+        $this->registrations = new RegistrationCollection();
     }
 
     public function uuid(): Uuid
