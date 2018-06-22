@@ -27,3 +27,8 @@ tournoi_tournament_add_player:
     path: /tournament/{uuid}/add-player
     methods: [POST]
     controller: Flo\Tournoi\Controllers\Tournament\TournamentController::addPlayer
+
+tournoi_tournament_launch:
+    path: /tournament/{uuid}/launch
+    methods: [GET]
+    controller: Flo\Tournoi\Controllers\Tournament\TournamentController::launch

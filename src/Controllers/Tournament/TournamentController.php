@@ -3,9 +3,11 @@
 namespace Flo\Tournoi\Controllers\Tournament;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Domain\Group\Services\GroupsCreator;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Registration\RegistrationRepository;
 use Flo\Tournoi\Domain\Registration\Entities\Registration;
+use Flo\Tournoi\Domain\Stage\Entities\GroupStage;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,16 +20,19 @@ class TournamentController extends Controller
     private
         $tournamentRepository,
         $playerRepository,
-        $registrationRepository;
+        $registrationRepository,
+        $groupsCreator;
 
     public function __construct(
         TournamentRepository $tournamentRepository,
         PlayerRepository $playerRepository,
-        RegistrationRepository $registrationRepository
+        RegistrationRepository $registrationRepository,
+        GroupsCreator $groupsCreator
     ){
         $this->tournamentRepository = $tournamentRepository;
         $this->playerRepository = $playerRepository;
         $this->registrationRepository = $registrationRepository;
+        $this->groupsCreator = $groupsCreator;
     }
 
     public function viewCreate(): Response
@@ -88,6 +93,24 @@ class TournamentController extends Controller
         $registration = new Registration(new Uuid($playerUuid), new Uuid($uuid));
 
         $this->registrationRepository->persist($registration);
+
+        return $this->redirectToRoute('tournoi_tournament_detail', ['uuid' => $uuid]);
+    }
+
+    public function launch(string $uuid): Response
+    {
+        $tournamentUuid = new Uuid($uuid);
+
+        $groupStage = new GroupStage(
+            new Uuid(),
+            $tournamentUuid
+        );
+
+        $players = $this->playerRepository->findByTournamentId($tournamentUuid);
+
+        $tournament = $this->tournamentRepository->findById($tournamentUuid);
+
+        $groups = $this->groupsCreator->create($groupStage, $players);
 
         return $this->redirectToRoute('tournoi_tournament_detail', ['uuid' => $uuid]);
     }
