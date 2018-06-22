@@ -9,7 +9,7 @@
     </section>
     <br/>
     <section>
-        <h4>Joueurs inscrits</h4>
+        <h5>Joueurs inscrits</h5>
         {% for player in registeredPlayers %}
             <div>
                 <span>{{ player.name }}</span>
@@ -20,7 +20,7 @@
     </section>
     <br/>
     <section>
-        <h4>Ajouter un joueur</h4>
+        <h5>Ajouter un joueur</h5>
 
         <form action="{{ path('tournoi_tournament_add_player', {'uuid': tournament.uuid}) }}" method="POST">
             <select name="player_to_add">
@@ -32,5 +32,10 @@
             <button type="submit">Valider</button>
         </form>
     </section>
+    <br/>
+    <section>
+        <a href="{{ path('tournoi_tournament_launch', {'uuid': tournament.uuid}) }}">Lancer le tournoi !</a>
+    </section>
+    <br/>
 
 {% endblock %}
