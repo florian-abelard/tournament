@@ -39,7 +39,7 @@ final class RankingPoints
         }
     }
 
-    public function fromString(?string $points): ?RankingPoints
+    public static function fromString(?string $points): ?RankingPoints
     {
         if ($points)
         {

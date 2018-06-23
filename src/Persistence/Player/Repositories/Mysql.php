@@ -140,10 +140,13 @@ SQL;
 
     public function buildDomainObject(array $result): Player
     {
-        return new Player(
+        $player = new Player(
             new Uuid($result['uuid']),
-            $result['name'],
-            (new RankingPoints())->fromString($result['ranking_points'])
+            $result['name']
         );
+
+        $player->setRankingPoints(RankingPoints::fromString($result['ranking_points']));
+
+        return $player;
     }
 }
