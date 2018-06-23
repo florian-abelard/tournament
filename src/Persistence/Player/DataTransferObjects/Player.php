@@ -8,12 +8,14 @@ class Player
 {
     private
         $uuid,
-        $name;
+        $name,
+        $rankingPoints;
 
-    public function __construct(string $uuid, string $name)
+    public function __construct(string $uuid, string $name, int $rankingPoints)
     {
         $this->uuid = $uuid;
         $this->name = $name;
+        $this->rankingPoints = $rankingPoints;
     }
 
     public function uuid(): string
@@ -24,5 +26,10 @@ class Player
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function rankingPoints(): int
+    {
+        return $this->rankingPoints;
     }
 }

@@ -8,6 +8,7 @@ use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
+use Flo\Tournoi\Domain\Player\ValueObjects\RankingPoints;
 use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlCore;
 
 class Mysql extends MysqlCore implements PlayerRepository
@@ -20,13 +21,14 @@ class Mysql extends MysqlCore implements PlayerRepository
         $dto = $player->toDTO();
 
         $sql = <<<SQL
-            INSERT INTO player (uuid, name)
-            VALUES (:uuid, :name)
+            INSERT INTO player (uuid, name, ranking_points)
+            VALUES (:uuid, :name, :rankingPoints)
 SQL;
 
         $statement = $this->getDatabaseConnection()->prepare($sql);
         $statement->bindValue(':uuid', $dto->uuid());
         $statement->bindValue(':name', $dto->name());
+        $statement->bindValue(':rankingPoints', $dto->rankingPoints());
         $statement->execute();
     }
 
@@ -140,7 +142,8 @@ SQL;
     {
         return new Player(
             new Uuid($result['uuid']),
-            $result['name']
+            $result['name'],
+            (new RankingPoints())->fromString($result['ranking_points'])
         );
     }
 }

@@ -105,10 +105,9 @@ class TournamentController extends Controller
             new Uuid(),
             $tournamentUuid
         );
+        $groupStage->setGroupPlacesNumber(4); // TODO dynamic groupPlacesNumber
 
         $players = $this->playerRepository->findByTournamentId($tournamentUuid);
-
-        $tournament = $this->tournamentRepository->findById($tournamentUuid);
 
         $groups = $this->groupsCreator->create($groupStage, $players);
 

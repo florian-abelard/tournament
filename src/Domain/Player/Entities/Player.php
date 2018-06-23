@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Domain\Player\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Domain\Player\ValueObjects\RankingPoints;
 use Flo\Tournoi\Domain\Registration\Collections\RegistrationCollection;
 use Flo\Tournoi\Persistence\Player\DataTransferObjects as DTO;
 use Flo\Tournoi\Domain\Registration\Entities\Registration;
@@ -14,7 +15,7 @@ class Player
     private
         $uuid,
         $name,
-        $points,
+        $rankingPoints,
         $registrations;
 
     public function __construct(Uuid $uuid, string $name)
@@ -22,6 +23,7 @@ class Player
         $this->uuid = $uuid;
         $this->name = $name;
 
+        $this->rankingPoints = new RankingPoints();
         $this->registrations = new RegistrationCollection();
     }
 
@@ -35,14 +37,14 @@ class Player
         return $this->name;
     }
 
-    public function points(): int
+    public function rankingPoints(): RankingPoints
     {
         return $this->points;
     }
 
-    public function setPoints(int $points): self
+    public function setRankingPoints(int $points): self
     {
-        $this->points = $points;
+        $this->rankingPoints = $points;
 
         return $this;
     }
@@ -61,7 +63,8 @@ class Player
     {
         return new DTO\Player(
             $this->uuid->value(),
-            $this->name
+            $this->name,
+            $this->rankingPoints->value()
         );
     }
 }
