@@ -10,21 +10,21 @@ use Flo\Tournoi\Domain\Stage\Entities\Stage;
 class GroupStage extends Stage
 {
     private
-        $groupPlacesNumber;
+        $placesNumberInGroup;
 
     public function __construct(Uuid $uuid, Uuid $tournamentUuid)
     {
         parent::__construct($uuid, $tournamentUuid);
     }
 
-    public function groupPlacesNumber(): ?int
+    public function placesNumberInGroup(): ?int
     {
-        return $this->groupPlacesNumber;
+        return $this->placesNumberInGroup;
     }
 
-    public function setGroupPlacesNumber(int $number): self
+    public function setPlacesNumberInGroup(int $number): self
     {
-        $this->groupPlacesNumber = $number;
+        $this->placesNumberInGroup = $number;
 
         return $this;
     }

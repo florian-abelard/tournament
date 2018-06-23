@@ -14,8 +14,11 @@ class GroupsCreator
     {
         $groups = new GroupCollection();
 
+        $placesNumberInGroup = $groupStage->placesNumberInGroup();
 
+        $playersNumber = $playerCollection->count();
 
+        $playerCollection->sortByRankingPoints();
 
         return $groups;
     }

@@ -69,6 +69,8 @@ class TournamentController extends Controller
 
         $notRegisteredplayers = $this->playerRepository->findNotInTournament($tournament->uuid());
 
+
+
         return $this->render(
             'Tournament/showTournament.html.twig',
             array(
@@ -105,7 +107,7 @@ class TournamentController extends Controller
             new Uuid(),
             $tournamentUuid
         );
-        $groupStage->setGroupPlacesNumber(4); // TODO dynamic groupPlacesNumber
+        $groupStage->setPlacesNumberInGroup(4); // TODO dynamic placesNumberInGroup
 
         $players = $this->playerRepository->findByTournamentId($tournamentUuid);
 
