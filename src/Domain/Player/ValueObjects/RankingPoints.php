@@ -31,6 +31,16 @@ final class RankingPoints
         return $this->value() === $rankingPoints->value();
     }
 
+    public function lowerThan(RankingPoints $rankingPoints): bool
+    {
+        return $this->value() < $rankingPoints->value();
+    }
+
+    public function greaterThan(RankingPoints $rankingPoints): bool
+    {
+        return $this->value() > $rankingPoints->value();
+    }
+
     public function validate(int $rankingPoints): void
     {
         if ($rankingPoints < 1 || $rankingPoints > 5000 )
