@@ -39,10 +39,10 @@ class Player
 
     public function rankingPoints(): RankingPoints
     {
-        return $this->points;
+        return $this->rankingPoints;
     }
 
-    public function setRankingPoints(int $points): self
+    public function setRankingPoints(RankingPoints $points): self
     {
         $this->rankingPoints = $points;
 
