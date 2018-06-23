@@ -8,27 +8,20 @@ use Flo\Tournoi\Domain\Player\Exceptions\InvalidRankingPointsException;
 
 final class RankingPoints
 {
-
-    private const
-        DEFAULT_POINTS = 500;
-
     private
         $rankingPoints;
 
     public function __construct(?int $rankingPoints = null)
     {
-        if ($rankingPoints === null)
+        if ($rankingPoints !== null)
         {
-            $rankingPoints = self::DEFAULT_POINTS;
-        }
-        else {
             $this->validate($rankingPoints);
         }
 
         $this->rankingPoints = $rankingPoints;
     }
 
-    public function value(): int
+    public function value(): ?int
     {
         return $this->rankingPoints;
     }
