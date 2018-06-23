@@ -66,4 +66,20 @@ class PlayerCollection implements \IteratorAggregate, \Countable
     {
         return count($this->players);
     }
+
+    public function sortByRankingPoints(): void
+    {
+        usort($this->players, function(Player $player1, Player $player2){
+
+            $player1RankingPoints = $player1->rankingPoints();
+            $player2RankingPoints = $player2->rankingPoints();
+
+            if ($player1RankingPoints->equals($player2RankingPoints))
+            {
+                return 0;
+            }
+
+            return ($player1RankingPoints->greaterThan($player2RankingPoints)) ? -1 : 1;
+        });
+    }
 }
