@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+
+    <h3>List tournaments</h3>
+    <br/>
+    <section>
+
+        {% for group in groups %}
+            <div>
+                <span>Poule {{ group.label }}</span>
+                <br/>
+                {% for player in group.players %}
+                    <span>- {{ player.name }}</span>
+                    <span>
+                        {% set points = player.rankingPoints.value %}
+                        {% if points is null %}
+                            (non classé)
+                        {% else %}
+                            ({{ points }} points)
+                        {% endif %}
+                    </span>
+                    <br/>
+                {% endfor %}
+            </div>
+            <br/><br/>
+        {% endfor %}
+
+    </section>
+
+{% endblock %}
