@@ -3,7 +3,7 @@
 namespace Flo\Tournoi\Controllers\Tournament;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Group\Services\GroupsCreator;
+use Flo\Tournoi\Domain\Group\Factories\GroupsFactory;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Registration\RegistrationRepository;
 use Flo\Tournoi\Domain\Registration\Entities\Registration;
@@ -20,19 +20,16 @@ class TournamentController extends Controller
     private
         $tournamentRepository,
         $playerRepository,
-        $registrationRepository,
-        $groupsCreator;
+        $registrationRepository;
 
     public function __construct(
         TournamentRepository $tournamentRepository,
         PlayerRepository $playerRepository,
-        RegistrationRepository $registrationRepository,
-        GroupsCreator $groupsCreator
+        RegistrationRepository $registrationRepository
     ){
         $this->tournamentRepository = $tournamentRepository;
         $this->playerRepository = $playerRepository;
         $this->registrationRepository = $registrationRepository;
-        $this->groupsCreator = $groupsCreator;
     }
 
     public function viewCreate(): Response
@@ -68,8 +65,6 @@ class TournamentController extends Controller
         $registeredPlayers = $this->playerRepository->findByTournamentId($tournament->uuid());
 
         $notRegisteredplayers = $this->playerRepository->findNotInTournament($tournament->uuid());
-
-
 
         return $this->render(
             'Tournament/showTournament.html.twig',
@@ -111,8 +106,10 @@ class TournamentController extends Controller
 
         $players = $this->playerRepository->findByTournamentId($tournamentUuid);
 
-        $groups = $this->groupsCreator->create($groupStage, $players);
+        $groupsFactory = new GroupsFactory($groupStage, $players);
+        $groups = $groupsFactory->create();
 
-        return $this->redirectToRoute('tournoi_tournament_detail', ['uuid' => $uuid]);
+        // return $this->redirectToRoute('tournoi_stage_detail', ['uuid' => $uuid]);
+        return $this->render('Stage/showGroupStage.html.twig', array('groups' => $groups));
     }
 }
