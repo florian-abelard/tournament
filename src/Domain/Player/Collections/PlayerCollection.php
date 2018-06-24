@@ -57,6 +57,11 @@ class PlayerCollection implements \IteratorAggregate, \Countable
         return $last;
     }
 
+    public function shift(): ?Player
+    {
+        return array_shift($this->players);
+    }
+
     public function getIterator(): \Iterator
     {
         return new \ArrayIterator($this->players);
