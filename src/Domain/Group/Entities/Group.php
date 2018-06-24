@@ -16,14 +16,14 @@ class Group
         $uuid,
         $label,
         $placesNumber,
-        $tournamentUuid,
+        $stageUuid,
         $players,
         $games;
 
-    public function __construct(Uuid $uuid, Uuid $tournamentUuid)
+    public function __construct(Uuid $uuid, Uuid $stageUuid)
     {
         $this->uuid = $uuid;
-        $this->tournamentUuid = $tournamentUuid;
+        $this->stageUuid = $stageUuid;
 
         $this->players = new PlayerCollection();
         $this->games = new GameCollection();
@@ -58,9 +58,9 @@ class Group
         return $this;
     }
 
-    public function tournamentUuid(): Uuid
+    public function stageUuid(): Uuid
     {
-        return $this->tournamentUuid;
+        return $this->stageUuid;
     }
 
     public function players(): PlayerCollection
