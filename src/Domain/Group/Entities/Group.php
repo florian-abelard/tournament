@@ -68,9 +68,9 @@ class Group
         return $this->players;
     }
 
-    public function addPlayer(Player $player): self
+    public function addPlayer(Player $player): void
     {
-        $players->add($player);
+        $this->players->add($player);
     }
 
     public function games(): GameCollection
