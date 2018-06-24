@@ -11,14 +11,21 @@ abstract class Stage
 {
     private
         $uuid,
-        $name,
-        $players;
+        $tournamentUuid;
 
     public function __construct(Uuid $uuid, Uuid $tournamentUuid)
     {
         $this->uuid = $uuid;
-
-        $players = new PlayerCollection();
+        $this->tournamentUuid = $tournamentUuid;
     }
 
+    public function uuid(): Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function tournamentUuid(): Uuid
+    {
+        return $this->tournamentUuid;
+    }
 }
