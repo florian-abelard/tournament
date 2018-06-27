@@ -3,10 +3,12 @@
 namespace Flo\Tournoi\Controllers\Tournament;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Domain\Group\GroupRepository;
 use Flo\Tournoi\Domain\Group\Factories\GroupsFactory;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Registration\RegistrationRepository;
 use Flo\Tournoi\Domain\Registration\Entities\Registration;
+use Flo\Tournoi\Domain\Stage\StageRepository;
 use Flo\Tournoi\Domain\Stage\Entities\GroupStage;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
@@ -20,16 +22,22 @@ class TournamentController extends Controller
     private
         $tournamentRepository,
         $playerRepository,
-        $registrationRepository;
+        $registrationRepository,
+        $groupRepository,
+        $stageRepository;
 
     public function __construct(
         TournamentRepository $tournamentRepository,
         PlayerRepository $playerRepository,
-        RegistrationRepository $registrationRepository
+        RegistrationRepository $registrationRepository,
+        GroupRepository $groupRepository,
+        StageRepository $stageRepository
     ){
         $this->tournamentRepository = $tournamentRepository;
         $this->playerRepository = $playerRepository;
         $this->registrationRepository = $registrationRepository;
+        $this->groupRepository = $groupRepository;
+        $this->stageRepository = $stageRepository;
     }
 
     public function viewCreate(): Response
@@ -97,19 +105,23 @@ class TournamentController extends Controller
     public function launch(string $uuid): Response
     {
         $tournamentUuid = new Uuid($uuid);
+        
+        $players = $this->playerRepository->findByTournamentId($tournamentUuid);
 
         $groupStage = new GroupStage(
             new Uuid(),
             $tournamentUuid
         );
         $groupStage->setPlacesNumberInGroup(4); // TODO dynamic placesNumberInGroup
-
-        $players = $this->playerRepository->findByTournamentId($tournamentUuid);
+        $this->stageRepository->persist($groupStage);
 
         $groupsFactory = new GroupsFactory($groupStage, $players);
         $groups = $groupsFactory->create();
+        foreach ($groups as $group)
+        {
+            $this->groupRepository->persist($group);
+        }
 
-        // return $this->redirectToRoute('tournoi_stage_detail', ['uuid' => $uuid]);
-        return $this->render('Stage/showGroupStage.html.twig', array('groups' => $groups));
+        return $this->redirectToRoute('tournoi_stage_detail', ['uuid' => $groupStage->uuid()]);
     }
 }
