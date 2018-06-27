@@ -11,3 +11,6 @@ tournoi_player:
 
 tournoi_tournament:
     resource: "routes/tournoi/tournament.yaml"
+
+tournoi_stage:
+    resource: "routes/tournoi/stage.yaml"

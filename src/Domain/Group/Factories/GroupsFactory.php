@@ -35,7 +35,7 @@ class GroupsFactory
 
         $groupsNumber = $this->calculateRequiredGroupsNumber($playersNumber, $placesNumberInGroup);
 
-        $this->initializeGroups($groupsNumber);
+        $this->initializeGroups($groupsNumber, $placesNumberInGroup);
         $this->fillsGroupsWithPlayers($groupsNumber);
 
         return $this->groups;
@@ -57,7 +57,7 @@ class GroupsFactory
         return $result;
     }
 
-    private function initializeGroups(int $groupsNumber): void
+    private function initializeGroups(int $groupsNumber, int $placesNumberInGroup): void
     {
         $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -65,6 +65,7 @@ class GroupsFactory
         {
             $group = new Group(new Uuid(), $this->groupStage->uuid());
             $group->setLabel($alphabet[$i]);
+            $group->setPlacesNumber($placesNumberInGroup);
 
             $this->groups->add($group);
         }

@@ -9,9 +9,14 @@ use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 
 abstract class Stage
 {
-    private
+    public const
+        TYPE_GROUP = "group",
+        TYPE_BRACKET = "bracket";
+
+    protected
         $uuid,
-        $tournamentUuid;
+        $tournamentUuid,
+        $type;
 
     public function __construct(Uuid $uuid, Uuid $tournamentUuid)
     {
@@ -27,5 +32,21 @@ abstract class Stage
     public function tournamentUuid(): Uuid
     {
         return $this->tournamentUuid;
+    }
+
+    public function type(): string
+    {
+        return $this->type;
+    }
+
+    public function setType($type): self
+    {
+        if ($type != self::TYPE_GROUP && $type != self::TYPE_BRACKET)
+        {
+            throw new \DomainException(sprintf('Invalid group type : "%s"', $type));
+        }
+        $this->type = $type;
+
+        return $this;
     }
 }

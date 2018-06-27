@@ -9,14 +9,15 @@ use Flo\Tournoi\Domain\Game\Collections\GameCollection;
 use Flo\Tournoi\Domain\Game\Entities\Game;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Flo\Tournoi\Domain\Player\Entities\Player;
+use Flo\Tournoi\Persistence\Group\DataTransferObjects as DTO;
 
 class Group
 {
     private
         $uuid,
+        $stageUuid,
         $label,
         $placesNumber,
-        $stageUuid,
         $players,
         $games;
 
@@ -81,5 +82,15 @@ class Group
     public function addGame(Game $game): self
     {
         $players->add($game);
+    }
+
+    public function toDTO(): DTO\Group
+    {
+        return new DTO\Group(
+            $this->uuid->value(),
+            $this->stageUuid->value(),
+            $this->placesNumber,
+            $this->label
+        );
     }
 }

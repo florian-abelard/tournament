@@ -11,7 +11,7 @@ class Player
         $name,
         $rankingPoints;
 
-    public function __construct(string $uuid, string $name, int $rankingPoints)
+    public function __construct(string $uuid, string $name, ?int $rankingPoints)
     {
         $this->uuid = $uuid;
         $this->name = $name;
