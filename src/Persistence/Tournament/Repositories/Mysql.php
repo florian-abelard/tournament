@@ -8,6 +8,7 @@ use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Tournament\Collections\TournamentCollection;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
+use Flo\Tournoi\Domain\Tournament\ValueObjects\TournamentStatus;
 use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlCore;
 
 class Mysql extends MysqlCore implements TournamentRepository
@@ -71,6 +72,22 @@ SQL;
         return $tournaments;
     }
 
+    public function updateStatus(Uuid $uuid, TournamentStatus $status): void
+    {
+        $table = self::TABLE;
+
+        $sql = <<<SQL
+            UPDATE $table
+            SET status = :status
+            WHERE uuid = :uuid
+SQL;
+
+        $statement = $this->getDatabaseConnection()->prepare($sql);
+        $statement->bindValue(':status', $status->value());
+        $statement->bindValue(':uuid', $uuid->value());
+        $statement->execute();
+    }
+
     public function remove(Uuid $uuid): void
     {
         $table = self::TABLE;
@@ -89,7 +106,8 @@ SQL;
     {
         return new Tournament(
             new Uuid($result['uuid']),
-            $result['name']
+            $result['name'],
+            new TournamentStatus($result['status'])
         );
     }
 }

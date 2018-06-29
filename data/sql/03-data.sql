@@ -1,10 +1,10 @@
 USE tournoi;
 
 DELETE FROM tournament;
-INSERT INTO tournament (uuid, name)
-VALUES ('859772a8-07bf-4e9c-8733-83f3bf806b09', 'Tournoi d\'Orvault'),
-       ('fd0125f1-2f43-46c4-833d-86d98600610d', 'Tournoi de la Chapelaine'),
-       ('422d591b-4cac-45be-adf5-1a231e83ff52', 'Les 24 heures du Pallet');
+INSERT INTO tournament (uuid, name, status)
+VALUES ('859772a8-07bf-4e9c-8733-83f3bf806b09', 'Tournoi d\'Orvault', 'upcoming'),
+       ('fd0125f1-2f43-46c4-833d-86d98600610d', 'Tournoi de la Chapelaine', 'upcoming'),
+       ('422d591b-4cac-45be-adf5-1a231e83ff52', 'Les 24 heures du Pallet', 'upcoming');
 
 DELETE FROM player;
 INSERT INTO player (uuid, name, ranking_points)

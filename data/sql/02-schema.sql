@@ -10,6 +10,7 @@ CREATE TABLE `player` (
 CREATE TABLE `tournament` (
     uuid VARCHAR(36) NOT NULL,
     name VARCHAR(100) NOT NULL,
+    status VARCHAR(30) NOT NULL,
     PRIMARY KEY (uuid)
 );
 
