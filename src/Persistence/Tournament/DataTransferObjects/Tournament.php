@@ -8,12 +8,14 @@ class Tournament
 {
     private
         $uuid,
-        $name;
+        $name,
+        $status;
 
-    public function __construct(string $uuid, string $name)
+    public function __construct(string $uuid, string $name, string $status)
     {
         $this->uuid = $uuid;
         $this->name = $name;
+        $this->status = $status;
     }
 
     public function uuid(): string
@@ -24,5 +26,10 @@ class Tournament
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function status(): string
+    {
+        return $this->status;
     }
 }

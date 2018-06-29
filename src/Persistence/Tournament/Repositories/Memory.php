@@ -8,6 +8,7 @@ use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Tournament\Collections\TournamentCollection;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
+use Flo\Tournoi\Domain\Tournament\ValueObjects\TournamentStatus;
 
 class Memory implements TournamentRepository
 {
@@ -39,6 +40,11 @@ class Memory implements TournamentRepository
     public function findAll(): TournamentCollection
     {
         return $this->collection;
+    }
+
+    public function updateStatus(Uuid $uuid, TournamentStatus $status): void
+    {
+
     }
 
     public function remove(Uuid $uuid): void

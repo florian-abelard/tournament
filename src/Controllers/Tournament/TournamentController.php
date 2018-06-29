@@ -12,6 +12,7 @@ use Flo\Tournoi\Domain\Stage\StageRepository;
 use Flo\Tournoi\Domain\Stage\Entities\GroupStage;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
+use Flo\Tournoi\Domain\Tournament\ValueObjects\TournamentStatus;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,7 +106,9 @@ class TournamentController extends Controller
     public function launch(string $uuid): Response
     {
         $tournamentUuid = new Uuid($uuid);
-        
+
+        $this->tournamentRepository->updateStatus($tournamentUuid, new TournamentStatus('running'));
+
         $players = $this->playerRepository->findByTournamentId($tournamentUuid);
 
         $groupStage = new GroupStage(
