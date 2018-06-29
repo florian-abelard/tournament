@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Persistence\Group\Repositories;
 
+use Doctrine\DBAL\Statement;
 use Flo\Tournoi\Domain\Group\Collections\GroupCollection;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Domain\Player\ValueObjects\RankingPoints;
@@ -79,17 +80,20 @@ SQL;
         $statement->bindValue(':stageUuid', $stageUuid->value());
         $statement->execute();
 
+        $resultGroupedBy = $this->groupsResultByGroup($statement);
+
+        $groups = $this->buildCollection($resultGroupedBy);
+
+        return $groups;
+    }
+
+    public function buildCollection(array $resultGroupedBy): GroupCollection
+    {
         $groups = new GroupCollection();
-        
-        $resultGroupedBy = [];
-        foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
-        {
-            $resultGroupedBy[$result['uuid']][] = $result;
-        }
 
         foreach ($resultGroupedBy as $groupUuid => $resultByGroup)
         {
-            $group = $this->buildDomainObject($result);
+            $group = $this->buildDomainObject($resultByGroup[0]);
 
             foreach ($resultByGroup as $result)
             {
@@ -126,5 +130,16 @@ SQL;
         $player->setRankingPoints(RankingPoints::fromString($result['ranking_points']));
 
         return $player;
+    }
+
+    public function groupsResultByGroup(Statement $statement): array
+    {
+        $groupedBy = [];
+        foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
+        {
+            $groupedBy[$result['uuid']][] = $result;
+        }
+
+        return $groupedBy;
     }
 }
