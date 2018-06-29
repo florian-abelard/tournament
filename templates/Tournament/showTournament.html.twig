@@ -6,6 +6,8 @@
     <br/>
     <section>
         <span>ID : {{ tournament.uuid }}</span>
+        <br/>
+        <span>Status : {{ tournament.status }}</span>
     </section>
     <br/>
     <section>
@@ -21,23 +23,25 @@
         {% endfor %}
     </section>
     <br/>
-    <section>
-        <h5>Ajouter un joueur</h5>
+    {% if tournament.status != 'running' %}
+        <section>
+            <h5>Ajouter un joueur</h5>
 
-        <form action="{{ path('tournoi_tournament_add_player', {'uuid': tournament.uuid}) }}" method="POST">
-            <select name="player_to_add">
-                {% for player in notRegisteredplayers %}
-                    <option value="{{ player.uuid }}">{{ player.name }}</option>
-                    </div>
-                {% endfor %}
-            </select>
-            <button type="submit">Valider</button>
-        </form>
-    </section>
-    <br/>
-    <section>
-        <a href="{{ path('tournoi_tournament_launch', {'uuid': tournament.uuid}) }}">Lancer le tournoi !</a>
-    </section>
+            <form action="{{ path('tournoi_tournament_add_player', {'uuid': tournament.uuid}) }}" method="POST">
+                <select name="player_to_add">
+                    {% for player in notRegisteredplayers %}
+                        <option value="{{ player.uuid }}">{{ player.name }}</option>
+                        </div>
+                    {% endfor %}
+                </select>
+                <button type="submit">Valider</button>
+            </form>
+        </section>
+        <br/>
+        <section>
+            <a href="{{ path('tournoi_tournament_launch', {'uuid': tournament.uuid}) }}">Lancer le tournoi !</a>
+        </section>
+    {% endif %}
     <br/>
 
 {% endblock %}
