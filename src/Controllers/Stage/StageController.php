@@ -7,11 +7,9 @@ namespace Flo\Tournoi\Controllers\Stage;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Group\GroupRepository;
 use Flo\Tournoi\Domain\Stage\StageRepository;
-use Flo\Tournoi\Domain\Stage\Entities\Stage;
+use Flo\Tournoi\Domain\Stage\ValueObjects\StageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class StageController extends Controller
 {
@@ -29,7 +27,7 @@ class StageController extends Controller
     {
         $stage = $this->stageRepository->findById(new Uuid($uuid));
 
-        if ($stage->type() == Stage::TYPE_GROUP)
+        if ($stage->type() == StageType::TYPE_GROUP)
         {
             $groups = $this->groupRepository->findByStageId(new Uuid($uuid));
 
