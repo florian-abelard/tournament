@@ -22,13 +22,14 @@ class Mysql extends MysqlCore implements TournamentRepository
         $dto = $tournament->toDTO();
 
         $sql = <<<SQL
-            INSERT INTO $table (uuid, name)
-            VALUES (:uuid, :name)
+            INSERT INTO $table (uuid, name, status)
+            VALUES (:uuid, :name, :status)
 SQL;
 
         $statement = $this->getDatabaseConnection()->prepare($sql);
         $statement->bindValue(':uuid', $dto->uuid());
         $statement->bindValue(':name', $dto->name());
+        $statement->bindValue(':status', $dto->status());
         $statement->execute();
     }
 

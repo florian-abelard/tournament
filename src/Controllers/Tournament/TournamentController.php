@@ -52,7 +52,8 @@ class TournamentController extends Controller
 
         $tournament = new Tournament(
             new Uuid(),
-            $name
+            $name,
+            new TournamentStatus('upcoming')
         );
 
         $this->tournamentRepository->persist($tournament);
