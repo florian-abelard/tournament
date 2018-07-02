@@ -5,14 +5,10 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Domain\Stage\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
+use Flo\Tournoi\Domain\Stage\ValueObjects\StageType;
 
 abstract class Stage
 {
-    public const
-        TYPE_GROUP = "group",
-        TYPE_BRACKET = "bracket";
-
     protected
         $uuid,
         $tournamentUuid,
@@ -34,17 +30,13 @@ abstract class Stage
         return $this->tournamentUuid;
     }
 
-    public function type(): string
+    public function type(): StageType
     {
         return $this->type;
     }
 
-    public function setType($type): self
+    public function setType(StageType $type): self
     {
-        if ($type != self::TYPE_GROUP && $type != self::TYPE_BRACKET)
-        {
-            throw new \DomainException(sprintf('Invalid group type : "%s"', $type));
-        }
         $this->type = $type;
 
         return $this;
