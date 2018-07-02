@@ -6,6 +6,7 @@ namespace Flo\Tournoi\Domain\Stage\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Stage\Entities\Stage;
+use Flo\Tournoi\Domain\Stage\ValueObjects\StageType;
 use Flo\Tournoi\Persistence\Stage\DataTransferObjects as DTO;
 
 class GroupStage extends Stage
@@ -17,7 +18,7 @@ class GroupStage extends Stage
     {
         parent::__construct($uuid, $tournamentUuid);
 
-        $this->setType(parent::TYPE_GROUP);
+        $this->setType(new StageType(StageType::TYPE_GROUP));
     }
 
     public function placesNumberInGroup(): ?int
@@ -37,7 +38,7 @@ class GroupStage extends Stage
         return new DTO\GroupStage(
             $this->uuid->value(),
             $this->tournamentUuid->value(),
-            $this->type,
+            $this->type->value(),
             $this->placesNumberInGroup
         );
     }

@@ -7,6 +7,7 @@ namespace Flo\Tournoi\Persistence\Stage\Repositories;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Stage\Collections\StageCollection;
 use Flo\Tournoi\Domain\Stage\Entities\GroupStage;
+use Flo\Tournoi\Domain\Stage\ValueObjects\StageType;
 use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlCore;
 use Flo\Tournoi\Domain\Stage\Entities\Stage;
 use Flo\Tournoi\Domain\Stage\StageRepository;
@@ -65,7 +66,7 @@ SQL;
             new Uuid($result['tournament_uuid'])
         );
 
-        $stage->setType($result['type']);
+        $stage->setType(new StageType($result['type']));
         $stage->setPlacesNumberInGroup((int) $result['places_number_in_group']);
 
         return $stage;

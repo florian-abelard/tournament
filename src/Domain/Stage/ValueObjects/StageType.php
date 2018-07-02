@@ -42,6 +42,6 @@ final class StageType
 
     public function __toString(): string
     {
-        return $this->status;
+        return $this->type;
     }
 }

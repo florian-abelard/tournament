@@ -3,6 +3,7 @@
 declare(strict_types = 1);
 
 namespace Flo\Tournoi\Persistence\Stage\DataTransferObjects;
+use Flo\Tournoi\Domain\Stage\ValueObjects\StageType;
 
 class GroupStage
 {
