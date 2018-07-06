@@ -25,7 +25,7 @@ class RegistrationTest extends TestCase
 
     public function testCreateEntity()
     {
-        $registration = $this->buildRegistration();
+        $registration = $this->createRegistration();
 
         $this->assertEquals($this->playerUuid, $registration->playerUuid());
         $this->assertEquals($this->tournamentUuid, $registration->tournamentUuid());
@@ -34,7 +34,7 @@ class RegistrationTest extends TestCase
 
     public function testToDTO()
     {
-        $registration = $this->buildRegistration();
+        $registration = $this->createRegistration();
 
         $dto = $registration->toDTO();
 
@@ -44,7 +44,7 @@ class RegistrationTest extends TestCase
         $this->assertSame($registration->registrationDate()->format('Y-m-d H:i:s'), $dto->registrationDate());
     }
 
-    public function buildRegistration(): Registration
+    public function createRegistration(): Registration
     {
         $registration = new Registration(
             $this->playerUuid,
