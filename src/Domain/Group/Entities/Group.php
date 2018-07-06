@@ -79,9 +79,9 @@ class Group
         return $this->games;
     }
 
-    public function addGame(Game $game): self
+    public function addGame(Game $game): void
     {
-        $players->add($game);
+        $this->games->add($game);
     }
 
     public function toDTO(): DTO\Group
