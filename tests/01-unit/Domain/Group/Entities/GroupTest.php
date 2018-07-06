@@ -29,7 +29,7 @@ class GroupTest extends TestCase
 
     public function testCreateEntity()
     {
-        $group = $this->buildGroup();
+        $group = $this->createGroup();
 
         $this->assertEquals($this->uuid, $group->uuid());
         $this->assertEquals($this->stageUuid, $group->stageUuid());
@@ -39,7 +39,7 @@ class GroupTest extends TestCase
 
     public function testAddPlayerInEntity()
     {
-        $group = $this->buildGroup();
+        $group = $this->createGroup();
 
         $this->assertCount(0, $group->players());
 
@@ -52,7 +52,7 @@ class GroupTest extends TestCase
 
     public function testAddGameInEntity()
     {
-        $group = $this->buildGroup();
+        $group = $this->createGroup();
 
         $this->assertCount(0, $group->games());
 
@@ -65,7 +65,7 @@ class GroupTest extends TestCase
 
     public function testToDTO()
     {
-        $group = $this->buildGroup();
+        $group = $this->createGroup();
 
         $dto = $group->toDTO();
 
@@ -74,7 +74,7 @@ class GroupTest extends TestCase
         $this->assertSame($group->stageUuid()->value(), $dto->stageUuid());
     }
 
-    public function buildGroup(): Group
+    public function createGroup(): Group
     {
         $group = new Group($this->uuid, $this->stageUuid);
         $group->setLabel($this->label);
