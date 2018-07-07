@@ -21,12 +21,12 @@ class GroupsFactory
     {
         $this->groupStage = $groupStage;
         $this->players = $players;
-
-        $this->groups = new GroupCollection();
     }
 
     public function create(): GroupCollection
     {
+        $this->groups = new GroupCollection();
+
         $placesNumberInGroup = $this->groupStage->placesNumberInGroup();
 
         $playersNumber = $this->players->count();
