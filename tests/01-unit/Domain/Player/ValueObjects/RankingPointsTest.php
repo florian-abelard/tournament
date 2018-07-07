@@ -18,7 +18,7 @@ class RankingPointTtest extends TestCase
     {
         $rankingPoints = new RankingPoints($pointsNumber);
 
-        $this->assertEquals($pointsNumber, $rankingPoints->value());
+        $this->assertSame($pointsNumber, $rankingPoints->value());
     }
 
     public function testCreationOfEmptyRankingPoints()
@@ -68,6 +68,13 @@ class RankingPointTtest extends TestCase
         $this->assertTrue($rankingPoints1->greaterThan($rankingPoints3));
         $this->assertFalse($rankingPoints1->greaterThan($rankingPoints2));
         $this->assertFalse($rankingPoints3->greaterThan($rankingPoints1));
+    }
+
+    public function testFromString()
+    {
+        $rankingPoints = RankingPoints::fromString('1500');
+
+        $this->assertSame(1500, $rankingPoints->value());
     }
 
     public function validRankingPointsProvider()
