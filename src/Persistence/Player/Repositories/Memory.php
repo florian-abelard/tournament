@@ -86,7 +86,7 @@ class Memory implements PlayerRepository
 
     public function remove(Uuid $uuid): void
     {
-        $this->collection->remove($uuid);
+        $this->collection->removeById($uuid);
     }
 
     public function last(): ?Player

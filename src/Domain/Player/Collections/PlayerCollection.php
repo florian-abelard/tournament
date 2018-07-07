@@ -23,7 +23,7 @@ class PlayerCollection extends Collection
         return $this;
     }
 
-    public function remove(Uuid $uuid): self
+    public function removeById(Uuid $uuid): self
     {
         foreach ($this->items as $index => $player)
         {
