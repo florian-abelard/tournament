@@ -43,6 +43,22 @@ class PlayerCollectionTest extends TestCase
         return $collection;
     }
 
+    /**
+     * @depends testAdd
+     */
+    public function testRemoveById(PlayerCollection $collection): void
+    {
+        $playersNumber = $collection->count();
+
+        $uuid = new Uuid();
+        $player = new Player($uuid, 'Tristan');
+        $collection->add($player);
+
+        $collection->removeById($uuid);
+
+        $this->assertCount($playersNumber, $collection);
+    }
+
     public function testLast(): void
     {
         $collection = new PlayerCollection();
