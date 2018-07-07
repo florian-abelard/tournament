@@ -9,10 +9,10 @@ use Flo\Tournoi\Domain\Player\Entities\Player;
 class Game
 {
     private
-        $isPlayed,
-        $winner,
         $player1,
         $player2,
+        $isPlayed,
+        $winner,
         $sets;
 
     public function __construct(Player $player1, Player $player2)
