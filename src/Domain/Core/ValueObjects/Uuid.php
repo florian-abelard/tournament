@@ -27,13 +27,6 @@ final class Uuid
         $this->uuid = $uuid;
     }
 
-    public function generate(): Uuid
-    {
-        $this->uuid = (string) RamseyUuid::uuid4();
-
-        return $this;
-    }
-
     public function value(): string
     {
         return $this->uuid;
@@ -44,9 +37,9 @@ final class Uuid
         return $this->value() === $uuid->value();
     }
 
-    public function fromString(string $uuid): Uuid
+    public static function fromString(string $uuid): Uuid
     {
-        return (new Uuid())->generate();
+        return (new Uuid($uuid));
     }
 
     public function validate(string $uuid): void
