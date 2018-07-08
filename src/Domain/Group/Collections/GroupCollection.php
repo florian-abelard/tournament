@@ -4,50 +4,27 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Group\Collections;
 
+use Flo\Tournoi\Domain\Core\Collections\Collection;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Group\Entities\Group;
 
-class GroupCollection implements \IteratorAggregate, \Countable
+class GroupCollection extends Collection
 {
-    private
-        $groups;
-
-    public function __construct(iterable $groups = [])
+    public function __construct(iterable $items = [])
     {
-        $this->groups = [];
-
-        foreach($groups as $group)
-        {
-            if($group instanceof Group)
-            {
-                $this->add($group);
-            }
-        }
+        parent::__construct(Group::class, $items);
     }
 
     public function add(Group $group): self
     {
-        $this->groups[] = $group;
-
-        return $this;
-    }
-
-    public function remove(Uuid $uuid): self
-    {
-        foreach ($this->groups as $index => $group)
-        {
-            if ($group->uuid()->equals($uuid))
-            {
-                unset($this->groups[$index]);
-            }
-        }
+        $this->items[] = $group;
 
         return $this;
     }
 
     public function last(): ?Group
     {
-        $last = end($this->groups);
+        $last = end($this->items);
 
         if (!$last)
         {
@@ -55,15 +32,5 @@ class GroupCollection implements \IteratorAggregate, \Countable
         }
 
         return $last;
-    }
-
-    public function getIterator(): \Iterator
-    {
-        return new \ArrayIterator($this->groups);
-    }
-
-    public function count(): int
-    {
-        return count($this->groups);
     }
 }

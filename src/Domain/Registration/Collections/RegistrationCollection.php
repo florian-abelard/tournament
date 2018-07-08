@@ -4,40 +4,20 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Registration\Collections;
 
+use Flo\Tournoi\Domain\Core\Collections\Collection;
 use Flo\Tournoi\Domain\Registration\Entities\Registration;
 
-class RegistrationCollection implements \IteratorAggregate, \Countable
+class RegistrationCollection extends Collection
 {
-    private
-        $registrations;
-
-    public function __construct(iterable $registrations = [])
+    public function __construct(iterable $items = [])
     {
-        $this->registrations = [];
-
-        foreach($registrations as $registrations)
-        {
-            if($registrations instanceof Registration)
-            {
-                $this->add($registrations);
-            }
-        }
+        parent::__construct(Registration::class, $items);
     }
 
-    public function add(Registration $registrations): self
+    public function add(Registration $items): self
     {
-        $this->registrations[] = $registrations;
+        $this->items[] = $items;
 
         return $this;
-    }
-
-    public function getIterator(): \Iterator
-    {
-        return new \ArrayIterator($this->registrations);
-    }
-
-    public function count(): int
-    {
-        return count($this->registrations);
     }
 }

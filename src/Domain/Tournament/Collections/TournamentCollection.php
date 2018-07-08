@@ -4,54 +4,34 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Tournament\Collections;
 
+use Flo\Tournoi\Domain\Core\Collections\Collection;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 
-class TournamentCollection implements \IteratorAggregate, \Countable
+class TournamentCollection extends Collection
 {
-    private
-        $tournaments;
-
-    public function __construct(iterable $tournaments = [])
+    public function __construct(iterable $items = [])
     {
-        $this->tournaments = [];
-
-        foreach($tournaments as $tournament)
-        {
-            if($tournament instanceof Tournament)
-            {
-                $this->add($tournament);
-            }
-        }
+        parent::__construct(Tournament::class, $items);
     }
 
     public function add(Tournament $tournament): self
     {
-        $this->tournaments[] = $tournament;
+        $this->items[] = $tournament;
 
         return $this;
     }
 
     public function remove(Uuid $uuid): self
     {
-        foreach ($this->tournaments as $index => $tournament)
+        foreach ($this->items as $index => $tournament)
         {
             if ($tournament->uuid()->equals($uuid))
             {
-                unset($this->tournaments[$index]);
+                unset($this->items[$index]);
             }
         }
 
         return $this;
-    }
-
-    public function getIterator(): \Iterator
-    {
-        return new \ArrayIterator($this->tournaments);
-    }
-
-    public function count(): int
-    {
-        return count($this->tournaments);
     }
 }

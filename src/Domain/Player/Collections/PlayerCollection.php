@@ -11,9 +11,9 @@ use Flo\Tournoi\Domain\Player\Entities\Player;
 class PlayerCollection extends Collection
 {
 
-    public function __construct(iterable $players = [])
+    public function __construct(iterable $items = [])
     {
-        parent::__construct(Player::class, $players);
+        parent::__construct(Player::class, $items);
     }
 
     public function add(Player $player): self
