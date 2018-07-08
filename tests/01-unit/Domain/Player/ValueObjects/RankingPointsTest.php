@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Tests\Domain\Player\Collections;
+namespace Flo\Tournoi\Tests\Domain\Player\ValueObjects;
 
 use Flo\Tournoi\Domain\Player\Exceptions\InvalidRankingPointsException;
 use Flo\Tournoi\Domain\Player\ValueObjects\RankingPoints;
