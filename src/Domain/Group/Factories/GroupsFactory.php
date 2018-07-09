@@ -13,30 +13,26 @@ use Flo\Tournoi\Domain\Stage\Entities\GroupStage;
 class GroupsFactory
 {
     private
-        $groupStage,
-        $players,
         $groups;
 
-    public function __construct(GroupStage $groupStage, PlayerCollection $players)
+    public function __construct()
     {
-        $this->groupStage = $groupStage;
-        $this->players = $players;
     }
 
-    public function create(): GroupCollection
+    public function create(PlayerCollection $players, GroupStage $groupStage): GroupCollection
     {
         $this->groups = new GroupCollection();
 
-        $placesNumberInGroup = $this->groupStage->placesNumberInGroup();
+        $placesNumberInGroup = $groupStage->placesNumberInGroup();
 
-        $playersNumber = $this->players->count();
+        $playersNumber = $players->count();
 
-        $this->players->sortByRankingPoints();
+        $players->sortByRankingPoints();
 
         $groupsNumber = $this->calculateRequiredGroupsNumber($playersNumber, $placesNumberInGroup);
 
-        $this->initializeGroups($groupsNumber, $placesNumberInGroup);
-        $this->fillsGroupsWithPlayers($groupsNumber);
+        $this->initializeGroups($groupsNumber, $placesNumberInGroup, $groupStage->uuid());
+        $this->fillsGroupsWithPlayers($players);
 
         return $this->groups;
     }
@@ -57,13 +53,13 @@ class GroupsFactory
         return $result;
     }
 
-    private function initializeGroups(int $groupsNumber, int $placesNumberInGroup): void
+    private function initializeGroups(int $groupsNumber, int $placesNumberInGroup, Uuid $stageUuid): void
     {
         $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         for ($i = 0 ; $i < $groupsNumber; ++$i)
         {
-            $group = new Group(new Uuid(), $this->groupStage->uuid());
+            $group = new Group(new Uuid(), $stageUuid);
             $group->setLabel($alphabet[$i]);
             $group->setPlacesNumber($placesNumberInGroup);
 
@@ -71,17 +67,17 @@ class GroupsFactory
         }
     }
 
-    private function fillsGroupsWithPlayers(): void
+    private function fillsGroupsWithPlayers(PlayerCollection $players): void
     {
-        while ($this->players->count() > 0)
+        while ($players->count() > 0)
         {
             foreach ($this->groups as $group)
             {
-                $player = $this->players->shift();
+                $player = $players->shift();
 
                 $group->addPlayer($player);
 
-                if ($this->players->count() === 0)
+                if ($players->count() === 0)
                 {
                     break;
                 }
