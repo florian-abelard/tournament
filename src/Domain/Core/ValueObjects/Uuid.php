@@ -9,7 +9,7 @@ use Ramsey\Uuid\Uuid as RamseyUuid;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints\Uuid as UuidConstraint;
 
-final class Uuid
+class Uuid
 {
     private
         $uuid;

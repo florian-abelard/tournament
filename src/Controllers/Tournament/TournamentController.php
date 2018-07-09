@@ -76,6 +76,8 @@ class TournamentController extends Controller
 
         $notRegisteredplayers = $this->playerRepository->findNotInTournament($tournament->uuid());
 
+        // $stages = $this->stageRepository->findByTournamentId($tournament->uuid()); // TODO
+
         return $this->render(
             'Tournament/showTournament.html.twig',
             array(
@@ -119,8 +121,8 @@ class TournamentController extends Controller
         $groupStage->setPlacesNumberInGroup(4); // TODO dynamic placesNumberInGroup
         $this->stageRepository->persist($groupStage);
 
-        $groupsFactory = new GroupsFactory($groupStage, $players);
-        $groups = $groupsFactory->create();
+        $groupsFactory = new GroupsFactory();
+        $groups = $groupsFactory->create($players, $groupStage);
         foreach ($groups as $group)
         {
             $this->groupRepository->persist($group);
