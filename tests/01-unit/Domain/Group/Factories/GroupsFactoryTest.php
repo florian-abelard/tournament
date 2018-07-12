@@ -7,6 +7,7 @@ namespace Flo\Tournoi\Tests\Domain\Group\Factories;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Group\Collections\GroupCollection;
 use Flo\Tournoi\Domain\Group\Factories\GroupsFactory;
+use Flo\Tournoi\Domain\Group\Services\RequiredNumberOfGroupsCalculator;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Domain\Player\ValueObjects\RankingPoints;
@@ -15,27 +16,35 @@ use PHPUnit\Framework\TestCase;
 
 class GroupsFactoryTests extends TestCase
 {
+    private
+        $groupsFactory;
+
+    protected function setUp()
+    {
+        $this->groupsFactory = new GroupsFactory(
+            new RequiredNumberOfGroupsCalculator
+        );
+    }
+
     /**
      * @dataProvider createProvider
      */
-    public function testCreate($groupsNumberExpected, $rankingPointsList)
+    public function testCreate(array $rankingPointsList, int $numberOfGroupsExpected)
     {
-        $groupsFactory = new GroupsFactory();
-
         $players = $this->createPlayerCollection($rankingPointsList);
 
         $groupStage = $this->createMockedGroupStage(3);
 
-        $groups = $groupsFactory->create($players, $groupStage);
+        $groups = $this->groupsFactory->create($players, $groupStage);
 
         $this->assertInstanceOf(GroupCollection::class, $groups);
-        $this->assertCount($groupsNumberExpected, $groups);
+        $this->assertCount($numberOfGroupsExpected, $groups);
     }
 
     public function createProvider()
     {
-        yield [2, [1500, null, 1300, 500, 700, 1600]];
-        yield [3, [1500, null, 1300, 500, 700, 1600, null]];
+        yield [[1500, null, 1300, 500, 700, 1600], 2];
+        yield [[1500, null, 1300, 500, 700, 1600, null], 3];
     }
 
     private function createPlayerCollection(array $rankingPointsList): PlayerCollection
