@@ -25,20 +25,23 @@ class TournamentController extends Controller
         $playerRepository,
         $registrationRepository,
         $groupRepository,
-        $stageRepository;
+        $stageRepository,
+        $groupsFactory;
 
     public function __construct(
         TournamentRepository $tournamentRepository,
         PlayerRepository $playerRepository,
         RegistrationRepository $registrationRepository,
         GroupRepository $groupRepository,
-        StageRepository $stageRepository
+        StageRepository $stageRepository,
+        GroupsFactory $groupsFactory
     ){
         $this->tournamentRepository = $tournamentRepository;
         $this->playerRepository = $playerRepository;
         $this->registrationRepository = $registrationRepository;
         $this->groupRepository = $groupRepository;
         $this->stageRepository = $stageRepository;
+        $this->groupsFactory = $groupsFactory;
     }
 
     public function viewCreate(): Response
@@ -121,8 +124,7 @@ class TournamentController extends Controller
         $groupStage->setPlacesNumberInGroup(4); // TODO dynamic placesNumberInGroup
         $this->stageRepository->persist($groupStage);
 
-        $groupsFactory = new GroupsFactory();
-        $groups = $groupsFactory->create($players, $groupStage);
+        $groups = $this->groupsFactory->create($players, $groupStage);
         foreach ($groups as $group)
         {
             $this->groupRepository->persist($group);

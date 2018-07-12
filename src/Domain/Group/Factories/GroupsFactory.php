@@ -7,16 +7,19 @@ namespace Flo\Tournoi\Domain\Group\Factories;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Group\Collections\GroupCollection;
 use Flo\Tournoi\Domain\Group\Entities\Group;
+use Flo\Tournoi\Domain\Group\Services\RequiredNumberOfGroupsCalculator;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Flo\Tournoi\Domain\Stage\Entities\GroupStage;
 
 class GroupsFactory
 {
     private
+        $requiredNumberOfGroupsCalculator,
         $groups;
 
-    public function __construct()
+    public function __construct(RequiredNumberOfGroupsCalculator $requiredNumberOfGroupsCalculator)
     {
+        $this->requiredNumberOfGroupsCalculator = $requiredNumberOfGroupsCalculator;
     }
 
     public function create(PlayerCollection $players, GroupStage $groupStage): GroupCollection
@@ -29,28 +32,12 @@ class GroupsFactory
 
         $players->sortByRankingPoints();
 
-        $groupsNumber = $this->calculateRequiredGroupsNumber($playersNumber, $placesNumberInGroup);
+        $groupsNumber = $this->requiredNumberOfGroupsCalculator->calculate($playersNumber, $placesNumberInGroup);
 
         $this->initializeGroups($groupsNumber, $placesNumberInGroup, $groupStage->uuid());
         $this->fillsGroupsWithPlayers($players);
 
         return $this->groups;
-    }
-
-    private function calculateRequiredGroupsNumber(int $playersNumber, int $placesNumberInGroup): ?int
-    {
-        try
-        {
-            $result = $playersNumber / $placesNumberInGroup;
-            $result = ceil($result);
-            $result = (int) $result;
-        }
-        catch (\Exception $e)
-        {
-            throw new \RuntimeException('Unable to calculate required groups number : ' . $e->getMessage());
-        }
-
-        return $result;
     }
 
     private function initializeGroups(int $groupsNumber, int $placesNumberInGroup, Uuid $stageUuid): void
