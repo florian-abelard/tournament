@@ -6,11 +6,11 @@ namespace Flo\Tournoi\Domain\Group\Services;
 
 class RequiredNumberOfGroupsCalculator
 {
-    public function calculate(int $playersNumber, int $placesNumberInGroup): int
+    public function calculate(int $numberOfPlayers, int $numberOfPlacesInGroup): int
     {
         try
         {
-            $result = $playersNumber / $placesNumberInGroup;
+            $result = $numberOfPlayers / $numberOfPlacesInGroup;
             $result = ceil($result);
             $result = (int) $result;
         }

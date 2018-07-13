@@ -23,15 +23,15 @@ class Mysql extends MysqlCore implements StageRepository
         $dto = $stage->toDTO();
 
         $sql = <<<SQL
-            INSERT INTO `$table` (uuid, tournament_uuid, type, places_number_in_group)
-            VALUES (:uuid, :tournamentUuid, :type, :placesNumberInGroup)
+            INSERT INTO `$table` (uuid, tournament_uuid, type, number_of_places_in_group)
+            VALUES (:uuid, :tournamentUuid, :type, :numberOfPlacesInGroup)
 SQL;
 
         $statement = $this->getDatabaseConnection()->prepare($sql);
         $statement->bindValue(':uuid', $dto->uuid());
         $statement->bindValue(':tournamentUuid', $dto->tournamentUuid());
         $statement->bindValue(':type', $dto->type());
-        $statement->bindValue(':placesNumberInGroup', $dto->placesNumberInGroup());
+        $statement->bindValue(':numberOfPlacesInGroup', $dto->numberOfPlacesInGroup());
         $statement->execute();
     }
 
@@ -67,7 +67,7 @@ SQL;
         );
 
         $stage->setType(new StageType($result['type']));
-        $stage->setPlacesNumberInGroup((int) $result['places_number_in_group']);
+        $stage->setNumberOfPlacesInGroup((int) $result['number_of_places_in_group']);
 
         return $stage;
     }

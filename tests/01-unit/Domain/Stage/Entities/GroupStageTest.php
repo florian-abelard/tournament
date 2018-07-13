@@ -16,31 +16,31 @@ class GroupStageTest extends TestCase
         $uuid,
         $tournamentUuid,
         $type,
-        $placesNumberInGroup;
+        $numberOfPlacesInGroup;
 
     public function setUp()
     {
         $this->uuid = new Uuid();
         $this->tournamentUuid = new Uuid();
         $this->type = new StageType(StageType::TYPE_GROUP);
-        $this->placesNumberInGroup = 4;
+        $this->numberOfPlacesInGroup = 4;
     }
 
     public function testCreateEntity()
     {
         $stage = new GroupStage($this->uuid, $this->tournamentUuid);
-        $stage->setPlacesNumberInGroup($this->placesNumberInGroup);
+        $stage->setNumberOfPlacesInGroup($this->numberOfPlacesInGroup);
 
         $this->assertEquals($this->uuid, $stage->uuid());
         $this->assertEquals($this->tournamentUuid, $stage->tournamentUuid());
         $this->assertEquals($this->type, $stage->type());
-        $this->assertEquals($this->placesNumberInGroup, $stage->placesNumberInGroup());
+        $this->assertEquals($this->numberOfPlacesInGroup, $stage->numberOfPlacesInGroup());
     }
 
     public function testToDTO()
     {
         $stage = new GroupStage($this->uuid, $this->tournamentUuid);
-        $stage->setPlacesNumberInGroup($this->placesNumberInGroup);
+        $stage->setNumberOfPlacesInGroup($this->numberOfPlacesInGroup);
 
         $dto = $stage->toDTO();
 

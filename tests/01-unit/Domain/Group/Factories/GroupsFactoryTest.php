@@ -71,13 +71,13 @@ class GroupsFactoryTests extends TestCase
         return $player;
     }
 
-    private function createMockedGroupStage(?int $placesNumber): GroupStage
+    private function createMockedGroupStage(?int $numberOfPlaces): GroupStage
     {
         $groupStage = $this
             ->getMockBuilder(GroupStage::class)
             ->setConstructorArgs([new Uuid(), new Uuid()])
             ->getMock();
-        $groupStage->method('placesNumberInGroup')->willReturn($placesNumber);
+        $groupStage->method('numberOfPlacesInGroup')->willReturn($numberOfPlaces);
 
         return $groupStage;
     }

@@ -10,13 +10,13 @@ class Group
         $uuid,
         $stageUuid,
         $label,
-        $placesNumber;
+        $numberOfPlaces;
 
-    public function __construct(string $uuid, string $stageUuid, int $placesNumber, string $label)
+    public function __construct(string $uuid, string $stageUuid, int $numberOfPlaces, string $label)
     {
         $this->uuid = $uuid;
         $this->stageUuid = $stageUuid;
-        $this->placesNumber = $placesNumber;
+        $this->numberOfPlaces = $numberOfPlaces;
         $this->label = $label;
     }
 
@@ -35,8 +35,8 @@ class Group
         return $this->label;
     }
 
-    public function placesNumber(): int
+    public function numberOfPlaces(): int
     {
-        return $this->placesNumber;
+        return $this->numberOfPlaces;
     }
 }

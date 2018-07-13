@@ -48,7 +48,7 @@ class PlayerCollectionTest extends TestCase
      */
     public function testRemoveById(PlayerCollection $collection): void
     {
-        $playersNumber = $collection->count();
+        $numberOfPlayers = $collection->count();
 
         $uuid = new Uuid();
         $player = new Player($uuid, 'Tristan');
@@ -56,7 +56,7 @@ class PlayerCollectionTest extends TestCase
 
         $collection->removeById($uuid);
 
-        $this->assertCount($playersNumber, $collection);
+        $this->assertCount($numberOfPlayers, $collection);
     }
 
     public function testLast(): void

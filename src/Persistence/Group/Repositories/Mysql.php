@@ -27,14 +27,14 @@ class Mysql extends MysqlCore implements GroupRepository
 
         $sql = <<<SQL
             INSERT INTO `$table` (uuid, stage_uuid, label, places_number)
-            VALUES (:uuid, :stageUuid, :label, :placesNumber)
+            VALUES (:uuid, :stageUuid, :label, :numberOfPlaces)
 SQL;
 
         $statement = $this->getDatabaseConnection()->prepare($sql);
         $statement->bindValue(':uuid', $dto->uuid());
         $statement->bindValue(':stageUuid', $dto->stageUuid());
         $statement->bindValue(':label', $dto->label());
-        $statement->bindValue(':placesNumber', $dto->placesNumber());
+        $statement->bindValue(':numberOfPlaces', $dto->numberOfPlaces());
         $statement->execute();
 
         foreach ($group->players() as $player)
@@ -115,7 +115,7 @@ SQL;
             new Uuid($result['stage_uuid'])
         );
         $group->setLabel($result['label']);
-        $group->setPlacesNumber((int) $result['places_number']);
+        $group->setNumberOfPlaces((int) $result['places_number']);
 
         return $group;
     }

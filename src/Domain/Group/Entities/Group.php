@@ -17,7 +17,7 @@ class Group
         $uuid,
         $stageUuid,
         $label,
-        $placesNumber,
+        $numberOfPlaces,
         $players,
         $games;
 
@@ -47,14 +47,14 @@ class Group
         return $this;
     }
 
-    public function placesNumber(): int
+    public function numberOfPlaces(): int
     {
-        return $this->placesNumber;
+        return $this->numberOfPlaces;
     }
 
-    public function setPlacesNumber(int $max): self
+    public function setNumberOfPlaces(int $max): self
     {
-        $this->placesNumber = $max;
+        $this->numberOfPlaces = $max;
 
         return $this;
     }
@@ -89,7 +89,7 @@ class Group
         return new DTO\Group(
             $this->uuid->value(),
             $this->stageUuid->value(),
-            $this->placesNumber,
+            $this->numberOfPlaces,
             $this->label
         );
     }

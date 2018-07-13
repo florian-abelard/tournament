@@ -17,14 +17,14 @@ class GroupTest extends TestCase
         $uuid,
         $stageUuid,
         $type,
-        $placesNumber;
+        $numberOfPlaces;
 
     public function setUp()
     {
         $this->uuid = new Uuid();
         $this->stageUuid = new Uuid();
         $this->label = 'Poule A';
-        $this->placesNumber = 4;
+        $this->numberOfPlaces = 4;
     }
 
     public function testCreateEntity()
@@ -34,7 +34,7 @@ class GroupTest extends TestCase
         $this->assertEquals($this->uuid, $group->uuid());
         $this->assertEquals($this->stageUuid, $group->stageUuid());
         $this->assertEquals($this->label, $group->label());
-        $this->assertEquals($this->placesNumber, $group->placesNumber());
+        $this->assertEquals($this->numberOfPlaces, $group->numberOfPlaces());
     }
 
     public function testAddPlayerInEntity()
@@ -78,7 +78,7 @@ class GroupTest extends TestCase
     {
         $group = new Group($this->uuid, $this->stageUuid);
         $group->setLabel($this->label);
-        $group->setPlacesNumber($this->placesNumber);
+        $group->setNumberOfPlaces($this->numberOfPlaces);
 
         return $group;
     }

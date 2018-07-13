@@ -12,7 +12,7 @@ use Flo\Tournoi\Persistence\Stage\DataTransferObjects as DTO;
 class GroupStage extends Stage
 {
     private
-        $placesNumberInGroup;
+        $numberOfPlacesInGroup;
 
     public function __construct(Uuid $uuid, Uuid $tournamentUuid)
     {
@@ -21,14 +21,14 @@ class GroupStage extends Stage
         $this->setType(new StageType(StageType::TYPE_GROUP));
     }
 
-    public function placesNumberInGroup(): ?int
+    public function numberOfPlacesInGroup(): ?int
     {
-        return $this->placesNumberInGroup;
+        return $this->numberOfPlacesInGroup;
     }
 
-    public function setPlacesNumberInGroup(int $number): self
+    public function setNumberOfPlacesInGroup(int $number): self
     {
-        $this->placesNumberInGroup = $number;
+        $this->numberOfPlacesInGroup = $number;
 
         return $this;
     }
@@ -39,7 +39,7 @@ class GroupStage extends Stage
             $this->uuid->value(),
             $this->tournamentUuid->value(),
             $this->type->value(),
-            $this->placesNumberInGroup
+            $this->numberOfPlacesInGroup
         );
     }
 }

@@ -11,14 +11,14 @@ class GroupStage
         $uuid,
         $tournamentUuid,
         $type,
-        $placesNumberInGroup;
+        $numberOfPlacesInGroup;
 
-    public function __construct(string $uuid, string $tournamentUuid, string $type, int $placesNumberInGroup)
+    public function __construct(string $uuid, string $tournamentUuid, string $type, int $numberOfPlacesInGroup)
     {
         $this->uuid = $uuid;
         $this->tournamentUuid = $tournamentUuid;
         $this->type = $type;
-        $this->placesNumberInGroup = $placesNumberInGroup;
+        $this->numberOfPlacesInGroup = $numberOfPlacesInGroup;
     }
 
     public function uuid(): string
@@ -36,8 +36,8 @@ class GroupStage
         return $this->type;
     }
 
-    public function placesNumberInGroup(): int
+    public function numberOfPlacesInGroup(): int
     {
-        return $this->placesNumberInGroup;
+        return $this->numberOfPlacesInGroup;
     }
 }

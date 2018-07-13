@@ -18,7 +18,7 @@ CREATE TABLE `stage` (
     uuid VARCHAR(36) NOT NULL,
     tournament_uuid VARCHAR(36) NOT NULL,
     type VARCHAR(20),
-    places_number_in_group SMALLINT UNSIGNED,
+    number_of_places_in_group SMALLINT UNSIGNED,
     PRIMARY KEY (uuid),
     FOREIGN KEY (tournament_uuid) REFERENCES `tournament` (uuid) ON DELETE CASCADE ON UPDATE CASCADE
 );
