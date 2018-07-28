@@ -12,27 +12,31 @@ NPM_DOCKER_CMD = docker run --rm \
 
 #------------------------------------------------------------------------------
 
-webpack-install: ##@webpack install webpack-encore node package
-	# $(call NPM_DOCKER_CMD, install --silent)
-	$(call NPM_DOCKER_CMD, install)
+npm-install: package-lock.json ##@npm install npm dependencies
+	$(call NPM_DOCKER_CMD, install --silent)
 
-webpack-build: ##@webpack build assets for development environment
+npm-update: package.json ##@npm update npm dependencies
+	$(call NPM_DOCKER_CMD, update)
+
+#------------------------------------------------------------------------------
+
+webpack-build: ##@npm build assets for development environment
 	$(call NPM_DOCKER_CMD, run dev)
 
-webpack-build-production: ##@webpack build assets for production environment
+webpack-build-production: ##@npm build assets for production environment
 	$(call NPM_DOCKER_CMD, run build)
 
-webpack-watch: ##@webpack run webpack watch
+webpack-watch: ##@npm run webpack watch
 	$(call NPM_DOCKER_CMD, run watch)
 
 #------------------------------------------------------------------------------
 
-clean-webpack: ##@webpack clean webpack node module
+clean-npm: ##@npm clean npm dependencies
 	test ! -e node_modules || rm -rf node_modules
 
-clean-built-assets: ##@webpack clean built assets
+clean-built-assets: ##@npm clean built assets
 	test ! -e public/build || rm -rf public/build
 
 #------------------------------------------------------------------------------
 
-.PHONY: webpack-install webpack-build webpack-build-production webpack-watch clean-webpack clean-built-assets
+.PHONY: webpack-build webpack-build-production webpack-watch clean-npm clean-built-assets

@@ -14,10 +14,10 @@ PHPUNIT_DOCKER_CMD = docker run --rm \
 
 #------------------------------------------------------------------------------
 
-phpunit: ##@phpunit launch PHPUnit tests
+phpunit: phpunit-image-build ##@phpunit launch PHPUnit tests
 	$(call PHPUNIT_DOCKER_CMD, --verbose)
 
-phpunit-image-build: ##@phpunit build PHPUnit docker container
+phpunit-image-build: docker/images/phpunit/Dockerfile ##@phpunit build PHPUnit docker container
 	docker build --force-rm -t ${PHPUNIT_IMAGE_NAME} docker/images/phpunit
 
 #------------------------------------------------------------------------------

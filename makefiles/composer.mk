@@ -6,10 +6,10 @@ COMPOSER_BIN := composer
 
 #------------------------------------------------------------------------------
 
-composer-install: composer.lock ##@composer install composer
+composer-install: composer.lock ##@composer install composer dependencies
 	$(COMPOSER_BIN) install --ignore-platform-reqs
 
-composer-update: composer.json ##@composer update composer
+composer-update: composer.json ##@composer update composer dependencies
 	$(COMPOSER_BIN) update --ignore-platform-reqs
 
 #------------------------------------------------------------------------------

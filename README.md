@@ -14,17 +14,17 @@
 # Récupération des sources github
 git clone https://github.com/florian-abelard/flo-tournoi.git
 
-# Installation des dépendances
+# Initialisation du projet
 make init
 
 # Démarrer les containers docker
 make up
 
-# Alimenter la base de données
-make db-populate
+# Créer et alimenter la base de données
+make db-init
 
 # Afficher toutes les commandes disponibles
 make
 ```
 
-Accès interface sur http://localhost
+Accès interface sur `http://localhost`

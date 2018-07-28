@@ -30,16 +30,16 @@ include makefiles/composer.mk
 include makefiles/docker.mk
 include makefiles/help.mk
 include makefiles/mariadb.mk
+include makefiles/npm.mk
 include makefiles/phpunit.mk
-include makefiles/webpack.mk
 
 #------------------------------------------------------------------------------
 
-init: .env composer-install webpack-install webpack-build db-init ## install project dependencies, create database
+init: .env composer-install npm-install webpack-build ## install project dependencies...
 
 #------------------------------------------------------------------------------
 
-clean: clean-docker clean-composer clean-webpack clean-built-assets clean-phpunit ## clean project dependencies, docker containers...
+clean: clean-docker clean-composer clean-npm clean-built-assets clean-phpunit ## clean project dependencies, docker containers...
 
 #------------------------------------------------------------------------------
 
@@ -55,4 +55,4 @@ help:
 
 #------------------------------------------------------------------------------
 
-.PHONY: init clean help
+.PHONY: help
