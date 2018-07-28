@@ -28,7 +28,7 @@ class Player
         return $this->name;
     }
 
-    public function rankingPoints(): int
+    public function rankingPoints(): ?int
     {
         return $this->rankingPoints;
     }
