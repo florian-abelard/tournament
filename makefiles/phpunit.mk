@@ -14,11 +14,15 @@ PHPUNIT_DOCKER_CMD = docker run --rm \
 
 #------------------------------------------------------------------------------
 
-phpunit: phpunit-image-build ##@phpunit launch PHPUnit tests
+phpunit: phpunit-test-environment ##@phpunit launch PHPUnit tests
 	$(call PHPUNIT_DOCKER_CMD, --verbose)
 
 phpunit-image-build: docker/images/phpunit/Dockerfile ##@phpunit build PHPUnit docker container
 	docker build --force-rm -t ${PHPUNIT_IMAGE_NAME} docker/images/phpunit
+
+phpunit-test-environment: vendor/bin/simple-phpunit phpunit-image-build
+
+vendor/bin/simple-phpunit: composer-install
 
 #------------------------------------------------------------------------------
 
@@ -27,4 +31,4 @@ clean-phpunit: ##@phpunit clean PHPUnit docker container
 
 #------------------------------------------------------------------------------
 
-.PHONY: phpunit phpunit-image-build clean-phpunit
+.PHONY: phpunit phpunit-image-build phpunit-test-environment clean-phpunit
