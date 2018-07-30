@@ -145,7 +145,7 @@ SQL;
             $result['name']
         );
 
-        $player->setRankingPoints(RankingPoints::fromString($result['ranking_points']));
+        $player->setRankingPoints(new RankingPoints($result['ranking_points']));
 
         return $player;
     }
