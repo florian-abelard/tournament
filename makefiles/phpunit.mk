@@ -17,7 +17,7 @@ PHPUNIT_DOCKER_CMD = docker run --rm \
 phpunit: phpunit-prepare-environment ##@phpunit launch PHPUnit tests
 	$(call PHPUNIT_DOCKER_CMD, --verbose)
 
-phpunit-build-image: ##@phpunit build phpunit docker image
+phpunit-build-image: ##@phpunit build PHPUnit docker image
 	docker build --force-rm -t ${PHPUNIT_IMAGE_NAME} docker/images/phpunit
 
 phpunit-prepare-environment: vendor/bin/simple-phpunit phpunit-build-image-if-needed
