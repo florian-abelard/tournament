@@ -115,7 +115,7 @@ SQL;
             new Uuid($result['stage_uuid'])
         );
         $group->setLabel($result['label']);
-        $group->setNumberOfPlaces((int) $result['places_number']);
+        $group->setNumberOfPlaces((int) $result['number_of_places']);
 
         return $group;
     }
