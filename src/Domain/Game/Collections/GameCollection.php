@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Domain\Game\Collections;
 
 use Flo\Tournoi\Domain\Core\Collections\Collection;
-use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Game\Entities\Game;
 
 class GameCollection extends Collection
