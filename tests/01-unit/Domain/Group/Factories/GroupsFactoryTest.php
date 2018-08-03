@@ -6,7 +6,7 @@ namespace Flo\Tournoi\Tests\Domain\Group\Factories;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Group\Collections\GroupCollection;
-use Flo\Tournoi\Domain\Group\Factories\GroupsFactory;
+use Flo\Tournoi\Domain\Group\Factories\GroupCollectionFactory;
 use Flo\Tournoi\Domain\Group\Services\RequiredNumberOfGroupsCalculator;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Flo\Tournoi\Domain\Player\Entities\Player;
@@ -14,14 +14,14 @@ use Flo\Tournoi\Domain\Player\ValueObjects\RankingPoints;
 use Flo\Tournoi\Domain\Stage\Entities\GroupStage;
 use PHPUnit\Framework\TestCase;
 
-class GroupsFactoryTests extends TestCase
+class GroupCollectionFactoryTests extends TestCase
 {
     private
         $groupsFactory;
 
     protected function setUp()
     {
-        $this->groupsFactory = new GroupsFactory(
+        $this->groupsFactory = new GroupCollectionFactory(
             new RequiredNumberOfGroupsCalculator
         );
     }
