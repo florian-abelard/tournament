@@ -5,12 +5,12 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Persistence\Core\Repositories;
 
 use Doctrine\DBAL\Connection;
+use Flo\Tournoi\Persistence\Core\MysqlTrait;
 
 abstract class Mysql
 {
-    private
-        $databaseConnection;
-
+    use MysqlTrait;
+    
     public function __construct(Connection $connection)
     {
         $this->databaseConnection = $connection;

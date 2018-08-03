@@ -2,6 +2,7 @@
 
 namespace Flo\Tournoi\Controllers\Tournament;
 
+use Doctrine\DBAL\Connection;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Group\GroupRepository;
 use Flo\Tournoi\Domain\Group\Factories\GroupsFactory;
@@ -13,6 +14,7 @@ use Flo\Tournoi\Domain\Stage\Entities\GroupStage;
 use Flo\Tournoi\Domain\Tournament\TournamentRepository;
 use Flo\Tournoi\Domain\Tournament\Entities\Tournament;
 use Flo\Tournoi\Domain\Tournament\ValueObjects\TournamentStatus;
+use Flo\Tournoi\Persistence\Core\MysqlTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +22,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TournamentController extends Controller
 {
+    use MysqlTrait;
+
     private
         $tournamentRepository,
         $playerRepository,
@@ -29,6 +33,7 @@ class TournamentController extends Controller
         $groupsFactory;
 
     public function __construct(
+        Connection $databaseConnection,
         TournamentRepository $tournamentRepository,
         PlayerRepository $playerRepository,
         RegistrationRepository $registrationRepository,
@@ -36,6 +41,7 @@ class TournamentController extends Controller
         StageRepository $stageRepository,
         GroupsFactory $groupsFactory
     ){
+        $this->databaseConnection = $databaseConnection;
         $this->tournamentRepository = $tournamentRepository;
         $this->playerRepository = $playerRepository;
         $this->registrationRepository = $registrationRepository;
@@ -111,23 +117,36 @@ class TournamentController extends Controller
 
     public function launch(string $uuid): Response
     {
-        $tournamentUuid = new Uuid($uuid);
+        $this->startTransaction();
 
-        $this->tournamentRepository->updateStatus($tournamentUuid, new TournamentStatus('running'));
-
-        $players = $this->playerRepository->findByTournamentId($tournamentUuid);
-
-        $groupStage = new GroupStage(
-            new Uuid(),
-            $tournamentUuid
-        );
-        $groupStage->setNumberOfPlacesInGroup(4); // TODO dynamic numberOfPlacesInGroup
-        $this->stageRepository->persist($groupStage);
-
-        $groups = $this->groupsFactory->create($players, $groupStage);
-        foreach ($groups as $group)
+        try
         {
-            $this->groupRepository->persist($group);
+            $tournamentUuid = new Uuid($uuid);
+
+            $this->tournamentRepository->updateStatus($tournamentUuid, new TournamentStatus('running'));
+
+            $players = $this->playerRepository->findByTournamentId($tournamentUuid);
+
+            $groupStage = new GroupStage(
+                new Uuid(),
+                $tournamentUuid
+            );
+            $groupStage->setNumberOfPlacesInGroup(3); // TODO dynamic numberOfPlacesInGroup
+            $this->stageRepository->persist($groupStage);
+
+            $groups = $this->groupsFactory->create($players, $groupStage);
+            foreach ($groups as $group)
+            {
+                $this->groupRepository->persist($group);
+            }
+
+            $this->commitTransaction();
+        }
+        catch (\Exception $e)
+        {
+            $this->rollbackTransaction();
+
+            return $this->redirectToRoute('tournoi_tournament_detail', ['uuid' => $uuid]);
         }
 
         return $this->redirectToRoute('tournoi_stage_detail', ['uuid' => $groupStage->uuid()]);
