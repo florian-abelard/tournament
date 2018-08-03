@@ -17,11 +17,11 @@ use PHPUnit\Framework\TestCase;
 class GroupCollectionFactoryTests extends TestCase
 {
     private
-        $groupsFactory;
+        $groupCollectionFactory;
 
     protected function setUp()
     {
-        $this->groupsFactory = new GroupCollectionFactory(
+        $this->groupCollectionFactory = new GroupCollectionFactory(
             new RequiredNumberOfGroupsCalculator
         );
     }
@@ -35,7 +35,7 @@ class GroupCollectionFactoryTests extends TestCase
 
         $groupStage = $this->createMockedGroupStage(3);
 
-        $groups = $this->groupsFactory->create($players, $groupStage);
+        $groups = $this->groupCollectionFactory->create($players, $groupStage);
 
         $this->assertInstanceOf(GroupCollection::class, $groups);
         $this->assertCount($numberOfGroupsExpected, $groups);

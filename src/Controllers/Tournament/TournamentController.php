@@ -30,7 +30,7 @@ class TournamentController extends Controller
         $registrationRepository,
         $groupRepository,
         $stageRepository,
-        $groupsFactory;
+        $groupCollectionFactory;
 
     public function __construct(
         Connection $databaseConnection,
@@ -39,7 +39,7 @@ class TournamentController extends Controller
         RegistrationRepository $registrationRepository,
         GroupRepository $groupRepository,
         StageRepository $stageRepository,
-        GroupCollectionFactory $groupsFactory
+        GroupCollectionFactory $groupCollectionFactory
     ){
         $this->databaseConnection = $databaseConnection;
         $this->tournamentRepository = $tournamentRepository;
@@ -47,7 +47,7 @@ class TournamentController extends Controller
         $this->registrationRepository = $registrationRepository;
         $this->groupRepository = $groupRepository;
         $this->stageRepository = $stageRepository;
-        $this->groupsFactory = $groupsFactory;
+        $this->groupCollectionFactory = $groupCollectionFactory;
     }
 
     public function viewCreate(): Response
@@ -134,9 +134,10 @@ class TournamentController extends Controller
             $groupStage->setNumberOfPlacesInGroup(3); // TODO dynamic numberOfPlacesInGroup
             $this->stageRepository->persist($groupStage);
 
-            $groups = $this->groupsFactory->create($players, $groupStage);
+            $groups = $this->groupCollectionFactory->create($players, $groupStage);
             foreach ($groups as $group)
             {
+                $groupGames = $this->
                 $this->groupRepository->persist($group);
             }
 
