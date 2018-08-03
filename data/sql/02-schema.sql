@@ -27,7 +27,7 @@ CREATE TABLE `group` (
     uuid VARCHAR(36) NOT NULL,
     stage_uuid VARCHAR(36) NOT NULL,
     label VARCHAR(100),
-    places_number SMALLINT UNSIGNED,
+    number_of_places SMALLINT UNSIGNED,
     PRIMARY KEY (uuid),
     FOREIGN KEY (stage_uuid) REFERENCES `stage` (uuid) ON DELETE CASCADE ON UPDATE CASCADE
 );

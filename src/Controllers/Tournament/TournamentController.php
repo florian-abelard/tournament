@@ -5,7 +5,7 @@ namespace Flo\Tournoi\Controllers\Tournament;
 use Doctrine\DBAL\Connection;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Group\GroupRepository;
-use Flo\Tournoi\Domain\Group\Factories\GroupsFactory;
+use Flo\Tournoi\Domain\Group\Factories\GroupCollectionFactory;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
 use Flo\Tournoi\Domain\Registration\RegistrationRepository;
 use Flo\Tournoi\Domain\Registration\Entities\Registration;
@@ -39,7 +39,7 @@ class TournamentController extends Controller
         RegistrationRepository $registrationRepository,
         GroupRepository $groupRepository,
         StageRepository $stageRepository,
-        GroupsFactory $groupsFactory
+        GroupCollectionFactory $groupsFactory
     ){
         $this->databaseConnection = $databaseConnection;
         $this->tournamentRepository = $tournamentRepository;

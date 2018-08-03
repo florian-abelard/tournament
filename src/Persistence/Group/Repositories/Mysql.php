@@ -26,7 +26,7 @@ class Mysql extends MysqlCore implements GroupRepository
         $dto = $group->toDTO();
 
         $sql = <<<SQL
-            INSERT INTO `$table` (uuid, stage_uuid, label, places_number)
+            INSERT INTO `$table` (uuid, stage_uuid, label, number_of_places)
             VALUES (:uuid, :stageUuid, :label, :numberOfPlaces)
 SQL;
 
