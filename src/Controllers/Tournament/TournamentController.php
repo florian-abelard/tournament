@@ -4,6 +4,7 @@ namespace Flo\Tournoi\Controllers\Tournament;
 
 use Doctrine\DBAL\Connection;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Domain\Game\Factories\GameCollectionFactory;
 use Flo\Tournoi\Domain\Group\GroupRepository;
 use Flo\Tournoi\Domain\Group\Factories\GroupCollectionFactory;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
@@ -30,7 +31,8 @@ class TournamentController extends Controller
         $registrationRepository,
         $groupRepository,
         $stageRepository,
-        $groupCollectionFactory;
+        $groupCollectionFactory,
+        $gameCollectionFactory;
 
     public function __construct(
         Connection $databaseConnection,
@@ -39,7 +41,8 @@ class TournamentController extends Controller
         RegistrationRepository $registrationRepository,
         GroupRepository $groupRepository,
         StageRepository $stageRepository,
-        GroupCollectionFactory $groupCollectionFactory
+        GroupCollectionFactory $groupCollectionFactory,
+        GameCollectionFactory $gameCollectionFactory
     ){
         $this->databaseConnection = $databaseConnection;
         $this->tournamentRepository = $tournamentRepository;
@@ -48,6 +51,7 @@ class TournamentController extends Controller
         $this->groupRepository = $groupRepository;
         $this->stageRepository = $stageRepository;
         $this->groupCollectionFactory = $groupCollectionFactory;
+        $this->gameCollectionFactory = $gameCollectionFactory;
     }
 
     public function viewCreate(): Response
@@ -137,8 +141,13 @@ class TournamentController extends Controller
             $groups = $this->groupCollectionFactory->create($players, $groupStage);
             foreach ($groups as $group)
             {
-                $groupGames = $this->
                 $this->groupRepository->persist($group);
+
+                $groupGames = $this->gameCollectionFactory->create($group);
+                // foreach ($groupGames as $game)
+                // {
+                //     $this->gameRepository->persist($game);
+                // }
             }
 
             $this->commitTransaction();
@@ -146,6 +155,8 @@ class TournamentController extends Controller
         catch (\Exception $e)
         {
             $this->rollbackTransaction();
+
+            // var_dump($e);
 
             return $this->redirectToRoute('tournoi_tournament_detail', ['uuid' => $uuid]);
         }

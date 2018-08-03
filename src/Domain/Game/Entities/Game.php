@@ -11,7 +11,7 @@ class Game
     private
         $player1,
         $player2,
-        $isPlayed,
+        $status,
         $winner,
         $sets;
 
