@@ -4,6 +4,7 @@ namespace Flo\Tournoi\Controllers\Tournament;
 
 use Doctrine\DBAL\Connection;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Domain\Game\GameRepository;
 use Flo\Tournoi\Domain\Game\Factories\GameCollectionFactory;
 use Flo\Tournoi\Domain\Group\GroupRepository;
 use Flo\Tournoi\Domain\Group\Factories\GroupCollectionFactory;
@@ -31,6 +32,7 @@ class TournamentController extends Controller
         $registrationRepository,
         $groupRepository,
         $stageRepository,
+        $gameRepository,
         $groupCollectionFactory,
         $gameCollectionFactory;
 
@@ -41,6 +43,7 @@ class TournamentController extends Controller
         RegistrationRepository $registrationRepository,
         GroupRepository $groupRepository,
         StageRepository $stageRepository,
+        GameRepository $gameRepository,
         GroupCollectionFactory $groupCollectionFactory,
         GameCollectionFactory $gameCollectionFactory
     ){
@@ -50,6 +53,7 @@ class TournamentController extends Controller
         $this->registrationRepository = $registrationRepository;
         $this->groupRepository = $groupRepository;
         $this->stageRepository = $stageRepository;
+        $this->gameRepository = $gameRepository;
         $this->groupCollectionFactory = $groupCollectionFactory;
         $this->gameCollectionFactory = $gameCollectionFactory;
     }
@@ -144,10 +148,10 @@ class TournamentController extends Controller
                 $this->groupRepository->persist($group);
 
                 $groupGames = $this->gameCollectionFactory->create($group);
-                // foreach ($groupGames as $game)
-                // {
-                //     $this->gameRepository->persist($game);
-                // }
+                foreach ($groupGames as $game)
+                {
+                    $this->gameRepository->persist($game);
+                }
             }
 
             $this->commitTransaction();
@@ -156,7 +160,7 @@ class TournamentController extends Controller
         {
             $this->rollbackTransaction();
 
-            // var_dump($e);
+            var_dump($e->getMessage()); die();
 
             return $this->redirectToRoute('tournoi_tournament_detail', ['uuid' => $uuid]);
         }
