@@ -48,3 +48,18 @@ CREATE TABLE `group_player` (
     FOREIGN KEY (group_uuid) REFERENCES `group` (uuid) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (player_uuid) REFERENCES `player` (uuid) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE `game` (
+    uuid VARCHAR(36) NOT NULL,
+    player1_uuid VARCHAR(36),
+    player2_uuid VARCHAR(36),
+    stage_uuid VARCHAR(36),
+    status VARCHAR(100),
+    playing_date DATETIME,
+    number_of_sets_to_win SMALLINT UNSIGNED,
+    winner_uuid VARCHAR(36),
+    PRIMARY KEY (uuid),
+    FOREIGN KEY (player1_uuid) REFERENCES `player` (uuid) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (player2_uuid) REFERENCES `player` (uuid) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (stage_uuid) REFERENCES `stage` (uuid) ON DELETE CASCADE ON UPDATE CASCADE
+);

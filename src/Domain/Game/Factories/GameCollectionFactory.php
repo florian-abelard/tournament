@@ -4,8 +4,10 @@ declare(strict_types= 1);
 
 namespace Flo\Tournoi\Domain\Game\Factories;
 
+use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Game\Collections\GameCollection;
 use Flo\Tournoi\Domain\Game\Entities\Game;
+use Flo\Tournoi\Domain\Game\ValueObjects\GameStatus;
 use Flo\Tournoi\Domain\Group\Entities\Group;
 
 class GameCollectionFactory
@@ -25,9 +27,13 @@ class GameCollectionFactory
         foreach ($gamesOrdered as $gamePosition)
         {
             $game = new Game(
+                new Uuid(),
                 $playersInGroup[$gamePosition[0]-1],
-                $playersInGroup[$gamePosition[1]-1]
+                $playersInGroup[$gamePosition[1]-1],
+                new Uuid($group->stageUuid()->value())
+
             );
+            $game->setStatus(new GameStatus('upcoming'));
             $games->add($game);
         }
 

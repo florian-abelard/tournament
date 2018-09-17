@@ -17,7 +17,7 @@ class Mysql extends MysqlCore implements GroupRepository
 {
     private const
         TABLE = 'group',
-        PLAYER_JOIN_TABLE = 'group_player',
+        GROUP_PLAYER_JOIN_TABLE = 'group_player',
         PLAYER_TABLE = 'player';
 
     public function persist(Group $group): void
@@ -45,7 +45,7 @@ SQL;
 
     public function addPlayer(Uuid $uuid, Player $player): void
     {
-        $table = self::PLAYER_JOIN_TABLE;
+        $table = self::GROUP_PLAYER_JOIN_TABLE;
         $playerDto = $player->toDTO();
 
         $sql = <<<SQL
@@ -59,10 +59,36 @@ SQL;
         $statement->execute();
     }
 
+    public function findById(Uuid $uuid): ?Group
+    {
+        $table = self::TABLE;
+
+        $sql = <<<SQL
+            SELECT * from `$table`
+            WHERE uuid = :uuid
+SQL;
+
+        $statement = $this->getDatabaseConnection()->prepare($sql);
+        $statement->bindValue(':uuid', $uuid);
+        $statement->execute();
+
+        if ($statement->rowCount() === 0)
+        {
+            return null;
+        }
+
+        $result = $statement->fetch();
+        $group = $this->buildDomainObject($result);
+
+        var_dump($group);
+
+        return $group;
+    }
+
     public function findByStageId(Uuid $stageUuid): GroupCollection
     {
         $table = self::TABLE;
-        $joinTable = self::PLAYER_JOIN_TABLE;
+        $joinTable = self::GROUP_PLAYER_JOIN_TABLE;
         $playerTable = self::PLAYER_TABLE;
 
         $sql = <<<SQL
@@ -87,7 +113,7 @@ SQL;
         return $groups;
     }
 
-    public function buildCollection(array $resultGroupedBy): GroupCollection
+    private function buildCollection(array $resultGroupedBy): GroupCollection
     {
         $groups = new GroupCollection();
 
@@ -108,7 +134,7 @@ SQL;
         return $groups;
     }
 
-    public function buildDomainObject(array $result): Group
+    private function buildDomainObject(array $result): Group
     {
         $group = new Group(
             new Uuid($result['uuid']),
@@ -120,7 +146,7 @@ SQL;
         return $group;
     }
 
-    public function buildPlayerDomainObject(array $result): Player
+    private function buildPlayerDomainObject(array $result): Player
     {
         $player = new Player(
             new Uuid($result['player_uuid']),
@@ -132,7 +158,7 @@ SQL;
         return $player;
     }
 
-    public function groupsResultByGroup(Statement $statement): array
+    private function groupsResultByGroup(Statement $statement): array
     {
         $groupedBy = [];
         foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)

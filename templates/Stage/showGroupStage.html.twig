@@ -8,7 +8,7 @@
 
         {% for group in groups %}
             <div>
-                <span>Poule {{ group.label }}</span>
+                <span>Poule {{ group.label }} [<a href="{{ path('tournoi_group_detail', {'uuid': group.uuid}) }}">détail</a>]</span>
                 <br/>
                 {% for player in group.players %}
                     <span>- {{ player.name }}</span>

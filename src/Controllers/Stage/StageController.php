@@ -27,6 +27,8 @@ class StageController extends Controller
     {
         $stage = $this->stageRepository->findById(new Uuid($uuid));
 
+        var_dump($stage);
+
         if ($stage->type() == StageType::TYPE_GROUP)
         {
             $groups = $this->groupRepository->findByStageId(new Uuid($uuid));
