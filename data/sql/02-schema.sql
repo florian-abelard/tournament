@@ -54,6 +54,7 @@ CREATE TABLE `game` (
     player1_uuid VARCHAR(36),
     player2_uuid VARCHAR(36),
     stage_uuid VARCHAR(36),
+    group_uuid VARCHAR(36),
     status VARCHAR(100),
     playing_date DATETIME,
     number_of_sets_to_win SMALLINT UNSIGNED,

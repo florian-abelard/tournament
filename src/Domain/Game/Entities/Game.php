@@ -7,6 +7,7 @@ namespace Flo\Tournoi\Domain\Game\Entities;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Core\ValueObjects\DateTime;
 use Flo\Tournoi\Domain\Core\ValueObjects\NullDateTime;
+use Flo\Tournoi\Domain\Game\ValueObjects\GameType;
 use Flo\Tournoi\Domain\Game\ValueObjects\GameStatus;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Persistence\Game\DataTransferObjects as DTO;
@@ -18,18 +19,20 @@ class Game
         $player1,
         $player2,
         $stageUuid,
+        $type,
         $status,
         $playingDate,
         $numberOfSetsToWin,
         $winner,
         $sets;
 
-    public function __construct(Uuid $uuid, Player $player1, Player $player2, Uuid $stageUuid)
+    public function __construct(Uuid $uuid, Player $player1, Player $player2, Uuid $stageUuid, GameType $type)
     {
         $this->uuid = $uuid;
         $this->player1 = $player1;
         $this->player2 = $player2;
         $this->stageUuid = $stageUuid;
+        $this->type = $type;
 
         $this->playingDate = new NullDateTime();
 
@@ -80,7 +83,7 @@ class Game
         return $this;
     }
 
-    public function numberOfSetsToWin(): int
+    public function numberOfSetsToWin(): ?int
     {
         return $this->numberOfSetsToWin;
     }
