@@ -80,8 +80,6 @@ SQL;
         $result = $statement->fetch();
         $group = $this->buildDomainObject($result);
 
-        var_dump($group);
-
         return $group;
     }
 
