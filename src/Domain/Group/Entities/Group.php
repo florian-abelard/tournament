@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Domain\Group\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Game\Collections\GameCollection;
+use Flo\Tournoi\Domain\Game\Collections\GroupGameCollection;
 use Flo\Tournoi\Domain\Game\Entities\Game;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Flo\Tournoi\Domain\Player\Entities\Player;
@@ -27,7 +27,7 @@ class Group
         $this->stageUuid = $stageUuid;
 
         $this->players = new PlayerCollection();
-        $this->games = new GameCollection();
+        $this->games = new GroupGameCollection();
     }
 
     public function uuid(): Uuid
@@ -74,7 +74,7 @@ class Group
         $this->players->add($player);
     }
 
-    public function games(): GameCollection
+    public function games(): GroupGameCollection
     {
         return $this->games;
     }
