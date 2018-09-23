@@ -1,0 +1,32 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+
+    <h3>Détail de la poule</h3>
+    <br/>
+    <section>
+        <span>Poule {{ group.label }}</span>
+        <br/>
+        {% for player in group.players %}
+            <span>- {{ player.name }}</span>
+            <span>
+                {% set points = player.rankingPoints.value %}
+                {% if points is null %}
+                    (non classé)
+                {% else %}
+                    ({{ points }} points)
+                {% endif %}
+            </span>
+            <br/>
+        {% endfor %}
+        <br/><br/>
+        {% for game in games %}
+            <span>Match {{ loop.index }} : {{ game.player1.name }} vs {{ game.player2.name }}</span>
+            <br/>
+        {% endfor %}
+
+
+
+    </section>
+
+{% endblock %}
