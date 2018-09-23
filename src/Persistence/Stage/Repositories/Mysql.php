@@ -59,6 +59,30 @@ SQL;
         return $stage;
     }
 
+    public function findByTournamentId(Uuid $tournamentUuid): ?StageCollection
+    {
+        $table = self::TABLE;
+
+        $sql = <<<SQL
+            SELECT * FROM $table
+            WHERE tournament_uuid = :tournamentUuid
+SQL;
+
+        $statement = $this->getDatabaseConnection()->prepare($sql);
+        $statement->bindValue(':tournamentUuid', $tournamentUuid);
+        $statement->execute();
+
+        $stages = new StageCollection();
+
+        foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
+        {
+            $stages->add($this->buildDomainObject($result));
+        }
+
+        return $stages;
+
+    }
+
     public function buildDomainObject(array $result): Stage
     {
         $stage = new GroupStage(

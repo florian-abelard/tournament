@@ -11,6 +11,20 @@
     </section>
     <br/>
     <section>
+    {% if tournament.status != 'upcoming' %}
+        {% for stage in stages %}
+            <a href="{{ path('tournoi_stage_detail', {'uuid': stage.uuid}) }}">
+                {% if stage.type == 'group' %}
+                    Phase de groupe
+                {% elseif stage.type == 'bracket' %}
+                    Tableau final
+                {% endif %}
+            </a>
+        {% endfor %}
+    {% endif %}
+    </section>
+    <br/>
+    <section>
         <h5>Joueurs inscrits</h5>
         {% for player in registeredPlayers %}
             <div>
