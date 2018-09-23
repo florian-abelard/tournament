@@ -89,16 +89,17 @@ class TournamentController extends Controller
     {
         $tournament = $this->tournamentRepository->findById(new Uuid($uuid));
 
+        $stages = $this->stageRepository->findByTournamentId($tournament->uuid());
+
         $registeredPlayers = $this->playerRepository->findByTournamentId($tournament->uuid());
 
         $notRegisteredplayers = $this->playerRepository->findNotInTournament($tournament->uuid());
-
-        // $stages = $this->stageRepository->findByTournamentId($tournament->uuid()); // TODO
 
         return $this->render(
             'Tournament/showTournament.html.twig',
             array(
                 'tournament' => $tournament,
+                'stages' => $stages,
                 'registeredPlayers' => $registeredPlayers,
                 'notRegisteredplayers' => $notRegisteredplayers
             )
