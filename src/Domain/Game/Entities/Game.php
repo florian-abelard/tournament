@@ -34,6 +34,7 @@ class Game
         $this->stageUuid = $stageUuid;
         $this->type = $type;
 
+        $this->status = new GameStatus('upcoming');
         $this->playingDate = new NullDateTime();
 
         // $this->sets = new SetCollection();
@@ -59,6 +60,11 @@ class Game
         return $this->stageUuid;
     }
 
+    public function type(): GameType
+    {
+        return $this->type;
+    }
+
     public function status(): GameStatus
     {
         return $this->status;
@@ -78,7 +84,7 @@ class Game
 
     public function setPlayingDate(DateTime $playingDate): self
     {
-        $this->date = $playingDate;
+        $this->playingDate = $playingDate;
 
         return $this;
     }
