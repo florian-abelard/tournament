@@ -52,16 +52,16 @@ class GroupGame extends Game
     public function toDto(): DTO\GroupGame
     {
         return new DTO\GroupGame(
-            $this->uuid()->value(),
-            $this->player1()->uuid()->value(),
-            $this->player2()->uuid()->value(),
-            $this->stageUuid()->value(),
-            $this->groupUuid() ? $this->groupUuid()->value() : null,
+            $this->uuid(),
+            $this->player1(),
+            $this->player2(),
+            $this->stageUuid(),
+            $this->groupUuid(),
             $this->position(),
-            $this->status()->value(),
-            $this->playingDate()->value(),
+            $this->status(),
+            $this->playingDate(),
             $this->numberOfSetsToWin(),
-            $this->winner() ? $this->winner()->uuid()->value() : null
+            $this->winner()
         );
     }
 }

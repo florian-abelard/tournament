@@ -33,7 +33,6 @@ class GroupGameCollectionFactory
                 $group->stageUuid(),
                 $group->uuid()
             );
-            $game->setStatus(new GameStatus('upcoming'));
             $game->setPosition($gamePosition);
             $games->add($game);
         }
