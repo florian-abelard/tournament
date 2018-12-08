@@ -11,12 +11,12 @@
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",
+        "symfony/debug": "^4.0",
         "symfony/debug-pack": "*",
         "symfony/expression-language": "^4.0",
         "symfony/flex": "^1.0",
         "symfony/form": "^4.0",
         "symfony/framework-bundle": "^4.0",
-        "symfony/lts": "^4@dev",
         "symfony/monolog-bundle": "^3.1",
         "symfony/process": "^4.0",
         "symfony/security-bundle": "^4.0",
@@ -34,7 +34,8 @@
         "symfony/dotenv": "^4.0",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "*"
+        "symfony/profiler-pack": "*",
+        "symfony/var-dumper": "^4.0"
     },
     "config": {
         "preferred-install": {
