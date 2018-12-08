@@ -1,14 +1,15 @@
 <?php
 
-declare(strict_types= 1);
+declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Game\Factories;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Game\Collections\GroupGameCollection;
 use Flo\Tournoi\Domain\Game\Entities\GroupGame;
-use Flo\Tournoi\Domain\Game\ValueObjects\GameStatus;
+use Flo\Tournoi\Domain\Game\Exceptions\InvalidNumberOfPlayersInGroupException;
 use Flo\Tournoi\Domain\Group\Entities\Group;
+use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 
 class GroupGameCollectionFactory
 {
@@ -40,7 +41,7 @@ class GroupGameCollectionFactory
         return $games;
     }
 
-    private function retrieveGamesPositionInGroup($players): array
+    private function retrieveGamesPositionInGroup(PlayerCollection $players): array
     {
         $numberOfPlayers = count($players);
 
@@ -69,8 +70,7 @@ class GroupGameCollectionFactory
                 ];
 
             default:
-                throw new \Exception("Invalid number of players in group : " . $numberOfPlayers);
-                break;
+                throw new InvalidNumberOfPlayersInGroupException($numberOfPlayers);
         }
     }
 }

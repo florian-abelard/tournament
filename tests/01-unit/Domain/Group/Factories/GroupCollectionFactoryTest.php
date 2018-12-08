@@ -14,7 +14,7 @@ use Flo\Tournoi\Domain\Player\ValueObjects\RankingPoints;
 use Flo\Tournoi\Domain\Stage\Entities\GroupStage;
 use PHPUnit\Framework\TestCase;
 
-class GroupCollectionFactoryTests extends TestCase
+class GroupCollectionFactoryTest extends TestCase
 {
     private
         $groupCollectionFactory;
@@ -77,6 +77,7 @@ class GroupCollectionFactoryTests extends TestCase
             ->getMockBuilder(GroupStage::class)
             ->setConstructorArgs([new Uuid(), new Uuid()])
             ->getMock();
+            
         $groupStage->method('numberOfPlacesInGroup')->willReturn($numberOfPlaces);
 
         return $groupStage;
