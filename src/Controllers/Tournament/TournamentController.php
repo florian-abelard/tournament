@@ -101,7 +101,7 @@ class TournamentController extends Controller
                 'tournament' => $tournament,
                 'stages' => $stages,
                 'registeredPlayers' => $registeredPlayers,
-                'notRegisteredplayers' => $notRegisteredplayers
+                'notRegisteredPlayers' => $notRegisteredplayers
             )
         );
     }
