@@ -43,7 +43,7 @@
 
             <form action="{{ path('tournoi_tournament_add_player', {'uuid': tournament.uuid}) }}" method="POST">
                 <select name="player_to_add">
-                    {% for player in notRegisteredplayers %}
+                    {% for player in notRegisteredPlayers %}
                         <option value="{{ player.uuid }}">{{ player.name }}</option>
                         </div>
                     {% endfor %}
