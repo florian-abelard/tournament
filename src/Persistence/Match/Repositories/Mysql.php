@@ -2,31 +2,31 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Persistence\Game\Repositories;
+namespace Flo\Tournoi\Persistence\Match\Repositories;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Game\Collections\GroupGameCollection;
-use Flo\Tournoi\Domain\Game\Entities\Game;
-use Flo\Tournoi\Domain\Game\GameRepository;
-use Flo\Tournoi\Domain\Game\Entities\GroupGame;
+use Flo\Tournoi\Domain\Match\Collections\GroupMatchCollection;
+use Flo\Tournoi\Domain\Match\Entities\Match;
+use Flo\Tournoi\Domain\Match\MatchRepository;
+use Flo\Tournoi\Domain\Match\Entities\GroupMatch;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Persistence\Core\Repositories\Mysql as MysqlCore;
 
-class Mysql extends MysqlCore implements GameRepository
+class Mysql extends MysqlCore implements MatchRepository
 {
     private const
-        TABLE = 'game',
+        TABLE = 'match',
         PLAYER_TABLE = 'player',
         STAGE_TABLE = 'stage',
         GROUP_TABLE = 'group';
 
-    public function persist(Game $game): void
+    public function persist(Match $match): void
     {
         $table = self::TABLE;
-        $dto = $game->toDTO();
+        $dto = $match->toDTO();
 
         $sql = <<<SQL
-            INSERT INTO $table (uuid, player1_uuid, player2_uuid, stage_uuid, group_uuid, position, status, playing_date, number_of_sets_to_win, winner_uuid)
+            INSERT INTO `$table` (uuid, player1_uuid, player2_uuid, stage_uuid, group_uuid, position, status, playing_date, number_of_sets_to_win, winner_uuid)
             VALUES (:uuid, :player1Uuid, :player2Uuid, :stageUuid, :groupUuid, :position, :status, :playingDate, :numberOfSetsToWin, :winnerUuid)
 SQL;
 
@@ -44,19 +44,19 @@ SQL;
         $statement->execute();
     }
 
-    public function findByGroupId(Uuid $groupId): GroupGameCollection
+    public function findByGroupId(Uuid $groupId): GroupMatchCollection
     {
         $table = self::TABLE;
         $playerTable = self::PLAYER_TABLE;
         $groupTable = self::GROUP_TABLE;
 
         $sql = <<<SQL
-            SELECT ga.*, pl1.name as player1_name, pl2.name as player2_name
-            FROM `$table` as ga
+            SELECT ma.*, pl1.name as player1_name, pl2.name as player2_name
+            FROM `$table` as ma
             INNER JOIN `$playerTable` as pl1
-            ON pl1.uuid = ga.player1_uuid
+            ON pl1.uuid = ma.player1_uuid
             INNER JOIN `$playerTable` as pl2
-            ON pl2.uuid = ga.player2_uuid
+            ON pl2.uuid = ma.player2_uuid
             WHERE group_uuid = :groupUuid
 SQL;
 
@@ -64,28 +64,28 @@ SQL;
         $statement->bindValue(':groupUuid', $groupId->value());
         $statement->execute();
 
-        $games = new GroupGameCollection();
+        $matches = new GroupMatchCollection();
 
         foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result)
         {
-            $games->add($this->buildDomainObject($result));
+            $matches->add($this->buildDomainObject($result));
         }
 
-        return $games;
+        return $matches;
     }
 
-    private function buildDomainObject(array $result): Game
+    private function buildDomainObject(array $result): Match
     {
-        $game = new GroupGame(
+        $match = new GroupMatch(
             new Uuid($result['uuid']),
             $this->buildPlayerDomainObject($result, 1),
             $this->buildPlayerDomainObject($result, 2),
             new Uuid($result['stage_uuid']),
             new Uuid($result['group_uuid'])
         );
-        $game->setPosition($result['position']);
+        $match->setPosition($result['position']);
 
-        return $game;
+        return $match;
     }
 
     private function buildPlayerDomainObject(array $result, int $playerNumero): Player

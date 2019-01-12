@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Persistence\Game\DataTransferObjects;
+namespace Flo\Tournoi\Persistence\Match\DataTransferObjects;
 
 use DateTime;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Game\ValueObjects\GameStatus;
+use Flo\Tournoi\Domain\Match\ValueObjects\MatchStatus;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 
-class GroupGame
+class GroupMatch
 {
     private
         $uuid,
@@ -30,7 +30,7 @@ class GroupGame
         Uuid $stageUuid,
         Uuid $groupUuid,
         ?int $position,
-        GameStatus $status,
+        MatchStatus $status,
         DateTime $playingDate,
         ?int $numberOfSetsToWin,
         ?Player $winner

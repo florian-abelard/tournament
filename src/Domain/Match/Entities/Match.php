@@ -2,17 +2,17 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Domain\Game\Entities;
+namespace Flo\Tournoi\Domain\Match\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Core\ValueObjects\DateTime;
 use Flo\Tournoi\Domain\Core\ValueObjects\NullDateTime;
-use Flo\Tournoi\Domain\Game\ValueObjects\GameType;
-use Flo\Tournoi\Domain\Game\ValueObjects\GameStatus;
+use Flo\Tournoi\Domain\Match\ValueObjects\MatchType;
+use Flo\Tournoi\Domain\Match\ValueObjects\MatchStatus;
 use Flo\Tournoi\Domain\Player\Entities\Player;
-use Flo\Tournoi\Persistence\Game\DataTransferObjects as DTO;
+use Flo\Tournoi\Persistence\Match\DataTransferObjects as DTO;
 
-class Game
+class Match
 {
     private
         $uuid,
@@ -26,7 +26,7 @@ class Game
         $winner,
         $sets;
 
-    public function __construct(Uuid $uuid, Player $player1, Player $player2, Uuid $stageUuid, GameType $type)
+    public function __construct(Uuid $uuid, Player $player1, Player $player2, Uuid $stageUuid, MatchType $type)
     {
         $this->uuid = $uuid;
         $this->player1 = $player1;
@@ -34,7 +34,7 @@ class Game
         $this->stageUuid = $stageUuid;
         $this->type = $type;
 
-        $this->status = new GameStatus('upcoming');
+        $this->status = new MatchStatus('upcoming');
         $this->playingDate = new NullDateTime();
 
         // $this->sets = new SetCollection();
@@ -60,17 +60,17 @@ class Game
         return $this->stageUuid;
     }
 
-    public function type(): GameType
+    public function type(): MatchType
     {
         return $this->type;
     }
 
-    public function status(): GameStatus
+    public function status(): MatchStatus
     {
         return $this->status;
     }
 
-    public function setStatus(GameStatus $status): self
+    public function setStatus(MatchStatus $status): self
     {
         $this->status = $status;
 

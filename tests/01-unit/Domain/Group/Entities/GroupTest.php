@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Tests\Domain\Stage\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Game\Entities\Game;
+use Flo\Tournoi\Domain\Match\Entities\Match;
 use Flo\Tournoi\Domain\Group\Entities\Group;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Persistence\Group\DataTransferObjects as DTO;
@@ -50,17 +50,17 @@ class GroupTest extends TestCase
         $this->assertEquals($player, $group->players()->last());
     }
 
-    public function testAddGameInEntity()
+    public function testAddMatchInEntity()
     {
         $group = $this->createGroup();
 
-        $this->assertCount(0, $group->games());
+        $this->assertCount(0, $group->matches());
 
-        $game = $this->createMock(Game::class);
-        $group->addGame($game);
+        $match = $this->createMock(Match::class);
+        $group->addMatch($match);
 
-        $this->assertCount(1, $group->games());
-        $this->assertEquals($game, $group->games()->last());
+        $this->assertCount(1, $group->matches());
+        $this->assertEquals($match, $group->matches()->last());
     }
 
     public function testToDTO()

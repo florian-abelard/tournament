@@ -2,46 +2,46 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Domain\Game\Factories;
+namespace Flo\Tournoi\Domain\Match\Factories;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Game\Collections\GroupGameCollection;
-use Flo\Tournoi\Domain\Game\Entities\GroupGame;
-use Flo\Tournoi\Domain\Game\Exceptions\InvalidNumberOfPlayersInGroupException;
+use Flo\Tournoi\Domain\Match\Collections\GroupMatchCollection;
+use Flo\Tournoi\Domain\Match\Entities\GroupMatch;
+use Flo\Tournoi\Domain\Match\Exceptions\InvalidNumberOfPlayersInGroupException;
 use Flo\Tournoi\Domain\Group\Entities\Group;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 
-class GroupGameCollectionFactory
+class GroupMatchCollectionFactory
 {
     public function __construct()
     {
     }
 
-    public function create(Group $group): GroupGameCollection
+    public function create(Group $group): GroupMatchCollection
     {
-        $games = new GroupGameCollection();
+        $matches = new GroupMatchCollection();
 
         $playersInGroup = $group->players();
 
-        $gamesOrdered = $this->retrieveGamesPositionInGroup($playersInGroup);
+        $matchesOrdered = $this->retrieveMatchesPositionInGroup($playersInGroup);
 
-        foreach ($gamesOrdered as $gamePosition => $gamePlayers)
+        foreach ($matchesOrdered as $matchPosition => $matchPlayers)
         {
-            $game = new GroupGame(
+            $match = new GroupMatch(
                 new Uuid(),
-                $playersInGroup[$gamePlayers[0]-1],
-                $playersInGroup[$gamePlayers[1]-1],
+                $playersInGroup[$matchPlayers[0]-1],
+                $playersInGroup[$matchPlayers[1]-1],
                 $group->stageUuid(),
                 $group->uuid()
             );
-            $game->setPosition($gamePosition);
-            $games->add($game);
+            $match->setPosition($matchPosition);
+            $matches->add($match);
         }
 
-        return $games;
+        return $matches;
     }
 
-    private function retrieveGamesPositionInGroup(PlayerCollection $players): array
+    private function retrieveMatchesPositionInGroup(PlayerCollection $players): array
     {
         $numberOfPlayers = count($players);
 

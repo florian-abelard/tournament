@@ -4,8 +4,8 @@ namespace Flo\Tournoi\Controllers\Tournament;
 
 use Doctrine\DBAL\Connection;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Game\GameRepository;
-use Flo\Tournoi\Domain\Game\Factories\GroupGameCollectionFactory;
+use Flo\Tournoi\Domain\Match\MatchRepository;
+use Flo\Tournoi\Domain\Match\Factories\GroupMatchCollectionFactory;
 use Flo\Tournoi\Domain\Group\GroupRepository;
 use Flo\Tournoi\Domain\Group\Factories\GroupCollectionFactory;
 use Flo\Tournoi\Domain\Player\PlayerRepository;
@@ -32,9 +32,9 @@ class TournamentController extends Controller
         $registrationRepository,
         $groupRepository,
         $stageRepository,
-        $gameRepository,
+        $matchRepository,
         $groupCollectionFactory,
-        $groupGameCollectionFactory;
+        $groupMatchCollectionFactory;
 
     public function __construct(
         Connection $databaseConnection,
@@ -43,9 +43,9 @@ class TournamentController extends Controller
         RegistrationRepository $registrationRepository,
         GroupRepository $groupRepository,
         StageRepository $stageRepository,
-        GameRepository $gameRepository,
+        MatchRepository $matchRepository,
         GroupCollectionFactory $groupCollectionFactory,
-        GroupGameCollectionFactory $groupGameCollectionFactory
+        GroupMatchCollectionFactory $groupMatchCollectionFactory
     ){
         $this->databaseConnection = $databaseConnection;
         $this->tournamentRepository = $tournamentRepository;
@@ -53,9 +53,9 @@ class TournamentController extends Controller
         $this->registrationRepository = $registrationRepository;
         $this->groupRepository = $groupRepository;
         $this->stageRepository = $stageRepository;
-        $this->gameRepository = $gameRepository;
+        $this->matchRepository = $matchRepository;
         $this->groupCollectionFactory = $groupCollectionFactory;
-        $this->groupGameCollectionFactory = $groupGameCollectionFactory;
+        $this->groupMatchCollectionFactory = $groupMatchCollectionFactory;
     }
 
     public function viewCreate(): Response
@@ -148,10 +148,10 @@ class TournamentController extends Controller
             {
                 $this->groupRepository->persist($group);
 
-                $games = $this->groupGameCollectionFactory->create($group);
-                foreach ($games as $game)
+                $matches = $this->groupMatchCollectionFactory->create($group);
+                foreach ($matches as $match)
                 {
-                    $this->gameRepository->persist($game);
+                    $this->matchRepository->persist($match);
                 }
             }
 

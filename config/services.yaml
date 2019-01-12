@@ -32,4 +32,4 @@ services:
     Flo\Tournoi\Domain\Registration\RegistrationRepository: '@Flo\Tournoi\Persistence\Registration\Repositories\Mysql'
     Flo\Tournoi\Domain\Group\GroupRepository: '@Flo\Tournoi\Persistence\Group\Repositories\Mysql'
     Flo\Tournoi\Domain\Stage\StageRepository: '@Flo\Tournoi\Persistence\Stage\Repositories\Mysql'
-    Flo\Tournoi\Domain\Game\GameRepository: '@Flo\Tournoi\Persistence\Game\Repositories\Mysql'
+    Flo\Tournoi\Domain\Match\MatchRepository: '@Flo\Tournoi\Persistence\Match\Repositories\Mysql'

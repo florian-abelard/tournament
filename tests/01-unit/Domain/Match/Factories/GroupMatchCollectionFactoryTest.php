@@ -2,32 +2,32 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Tests\Domain\Game\Factories;
+namespace Flo\Tournoi\Tests\Domain\Match\Factories;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Game\Collections\GroupGameCollection;
-use Flo\Tournoi\Domain\Game\Exceptions\InvalidNumberOfPlayersInGroupException;
-use Flo\Tournoi\Domain\Game\Factories\GroupGameCollectionFactory;
+use Flo\Tournoi\Domain\Match\Collections\GroupMatchCollection;
+use Flo\Tournoi\Domain\Match\Exceptions\InvalidNumberOfPlayersInGroupException;
+use Flo\Tournoi\Domain\Match\Factories\GroupMatchCollectionFactory;
 use Flo\Tournoi\Domain\Group\Collections\GroupCollection;
 use Flo\Tournoi\Domain\Group\Entities\Group;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use PHPUnit\Framework\TestCase;
 
-class GroupGameCollectionFactoryTest extends TestCase
+class GroupMatchCollectionFactoryTest extends TestCase
 {
     /**
      * @dataProvider createProvider
      */
-    public function testCreate(int $numberOfPlayers, int $numberOfGamesExpected)
+    public function testCreate(int $numberOfPlayers, int $numberOfMatchesExpected)
     {
         $groupStage = $this->createGroup($numberOfPlayers);
 
-        $groupGameCollectionFactory = new GroupGameCollectionFactory();
+        $groupMatchCollectionFactory = new GroupMatchCollectionFactory();
 
-        $groupGames = $groupGameCollectionFactory->create($groupStage);
+        $groupMatches = $groupMatchCollectionFactory->create($groupStage);
 
-        $this->assertInstanceOf(GroupGameCollection::class, $groupGames);
-        $this->assertCount($numberOfGamesExpected, $groupGames);
+        $this->assertInstanceOf(GroupMatchCollection::class, $groupMatches);
+        $this->assertCount($numberOfMatchesExpected, $groupMatches);
     }
 
     public function createProvider()
@@ -41,22 +41,22 @@ class GroupGameCollectionFactoryTest extends TestCase
     {
         $groupStage = $this->createGroup(0);
 
-        $groupGameCollectionFactory = new GroupGameCollectionFactory();
+        $groupMatchCollectionFactory = new GroupMatchCollectionFactory();
 
         $this->expectException(InvalidNumberOfPlayersInGroupException::class);
 
-        $groupGames = $groupGameCollectionFactory->create($groupStage);
+        $groupMatches = $groupMatchCollectionFactory->create($groupStage);
     }
 
     public function testCreateFromGroupWithTooManyPlayers()
     {
         $groupStage = $this->createGroup(5);
 
-        $groupGameCollectionFactory = new GroupGameCollectionFactory();
+        $groupMatchCollectionFactory = new GroupMatchCollectionFactory();
 
         $this->expectException(InvalidNumberOfPlayersInGroupException::class);
 
-        $groupGames = $groupGameCollectionFactory->create($groupStage);
+        $groupMatches = $groupMatchCollectionFactory->create($groupStage);
     }
 
     private function createGroup(?int $numberOfPlayers): Group

@@ -49,7 +49,7 @@ CREATE TABLE `group_player` (
     FOREIGN KEY (player_uuid) REFERENCES `player` (uuid) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `game` (
+CREATE TABLE `match` (
     uuid VARCHAR(36) NOT NULL,
     player1_uuid VARCHAR(36),
     player2_uuid VARCHAR(36),

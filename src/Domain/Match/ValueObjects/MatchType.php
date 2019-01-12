@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Domain\Game\ValueObjects;
+namespace Flo\Tournoi\Domain\Match\ValueObjects;
 
-use Flo\Tournoi\Domain\Game\Exceptions\InvalidGameTypeException;
+use Flo\Tournoi\Domain\Match\Exceptions\InvalidMatchTypeException;
 
-final class GameType
+final class MatchType
 {
     public const
         TYPE_GROUP = "group",
@@ -27,7 +27,7 @@ final class GameType
         return $this->type;
     }
 
-    public function equals(GameType $type): bool
+    public function equals(MatchType $type): bool
     {
         return $this->value() === $type->value();
     }
@@ -36,7 +36,7 @@ final class GameType
     {
         if ($type != self::TYPE_GROUP && $type != self::TYPE_KNOCKOUT)
         {
-            throw new InvalidGameTypeException($type);
+            throw new InvalidMatchTypeException($type);
         }
     }
 
