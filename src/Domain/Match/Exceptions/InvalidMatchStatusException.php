@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Domain\Game\Exceptions;
+namespace Flo\Tournoi\Domain\Match\Exceptions;
 
-class InvalidGameStatusException extends \DomainException
+class InvalidMatchStatusException extends \DomainException
 {
     public function __construct($status)
     {
         parent::__construct(sprintf(
-            'Invalid game status : "%s"',
+            'Invalid match status : "%s"',
             $status
         ));
     }

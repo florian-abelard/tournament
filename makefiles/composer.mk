@@ -12,6 +12,9 @@ composer-install: ##@composer install composer dependencies
 composer-update: ##@composer update composer dependencies
 	$(COMPOSER_BIN) update --ignore-platform-reqs
 
+composer-dump-autoload: ##@composer dump autoloading
+	$(COMPOSER_BIN) dump-autoload
+
 #------------------------------------------------------------------------------
 
 clean-composer:##@composer clean composer

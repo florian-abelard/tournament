@@ -20,8 +20,8 @@
             <br/>
         {% endfor %}
         <br/><br/>
-        {% for game in games %}
-            <span>Match {{ loop.index }} : {{ game.player1.name }} vs {{ game.player2.name }}</span>
+        {% for match in matches %}
+            <span>Match {{ loop.index }} : {{ match.player1.name }} vs {{ match.player2.name }}</span>
             <br/>
         {% endfor %}
 

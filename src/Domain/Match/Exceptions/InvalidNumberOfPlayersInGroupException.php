@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Domain\Game\Exceptions;
+namespace Flo\Tournoi\Domain\Match\Exceptions;
 
 class InvalidNumberOfPlayersInGroupException extends \DomainException
 {

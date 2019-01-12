@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Domain\Game\ValueObjects;
+namespace Flo\Tournoi\Domain\Match\ValueObjects;
 
-use Flo\Tournoi\Domain\Game\Exceptions\InvalidGameStatusException;
+use Flo\Tournoi\Domain\Match\Exceptions\InvalidMatchStatusException;
 
-final class GameStatus
+final class MatchStatus
 {
     private const
         ALLOWED_STATUSES = ['upcoming', 'running', 'finished'];
@@ -26,7 +26,7 @@ final class GameStatus
         return $this->status;
     }
 
-    public function equals(GameStatus $status): bool
+    public function equals(MatchStatus $status): bool
     {
         return $this->value() === $status->value();
     }
@@ -35,7 +35,7 @@ final class GameStatus
     {
         if(!in_array($status, self::ALLOWED_STATUSES))
         {
-            throw new InvalidGameStatusException($status);
+            throw new InvalidMatchStatusException($status);
         }
     }
 

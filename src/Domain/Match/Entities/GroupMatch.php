@@ -2,18 +2,18 @@
 
 declare(strict_types = 1);
 
-namespace Flo\Tournoi\Domain\Game\Entities;
+namespace Flo\Tournoi\Domain\Match\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Core\ValueObjects\DateTime;
 use Flo\Tournoi\Domain\Core\ValueObjects\NullDateTime;
-use Flo\Tournoi\Domain\Game\ValueObjects\GameType;
-use Flo\Tournoi\Domain\Game\ValueObjects\GameStatus;
-use Flo\Tournoi\Domain\Game\Entities\Game;
+use Flo\Tournoi\Domain\Match\ValueObjects\MatchType;
+use Flo\Tournoi\Domain\Match\ValueObjects\MatchStatus;
+use Flo\Tournoi\Domain\Match\Entities\Match;
 use Flo\Tournoi\Domain\Player\Entities\Player;
-use Flo\Tournoi\Persistence\Game\DataTransferObjects as DTO;
+use Flo\Tournoi\Persistence\Match\DataTransferObjects as DTO;
 
-class GroupGame extends Game
+class GroupMatch extends Match
 {
     private
         $groupUuid,
@@ -26,7 +26,7 @@ class GroupGame extends Game
             $player1,
             $player2,
             $stageUuid,
-            new GameType(GameType::TYPE_GROUP)
+            new MatchType(MatchType::TYPE_GROUP)
         );
 
         $this->groupUuid = $groupUuid;
@@ -49,9 +49,9 @@ class GroupGame extends Game
         return $this;
     }
 
-    public function toDto(): DTO\GroupGame
+    public function toDto(): DTO\GroupMatch
     {
-        return new DTO\GroupGame(
+        return new DTO\GroupMatch(
             $this->uuid(),
             $this->player1(),
             $this->player2(),

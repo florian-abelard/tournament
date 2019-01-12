@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Domain\Group\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Game\Collections\GroupGameCollection;
-use Flo\Tournoi\Domain\Game\Entities\Game;
+use Flo\Tournoi\Domain\Match\Collections\GroupMatchCollection;
+use Flo\Tournoi\Domain\Match\Entities\Match;
 use Flo\Tournoi\Domain\Player\Collections\PlayerCollection;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Persistence\Group\DataTransferObjects as DTO;
@@ -19,7 +19,7 @@ class Group
         $label,
         $numberOfPlaces,
         $players,
-        $games;
+        $matches;
 
     public function __construct(Uuid $uuid, Uuid $stageUuid)
     {
@@ -27,7 +27,7 @@ class Group
         $this->stageUuid = $stageUuid;
 
         $this->players = new PlayerCollection();
-        $this->games = new GroupGameCollection();
+        $this->matches = new GroupMatchCollection();
     }
 
     public function uuid(): Uuid
@@ -74,14 +74,14 @@ class Group
         $this->players->add($player);
     }
 
-    public function games(): GroupGameCollection
+    public function matches(): GroupMatchCollection
     {
-        return $this->games;
+        return $this->matches;
     }
 
-    public function addGame(Game $game): void
+    public function addMatch(Match $match): void
     {
-        $this->games->add($game);
+        $this->matches->add($match);
     }
 
     public function toDTO(): DTO\Group
