@@ -117,9 +117,12 @@ class TournamentController extends Controller
     {
         $playerUuid = $request->request->get('player_to_add');
 
-        $registration = new Registration(new Uuid($playerUuid), new Uuid($uuid));
+        if ($playerUuid)
+        {
+            $registration = new Registration(new Uuid($playerUuid), new Uuid($uuid));
 
-        $this->registrationRepository->persist($registration);
+            $this->registrationRepository->persist($registration);
+        }
 
         return $this->redirectToRoute('tournoi_tournament_detail', ['uuid' => $uuid]);
     }
