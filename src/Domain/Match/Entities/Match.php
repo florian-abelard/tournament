@@ -21,10 +21,7 @@ class Match
         $stageUuid,
         $type,
         $status,
-        $playingDate,
-        $numberOfSetsToWin,
-        $winner,
-        $sets;
+        $playingDate;
 
     public function __construct(Uuid $uuid, Player $player1, Player $player2, Uuid $stageUuid, MatchType $type)
     {
@@ -36,8 +33,6 @@ class Match
 
         $this->status = new MatchStatus('upcoming');
         $this->playingDate = new NullDateTime();
-
-        // $this->sets = new SetCollection();
     }
 
     public function uuid(): Uuid
@@ -85,30 +80,6 @@ class Match
     public function setPlayingDate(DateTime $playingDate): self
     {
         $this->playingDate = $playingDate;
-
-        return $this;
-    }
-
-    public function numberOfSetsToWin(): ?int
-    {
-        return $this->numberOfSetsToWin;
-    }
-
-    public function setNumberOfSetsToWin(int $numberOfSetsToWin): self
-    {
-        $this->numberOfSetsToWin = $numberOfSetsToWin;
-
-        return $this;
-    }
-
-    public function winner(): ?Player
-    {
-        return $this->winner;
-    }
-
-    public function setWinner(Player $winner): self
-    {
-        $this->winner = $winner;
 
         return $this;
     }

@@ -60,7 +60,7 @@ class GroupMatch extends Match
             $this->position(),
             $this->status(),
             $this->playingDate(),
-            $this->numberOfSetsToWin(),
+            $this->numberOfWinningSets(),
             $this->winner()
         );
     }

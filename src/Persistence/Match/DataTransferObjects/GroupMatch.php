@@ -20,7 +20,7 @@ class GroupMatch
         $position,
         $status,
         $playingDate,
-        $numberOfSetsToWin,
+        $numberOfWinningSets,
         $winner;
 
     public function __construct(
@@ -32,7 +32,7 @@ class GroupMatch
         ?int $position,
         MatchStatus $status,
         DateTime $playingDate,
-        ?int $numberOfSetsToWin,
+        ?int $numberOfWinningSets,
         ?Player $winner
     ){
         $this->uuid = $uuid;
@@ -43,7 +43,7 @@ class GroupMatch
         $this->position = $position;
         $this->status = $status;
         $this->playingDate = $playingDate;
-        $this->numberOfSetsToWin = $numberOfSetsToWin;
+        $this->numberOfWinningSets = $numberOfWinningSets;
         $this->winner = $winner;
     }
 
@@ -87,9 +87,9 @@ class GroupMatch
         return $this->playingDate->value();
     }
 
-    public function numberOfSetsToWin(): ?int
+    public function numberOfWinningSets(): ?int
     {
-        return $this->numberOfSetsToWin;
+        return $this->numberOfWinningSets;
     }
 
     public function winnerUuid(): ?string
