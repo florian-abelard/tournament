@@ -6,6 +6,7 @@ namespace Flo\Tournoi\Persistence\Match\DataTransferObjects;
 
 use DateTime;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
+use Flo\Tournoi\Domain\Match\ValueObjects\MatchResult;
 use Flo\Tournoi\Domain\Match\ValueObjects\MatchStatus;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 
@@ -20,8 +21,7 @@ class GroupMatch
         $position,
         $status,
         $playingDate,
-        $numberOfWinningSets,
-        $winner;
+        $result;
 
     public function __construct(
         Uuid $uuid,
@@ -32,8 +32,7 @@ class GroupMatch
         ?int $position,
         MatchStatus $status,
         DateTime $playingDate,
-        ?int $numberOfWinningSets,
-        ?Player $winner
+        ?MatchResult $result
     ){
         $this->uuid = $uuid;
         $this->player1 = $player1;
@@ -43,8 +42,7 @@ class GroupMatch
         $this->position = $position;
         $this->status = $status;
         $this->playingDate = $playingDate;
-        $this->numberOfWinningSets = $numberOfWinningSets;
-        $this->winner = $winner;
+        $this->result = $result;
     }
 
     public function uuid(): string
@@ -87,17 +85,22 @@ class GroupMatch
         return $this->playingDate->value();
     }
 
-    public function numberOfWinningSets(): ?int
+    public function result(): ?string
     {
-        return $this->numberOfWinningSets;
+        return serialize($this->result);
     }
 
     public function winnerUuid(): ?string
     {
-        if ($this->winner instanceof Player)
+        if (is_null($this->result)) 
         {
-            return $this->winner->uuid()->value();
+            return null;
         }
+        if ($this->result->winner() instanceof Player)
+        {
+            return $this->result->winner()->uuid()->value();
+        }
+
         return null;
     }
 }

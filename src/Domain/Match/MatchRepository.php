@@ -12,5 +12,9 @@ interface MatchRepository
 {
     public function persist(Match $match): void;
 
+    public function update(Match $match): void;
+
+    public function findById(Uuid $uuid): ?Match;
+
     public function findByGroupId(Uuid $groupUuid): GroupMatchCollection;
 }

@@ -1,0 +1,4 @@
+tournoi_match_result:
+    path: /match/{uuid}/result
+    methods: [GET]
+    controller: Flo\Tournoi\Controllers\Match\MatchController::enterMatchResultAction

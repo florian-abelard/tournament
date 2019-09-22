@@ -17,7 +17,6 @@ class Mysql extends MysqlCore implements MatchRepository
     private const
         TABLE = 'match',
         PLAYER_TABLE = 'player',
-        STAGE_TABLE = 'stage',
         GROUP_TABLE = 'group';
 
     public function persist(Match $match): void
@@ -26,8 +25,8 @@ class Mysql extends MysqlCore implements MatchRepository
         $dto = $match->toDTO();
 
         $sql = <<<SQL
-            INSERT INTO `$table` (uuid, player1_uuid, player2_uuid, stage_uuid, group_uuid, position, status, playing_date, number_of_sets_to_win, winner_uuid)
-            VALUES (:uuid, :player1Uuid, :player2Uuid, :stageUuid, :groupUuid, :position, :status, :playingDate, :numberOfSetsToWin, :winnerUuid)
+            INSERT INTO `$table` (uuid, player1_uuid, player2_uuid, stage_uuid, group_uuid, position, status, playing_date, result, winner_uuid)
+            VALUES (:uuid, :player1Uuid, :player2Uuid, :stageUuid, :groupUuid, :position, :status, :playingDate, :result, :winnerUuid)
 SQL;
 
         $statement = $this->getDatabaseConnection()->prepare($sql);
@@ -39,16 +38,79 @@ SQL;
         $statement->bindValue(':position', $dto->position());
         $statement->bindValue(':status', $dto->status());
         $statement->bindValue(':playingDate', $dto->playingDate());
-        $statement->bindValue(':numberOfSetsToWin', $dto->numberOfSetsToWin());
+        $statement->bindValue(':result', $dto->result());
         $statement->bindValue(':winnerUuid', $dto->winnerUuid());
         $statement->execute();
+    }
+
+    public function update(Match $match): void
+    {
+        $table = self::TABLE;
+        $dto = $match->toDTO();
+
+        $sql = <<<SQL
+            UPDATE `$table` 
+            SET 
+                player1_uuid = :player1Uuid,
+                player2_uuid = :player2Uuid,
+                stage_uuid = :stageUuid,
+                group_uuid = :groupUuid,
+                position = :position,
+                status = :status,
+                playing_date = :playingDate,
+                result = :result,
+                winner_uuid = :winnerUuid
+            WHERE uuid = :uuid
+SQL;
+
+        $statement = $this->getDatabaseConnection()->prepare($sql);
+        $statement->bindValue(':uuid', $dto->uuid());
+        $statement->bindValue(':player1Uuid', $dto->player1Uuid());
+        $statement->bindValue(':player2Uuid', $dto->player2Uuid());
+        $statement->bindValue(':stageUuid', $dto->stageUuid());
+        $statement->bindValue(':groupUuid', $dto->groupUuid());
+        $statement->bindValue(':position', $dto->position());
+        $statement->bindValue(':status', $dto->status());
+        $statement->bindValue(':playingDate', $dto->playingDate());
+        $statement->bindValue(':result', $dto->result());
+        $statement->bindValue(':winnerUuid', $dto->winnerUuid());
+        $statement->execute();
+    }
+
+    public function findById(Uuid $id): Match
+    {
+        $table = self::TABLE;
+        $playerTable = self::PLAYER_TABLE;
+
+        $sql = <<<SQL
+            SELECT ma.*, pl1.name as player1_name, pl2.name as player2_name
+            FROM `$table` as ma
+            INNER JOIN `$playerTable` as pl1
+            ON pl1.uuid = ma.player1_uuid
+            INNER JOIN `$playerTable` as pl2
+            ON pl2.uuid = ma.player2_uuid
+            WHERE ma.uuid = :uuid
+SQL;
+
+        $statement = $this->getDatabaseConnection()->prepare($sql);
+        $statement->bindValue(':uuid', $id->value());
+        $statement->execute();
+
+        if ($statement->rowCount() === 0) {
+            return null;
+        }
+
+        $result = $statement->fetch();
+        $match = $this->buildDomainObject($result);
+
+        return $match;
+
     }
 
     public function findByGroupId(Uuid $groupId): GroupMatchCollection
     {
         $table = self::TABLE;
         $playerTable = self::PLAYER_TABLE;
-        $groupTable = self::GROUP_TABLE;
 
         $sql = <<<SQL
             SELECT ma.*, pl1.name as player1_name, pl2.name as player2_name
@@ -84,6 +146,7 @@ SQL;
             new Uuid($result['group_uuid'])
         );
         $match->setPosition($result['position']);
+        $match->setResult(unserialize($result['result']));
 
         return $match;
     }

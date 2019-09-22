@@ -59,6 +59,7 @@ CREATE TABLE `match` (
     status VARCHAR(100),
     playing_date DATETIME,
     number_of_sets_to_win SMALLINT UNSIGNED,
+    result VARCHAR(5000),
     winner_uuid VARCHAR(36),
     PRIMARY KEY (uuid),
     FOREIGN KEY (player1_uuid) REFERENCES `player` (uuid) ON DELETE SET NULL ON UPDATE CASCADE,

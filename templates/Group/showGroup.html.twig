@@ -22,6 +22,12 @@
         <br/><br/>
         {% for match in matches %}
             <span>Match {{ loop.index }} : {{ match.player1.name }} vs {{ match.player2.name }}</span>
+            {% if match.result is not null %}
+                {% for set in match.result.sets %}
+                    <span> [ {{ set.scorePlayer1 }}-{{ set.scorePlayer2 }}  ]</span>
+                {% endfor %}
+            {% endif %}
+            <span>- {{ match.uuid }}</span>
             <br/>
         {% endfor %}
 

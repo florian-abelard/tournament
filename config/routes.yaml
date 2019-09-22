@@ -17,3 +17,6 @@ tournoi_stage:
 
 tournoi_group:
     resource: "routes/tournoi/group.yaml"
+
+tournoi_match:
+    resource: "routes/tournoi/match.yaml"

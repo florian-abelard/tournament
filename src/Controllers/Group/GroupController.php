@@ -27,6 +27,7 @@ class GroupController extends Controller
         $group = $this->groupRepository->findById(new Uuid($uuid));
 
         $matches = $this->matchRepository->findByGroupId(new Uuid($uuid));
+
         $matches->sortByPosition();
 
         return $this->render('Group/showGroup.html.twig', array('group' => $group, 'matches' => $matches));

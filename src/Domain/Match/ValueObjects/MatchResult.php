@@ -12,7 +12,6 @@ final class MatchResult
         $player1,
         $player2,
         $numberOfWinningSets,
-        $winner,
         $sets;
 
     public function __construct(Player $player1, Player $player2, SetCollection $sets)
@@ -21,7 +20,7 @@ final class MatchResult
         $this->player2 = $player2;
 
         $this->numberOfWinningSets = 3;
-        // $this->sets = new SetCollection();
+        $this->sets = $sets;
     }
 
     public function winner(): ?Player
@@ -29,9 +28,9 @@ final class MatchResult
         $numberOfSetsWonByPlayer1 = 0;
         $numberOfSetsWonByPlayer2 = 0;
 
-        foreach ($sets as $set)
+        foreach ($this->sets as $set)
         {
-            if ($set->score1 > $set->score2)
+            if ($set->scorePlayer1() > $set->scorePlayer2())
             {
                 $numberOfSetsWonByPlayer1++;
             }
@@ -42,18 +41,23 @@ final class MatchResult
 
         if ($numberOfSetsWonByPlayer1 >= $this->numberOfWinningSets)
         {
-            return $player1;
+            return $this->player1;
         }
         if ($numberOfSetsWonByPlayer2 >= $this->numberOfWinningSets)
         {
-            return $player2;
+            return $this->player2;
         }
 
         return null;
     }
 
-    public function maximumNumberOfSets()
+    public function maximumNumberOfSets(): int
     {
         return $this->numberOfWinningSets * 2 - 1;
+    }
+
+    public function sets(): SetCollection
+    {
+        return $this->sets;
     }
 }

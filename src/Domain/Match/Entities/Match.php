@@ -7,6 +7,7 @@ namespace Flo\Tournoi\Domain\Match\Entities;
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
 use Flo\Tournoi\Domain\Core\ValueObjects\DateTime;
 use Flo\Tournoi\Domain\Core\ValueObjects\NullDateTime;
+use Flo\Tournoi\Domain\Match\ValueObjects\MatchResult;
 use Flo\Tournoi\Domain\Match\ValueObjects\MatchType;
 use Flo\Tournoi\Domain\Match\ValueObjects\MatchStatus;
 use Flo\Tournoi\Domain\Player\Entities\Player;
@@ -21,7 +22,8 @@ class Match
         $stageUuid,
         $type,
         $status,
-        $playingDate;
+        $playingDate,
+        $result;
 
     public function __construct(Uuid $uuid, Player $player1, Player $player2, Uuid $stageUuid, MatchType $type)
     {
@@ -33,6 +35,7 @@ class Match
 
         $this->status = new MatchStatus('upcoming');
         $this->playingDate = new NullDateTime();
+        $this->result = null;
     }
 
     public function uuid(): Uuid
@@ -82,5 +85,15 @@ class Match
         $this->playingDate = $playingDate;
 
         return $this;
+    }
+
+    public function result(): ?MatchResult
+    {
+        return $this->result;
+    }
+
+    public function setResult(?MatchResult $result)
+    {
+        $this->result = $result;
     }
 }

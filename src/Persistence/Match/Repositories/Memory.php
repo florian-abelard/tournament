@@ -25,6 +25,15 @@ class Memory extends MysqlAbstract implements MatchRepository
         $this->collection->add($match);
     }
 
+    public function update(Match $match): void
+    {
+    }
+
+    public function findById(Uuid $uuid): ?Match
+    {
+        return null;
+    }
+
     public function findByGroupId(Uuid $uuid): GroupMatchCollection
     {
         return new GroupMatchCollection();

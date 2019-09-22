@@ -9,20 +9,49 @@ use Flo\Tournoi\Domain\Player\Entities\Player;
 final class Set
 {
     private
-        $score1,
-        $score2,
+        $scorePlayer1,
+        $scorePlayer2,
         $numberOfWinningPoints;
 
-    public function __construct(int $score1, int $score2)
+    public function __construct(int $scorePlayer1, int $scorePlayer2)
     {
-        $this->score1 = $score1;
-        $this->score2 = $score2;
+        $this->scorePlayer1 = $scorePlayer1;
+        $this->scorePlayer2 = $scorePlayer2;
 
-        $this->numberOfWinningPoints = 11;
+        $this->numberOfWinningPoints = 11; // Todo tournament configuration
     }
 
-    public function winner(): ?Player
+    public function scorePlayer1(): ?int
     {
-        return $this->winner;
+        return $this->scorePlayer1;
+    }
+
+    public function scorePlayer2(): ?int
+    {
+        return $this->scorePlayer2;
+    }
+
+    public function validate()
+    {
+        if ($this->scorePlayer1 < $this->numberOfWinningPoints && $this->scorePlayer2 < $this->numberOfWinningPoints)
+        {
+            return false;
+        }
+        if (!$this->hasAtLeastTwoPoints())
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function hasAtLeastTwoPoints()
+    {
+        if (abs($this->scorePlayer1 - $this->scorePlayer2) >= 2)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

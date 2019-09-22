@@ -5,10 +5,7 @@ declare(strict_types = 1);
 namespace Flo\Tournoi\Domain\Match\Entities;
 
 use Flo\Tournoi\Domain\Core\ValueObjects\Uuid;
-use Flo\Tournoi\Domain\Core\ValueObjects\DateTime;
-use Flo\Tournoi\Domain\Core\ValueObjects\NullDateTime;
 use Flo\Tournoi\Domain\Match\ValueObjects\MatchType;
-use Flo\Tournoi\Domain\Match\ValueObjects\MatchStatus;
 use Flo\Tournoi\Domain\Match\Entities\Match;
 use Flo\Tournoi\Domain\Player\Entities\Player;
 use Flo\Tournoi\Persistence\Match\DataTransferObjects as DTO;
@@ -60,8 +57,7 @@ class GroupMatch extends Match
             $this->position(),
             $this->status(),
             $this->playingDate(),
-            $this->numberOfWinningSets(),
-            $this->winner()
+            $this->result()
         );
     }
 }
