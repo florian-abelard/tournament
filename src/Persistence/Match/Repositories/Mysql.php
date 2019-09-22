@@ -58,8 +58,7 @@ SQL;
                 position = :position,
                 status = :status,
                 playing_date = :playingDate,
-                result = :result,
-                winner_uuid = :winnerUuid
+                result = :result
             WHERE uuid = :uuid
 SQL;
 
@@ -73,7 +72,6 @@ SQL;
         $statement->bindValue(':status', $dto->status());
         $statement->bindValue(':playingDate', $dto->playingDate());
         $statement->bindValue(':result', $dto->result());
-        $statement->bindValue(':winnerUuid', $dto->winnerUuid());
         $statement->execute();
     }
 

@@ -4,56 +4,49 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Match\ValueObjects;
 
-use Flo\Tournoi\Domain\Player\Entities\Player;
+use Flo\Tournoi\Domain\Match\Exceptions\InvalidMatchResultException;
 
 final class MatchResult
 {
     private
-        $player1,
-        $player2,
-        $numberOfWinningSets,
-        $sets;
+        $sets,
+        $numberOfWinningSets;
 
-    public function __construct(Player $player1, Player $player2, SetCollection $sets)
+    public function __construct(SetCollection $sets)
     {
-        $this->player1 = $player1;
-        $this->player2 = $player2;
-
         $this->numberOfWinningSets = 3;
+
+        $this->validate($sets);
+
         $this->sets = $sets;
+        
     }
 
-    public function winner(): ?Player
+    private function validate(SetCollection $sets)
     {
         $numberOfSetsWonByPlayer1 = 0;
         $numberOfSetsWonByPlayer2 = 0;
-
-        foreach ($this->sets as $set)
+        
+        foreach ($sets as $set) 
         {
-            if ($set->scorePlayer1() > $set->scorePlayer2())
-            {
+            if ($set->score1() > $set->score2()) {
                 $numberOfSetsWonByPlayer1++;
-            }
-            else {
+            } else {
                 $numberOfSetsWonByPlayer2++;
             }
         }
 
-        if ($numberOfSetsWonByPlayer1 >= $this->numberOfWinningSets)
-        {
-            return $this->player1;
+        if (
+            $numberOfSetsWonByPlayer1 < $this->numberOfWinningSets &&
+            $numberOfSetsWonByPlayer2 < $this->numberOfWinningSets 
+        ) {
+            throw new InvalidMatchResultException($sets);
         }
-        if ($numberOfSetsWonByPlayer2 >= $this->numberOfWinningSets)
-        {
-            return $this->player2;
-        }
-
-        return null;
     }
 
-    public function maximumNumberOfSets(): int
+    public function sets(): SetCollection
     {
-        return $this->numberOfWinningSets * 2 - 1;
+        return $this->sets;
     }
 
     public function sets(): SetCollection

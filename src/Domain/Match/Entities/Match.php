@@ -75,6 +75,11 @@ class Match
         return $this;
     }
 
+    public function maximumNumberOfSets(): int
+    {
+        return $this->numberOfWinningSets * 2 - 1;
+    }
+
     public function playingDate(): DateTime
     {
         return $this->playingDate;
@@ -95,5 +100,31 @@ class Match
     public function setResult(?MatchResult $result)
     {
         $this->result = $result;
+    }
+
+    public function winner(): ?Player
+    {
+        if ($this->status->value() !== 'finished')
+        {
+            return null;
+        }
+
+        $numberOfSetsWonByPlayer1 = 0;
+        $numberOfSetsWonByPlayer2 = 0;
+
+        foreach ($this->result->sets as $set) {
+            if ($set->score1() > $set->score2()) {
+                $numberOfSetsWonByPlayer1++;
+            } else {
+                $numberOfSetsWonByPlayer2++;
+            }
+        }
+
+        if ($numberOfSetsWonByPlayer1 = $this->numberOfWinningSets) {
+            return $this->player1;
+        }
+        else {
+            return $this->player2;
+        }
     }
 }

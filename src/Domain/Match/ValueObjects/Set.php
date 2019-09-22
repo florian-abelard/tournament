@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace Flo\Tournoi\Domain\Match\ValueObjects;
 
-use Flo\Tournoi\Domain\Player\Entities\Player;
+use Flo\Tournoi\Domain\Match\Exceptions\InvalidSetException;
 
-final class Set
+final class Set implements \JsonSerializable
 {
     private
         $scorePlayer1,
@@ -15,43 +15,55 @@ final class Set
 
     public function __construct(int $scorePlayer1, int $scorePlayer2)
     {
-        $this->scorePlayer1 = $scorePlayer1;
-        $this->scorePlayer2 = $scorePlayer2;
+        $this->validate($score1, $score2);
+        
+        $this->score1 = $score1;
+        $this->score2 = $score2;
 
         $this->numberOfWinningPoints = 11; // Todo tournament configuration
+
     }
 
-    public function scorePlayer1(): ?int
+    public function score1(): ?int
     {
-        return $this->scorePlayer1;
+        return $this->score1;
     }
 
-    public function scorePlayer2(): ?int
+    public function score2(): ?int
     {
-        return $this->scorePlayer2;
+        return $this->score2;
     }
 
-    public function validate()
+    private function validate(int $score1, int $score2)
     {
-        if ($this->scorePlayer1 < $this->numberOfWinningPoints && $this->scorePlayer2 < $this->numberOfWinningPoints)
+        if ($score1 < $this->numberOfWinningPoints && $score2 < $this->numberOfWinningPoints)
         {
-            return false;
+            throw new InvalidSetException($score1, $score2);
         }
-        if (!$this->hasAtLeastTwoPoints())
+        if (!$this->hasAtLeastTwoPointsOfDifference($score1, $score2)) 
         {
-            return false;
+            throw new InvalidSetException($score1, $score2);
         }
 
         return true;
     }
 
-    public function hasAtLeastTwoPoints()
+    private function hasAtLeastTwoPointsOfDifference(int $score1, int $score2)
     {
-        if (abs($this->scorePlayer1 - $this->scorePlayer2) >= 2)
+        if (abs($score1 - $score2) >= 2)
         {
             return true;
         }
 
         return false;
+    }
+
+    public function jsonSerialize()
+    {
+        return
+            [
+                'score1'   => $this->score1(),
+                'score2' => $this->score2()
+            ];
     }
 }

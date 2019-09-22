@@ -89,18 +89,4 @@ class GroupMatch
     {
         return serialize($this->result);
     }
-
-    public function winnerUuid(): ?string
-    {
-        if (is_null($this->result)) 
-        {
-            return null;
-        }
-        if ($this->result->winner() instanceof Player)
-        {
-            return $this->result->winner()->uuid()->value();
-        }
-
-        return null;
-    }
 }

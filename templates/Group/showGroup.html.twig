@@ -24,7 +24,11 @@
             <span>Match {{ loop.index }} : {{ match.player1.name }} vs {{ match.player2.name }}</span>
             {% if match.result is not null %}
                 {% for set in match.result.sets %}
+<<<<<<< HEAD
                     <span> [ {{ set.scorePlayer1 }}-{{ set.scorePlayer2 }}  ]</span>
+=======
+                    <span> [ {{ set.score1 }}-{{ set.score2 }}  ]</span>
+>>>>>>> feat(match): Match Result [WIP]
                 {% endfor %}
             {% endif %}
             <span>- {{ match.uuid }}</span>
